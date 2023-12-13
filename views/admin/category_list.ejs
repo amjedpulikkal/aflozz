@@ -1,0 +1,63 @@
+<div class="product-status mg-b-30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="product-status-wrap">
+                    <h4>Category List</h4>
+                    <div class="add-product">
+                        <a href="/admin/add/category">Add category</a>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Image</th>
+                            <th>Category Title</th>
+                            <th>Offer</th>
+                            <th>Status</th>
+                            <th>Setting</th>
+                        </tr>
+                        <% products.forEach(function(item) { %>
+                            <tr>
+                                <td><img src="/image/products/<%=item.image%>" alt=""></td>
+                                <td>
+                                    <%= item.category%>
+                                </td>
+                                <td>
+                                    <%= item.offer%>
+                                </td>
+                                <td>
+                                    <% if(item.status===false){ %>
+                                        <a href="/admin/unlist?_id=<%=item._id%>&status=true"
+                                            class="ds-setting">Disabled</a>
+                                        <%}else{%>
+                                            <a href="/admin/unlist?_id=<%=item._id%>&status=false"
+                                                class="pd-setting">Active</a>
+                                            <%}%>
+                                </td>
+                                <td>
+                                    <!-- <a href="/admin/category/delete?id=<%=item._id%>&image=<%=item.image%>"><button
+                                            data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i
+                                                class="fa fa-trash-o" aria-hidden="true"></i></button></a> -->
+
+                                    <a href="/admin/update/category/<%= item._id%>"><button data-toggle="tooltip" title="Edit"
+                                            class="pd-setting-ed"><i class="fa fa-pencil-square-o"
+                                                aria-hidden="true"></i></button></a>
+
+                                </td>
+
+                            </tr>
+                            <% }); %>
+                    </table>
+                    <!-- <div class="custom-pagination">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

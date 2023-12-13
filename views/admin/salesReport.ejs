@@ -1,0 +1,168 @@
+<style>
+    .table-striped>tbody>tr:nth-child(odd)>td,
+    .table-striped>tbody>tr:nth-child(odd)>th {
+        background-color: #090d16;
+    }
+</style>
+<div class="container mx-auto flex-grow-1 p-4 text-white">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title text-xl font-bold">Sales Report</h4>
+            <div class=" flex ">
+
+                <div class="flex items-center space-x-2 ">
+                    <span class="font-bold">From</span>
+                    <input class="m-1 border rounded p-1" type="date" name="from" style="color: #090d16;" id="start"
+                        required>
+                    <span class="font-bold">To</span>
+                    <input class="m-1 border rounded p-1" type="date" name="upto" style="color: #090d16;" id="end"
+                        required>
+                    <button class="btn btn-outline-primary btn-sm m-1 btn-dark" style="background-color: black;"
+                        onclick="getReport()">Apply date</button>
+                </div>
+
+                <select class="form-select col-10 border rounded p-1 ml-10 text-black" id="status">
+                    <option value="">Order Status Filter All</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Cancelled">Cancelled</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Returned">Returned</option>
+                </select>
+                <button id="downloadPdfBtn" onclick="exportToPDF()" class="btn btn-primary ms-auto">Download
+                    PDF</button>
+            </div>
+
+
+            <div class="table-responsive mt-9">
+                <table id="salesReportTable" class="table table-striped ">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Delivery Address</th>
+                            <th>Order Details</th>
+                            <th>Order Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-3">
+                    </tbody>
+                </table>
+                <div id="E_image" class="flex justify-center hidden">
+                    <img style=" width:70%;"
+                        src="/image/sales_report_not_found_error_image_with_error_ti__1_-removebg-preview.png" alt="">
+                </div>
+                <div class="flex">
+                    <div class="col-md-9 col-12 pt-3">
+                        Total orders done: <samp id="done"></samp><br>
+                        <strong>Total Revenue: ₹<samp id="Total">0</samp></strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+<!-- Include google-mtranslate library -->
+<script src="https://cdn.jsdelivr.net/npm/google-mtranslate"></script>
+
+<script>
+    const tomorrow = new Date(); // Create a new Date object with the current date
+    tomorrow.setDate(tomorrow.getDate() + 1); // Add one day to the current date
+    const tomorrowISOString = tomorrow.toISOString().split('T')[0]; // Get the ISO string representing the date
+
+    document.getElementById("start").value = new Date().toISOString().split('T')[0]
+    document.getElementById("end").value = tomorrowISOString
+    getReport()
+    function exportToPDF() {
+        const { jsPDF } = window.jspdf;
+        console.log(jsPDF)
+        const doc = new jsPDF();
+        console.log("sdddd");
+        doc.autoTable({ html: '#salesReportTable' });
+        doc.save('sales_report.pdf');
+        toaster(1, "PDF download started")
+    }
+
+    document.getElementById("status").addEventListener("change", () => {
+        getReport(document.getElementById("status").value)
+    })
+
+    async function getReport(method = document.getElementById("status").value) {
+
+        let start = document.getElementById("start").value
+        let end = document.getElementById("end").value
+        console.log(start)
+        console.log(end)
+        if (new Date(end) > new Date(start)) {
+
+            let table = document.getElementById("table-3")
+            method = method ? method : ""
+            // console.log(method);
+            const res = await fetch("/admin/getReport", { method: "POST", body: new URLSearchParams({ start, end, method }) })
+            let resp = await res.json()
+            let data = resp.length ? resp[0] : resp
+            console.log(data);
+            document.getElementById("Total").innerHTML = 0
+            table.innerHTML = ""
+            if (data.orders) {
+                document.getElementById("E_image").classList.add("hidden")
+                document.getElementById("Total").innerHTML = data?.totalPrice?.toFixed(2) || 0
+                data = data.orders
+                console.log(data)
+                document.getElementById("downloadPdfBtn").classList.remove("hidden")
+                let c = 0
+                data?.forEach(element => {
+                    if (!element.cancel && !element.return && element.status.length > 2) c++
+                    const tr = document.createElement("tr");
+                    tr.classList.add("border-b")
+                    tr.innerHTML = ` <td>
+                                       ${element.address[0].valueAtIndex2.name}<br>
+                                       ${element.address[0].valueAtIndex2.Number}
+                                    </td>
+                                    <td style="width: 100px;">
+                                        ${element.address[0].valueAtIndex2?.city},
+                                        ${element.address[0].valueAtIndex2?.pincode}<br>
+                                        ${element.address[0].valueAtIndex2?.village},
+                                        Pincode: ${element.address[0].valueAtIndex2?.pincode}<br>
+                                        <p>
+                                        House No.:  ${element.address[0].valueAtIndex2?.address}</p>
+                                    </td>
+                                    <td>
+                                        <div class="border-b mb-3">
+                                            <span class="text-primary text-lg uppercase">
+                                               Total products: ${element.products.length}
+                                            </span><br>
+                                            MRP: ${element.totalMRP},
+                                            price:  ${element.price}
+                                        </div>
+                                        <span>
+                                            <strong>
+                                                Payment Method: ${element.paymentType}<br>
+                                                Status : ${element.cancel ? 'Cancelled' : element.return ? "Returnd" : element.status.length > 2 ? "Delivered" : element.status.length > 1 ? "Shipped" : "Processing"}
+                                                
+                                            </strong>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        Order Confirmed : ${new Date(element.date).toISOString().split('T')[0]} <br>
+                                        Delivery : ${new Date(element.date).toISOString().split('T')[0]}
+                                    </td>`
+                    table.appendChild(tr)
+                });
+                document.getElementById("done").innerHTML = c
+
+            } else {
+                document.getElementById("E_image").classList.remove("hidden")
+                document.getElementById("downloadPdfBtn").classList.add("hidden")
+
+            }
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please choose valid start and end dates!',
+            });
+        }
+    }
+</script>

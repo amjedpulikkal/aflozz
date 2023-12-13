@@ -1,0 +1,149 @@
+<div class="product-status mg-b-30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="product-status-wrap">
+                    <div>
+                        <div class="container text-white">
+
+                            <div class="form-wrap mt-5">
+                                <form id="survey-form" action="/admin/send" method="post" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Notification title</label>
+                                                <input type="" class="form-control" name="title" id="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label id="email-label" for="body">body</label>
+                                                <input type="" name="body" class="form-control" required
+                                                    style="color: black">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label id="type-label"
+                                                    for="number">Percentage<small>(optional)</small></label>
+                                                <input type="file" id="" name="image" min="10" max="99" required
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label id="number-label" for="number">link</label>
+                                                <input type="" min="1" name="link" required class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-end my-5">
+                                        <div class="">
+                                            <button type="submit" id="submit" class="btn btn-primary btn-block">Push
+                                                notification</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>image</th>
+                            <th>title</th>
+                            <th>body </th>
+                            <th>URl</th>
+                            <th>Date</th>
+                        </tr>
+                        
+                        <%data.reverse().forEach(item=>{%>
+                            <tr>
+                                <td><img src="/image/notification/<%=item.image%>" alt=""/></td>
+                                <td><%=item.title%></td>
+                                <td><%=item.body%></td>
+                                <td><%=item.link%></td>
+                                <td><%=new Date(item.date).toISOString().split('T')[0]%></td>
+                            </tr>
+                            <%})%>
+                                <!-- <tr>
+                            <td><img src="img/new-product/7-small.jpg" alt="" /></td>
+                            <td>Product Title 3</td>
+                            <td>
+                                <button class="ds-setting">Disabled</button>
+                            </td>
+                            <td>70</td>
+                            <td>$1050</td>
+                            <td>Low Stock</td>
+                            <td>$15</td>
+                            <td>
+                                <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/new-product/5-small.jpg" alt="" /></td>
+                            <td>Product Title 4</td>
+                            <td>
+                                <button class="pd-setting">Active</button>
+                            </td>
+                            <td>120</td>
+                            <td>$1440</td>
+                            <td>In Stock</td>
+                            <td>$12</td>
+                            <td>
+                                <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/new-product/6-small.jpg" alt="" /></td>
+                            <td>Product Title 5</td>
+                            <td>
+                                <button class="pd-setting">Active</button>
+                            </td>
+                            <td>30</td>
+                            <td>$540</td>
+                            <td>Out Of Stock</td>
+                            <td>$18</td>
+                            <td>
+                                <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><img src="img/new-product/7-small.jpg" alt="" /></td>
+                            <td>Product Title 6</td>
+                            <td>
+                                <button class="ps-setting">Paused</button>
+                            </td>
+                            <td>400</td>
+                            <td>$4000</td>
+                            <td>In Stock</td>
+                            <td>$10</td>
+                            <td>
+                                <button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                            </td>
+                        </tr> -->
+                    </table>
+                    <!-- <div class="custom-pagination">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>

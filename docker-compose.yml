@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+
+  mongo_db:
+    container_name: db_container
+    image: mongo:latest
+    restart: always
+    ports:
+      - 2717:27017
+    volumes:
+      - mongo_db:/data/db
+  api:
+    build: .
+    ports:
+      - 4000:3000
+    environment:
+      PORT: 3000
+      DATABASE_URL: mongodb://mongo_db:27017/aflozz
+      secret_key: wVowpvLT8E2odtA5
+      MY_PASSWORD: wVowpvLT8E2odtA5aflozz
+      key_secret: Nsw4FLjT0UauZyFJDug7ViEU
+      key_id: rzp_test_ISFWvbAXmN0zBI
+      webPush_publicKey: BECJByIfs2oV2rDl72EmZAgU3wQq4HZQXslwFbrivDTblWuHZyW2r5R5mXKEop-auHg46mQS_1O134ZvfOH4yTY
+      webPush_privatekey: 1QJpyn77an14wdgHB_QeihihDeLk3NcPBOKApakn8Z0
+    depends_on:
+      - mongo_db
+
+volumes:
+  mongo_db: {}

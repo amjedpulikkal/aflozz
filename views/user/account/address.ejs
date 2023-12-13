@@ -1,0 +1,46 @@
+<%-include("account-layout")%>
+    <a href="/new-address"> <button
+            class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-40 mt-6 ms-5">Add
+            new Address</button></a>
+    <div class="flex justify-center">
+
+        <div>
+            <%if(address){%>
+                <% for (let i=0; i< address.length; i++) { %>
+                    <ul class="container  bg-white shadow mt-4">
+                        <li class="mt-4">
+                            <div class="px-4 py-5 sm:px-6">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-lg font-medium leading-6 text-gray-900">Home</h3>
+                                    </p>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <div class=" font-extralight">
+                                        <p>
+                                            <%=address[i].name%>
+                                        </p>
+                                        <div class=" font-extralight">
+                                            <p>
+                                                <%=address[i].address%>
+                                            </p>
+                                            <p>
+                                                <%=address[i].city%>,<%=address[i].village%>-<%=address[i].pincode%>
+                                            </p>
+                                            <p>Phone: <%=address[i].Number%>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <a href="/address/remove/<%=i%>"
+                                            class="font-medium text-red-500 hover:text-red-600 me-3">remove</a>
+                                        <a href="/address/edit/<%=i%>"
+                                            class="font-medium text-indigo-600 hover:text-indigo-500">Edit</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <%}%>
+                        <%}%>
+        </div>
+    </div>

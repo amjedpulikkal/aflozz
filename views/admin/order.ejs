@@ -1,0 +1,163 @@
+<style>
+    .none {
+
+        display: none;
+    }
+
+   
+
+    /* Style the select element */
+    #filterSelect {
+        width: 130px;
+        padding: 5px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    /* Style the options inside the select element */
+    #filterSelect option {
+        font-size: 14px;
+        background-color: #f5f5f5;
+        color: #333;
+    }
+</style>
+<div class="product-status mg-b-30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="product-status-wrap">
+                    <div class="flex justify-between ">
+                        <h4>Order List</h4>
+                        <select id="filterSelect">
+                            <option value="1">All order</option>
+                            <option value="2">Cancal order</option>
+                            <option value="3">Retur order</option>
+                        </select>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>#order no</th>
+                            <th>User</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                        <% orders.forEach(function(item){ %>
+                            <tr class="item-1" <%if(!item.cancel && !item.return){%>
+                                id="1"
+                                <%}else if(item.cancel && !item.return){%>
+                                    id="2">
+                                    <%}else{%>
+                                        id="3"
+                                        <%}%> >
+                                            <td>
+                                                #<%= item.no%>
+                                            </td>
+                                            <td>
+                                                <%= item.user[0].Email%>
+                                            </td>
+                                            <td>
+                                                <%= item.date%>
+                                            </td>
+                                            <td>
+                                                <div class="row-auto">
+                                                    <div class="col-12 col-10 hh-grayBox pt-4">
+                                                        <div class="flex justify between">
+
+                                                            <%if(!item.cancel && !item.return){%>
+                                                                <div
+                                                                    class="  order-tracking <%= (item.status.length >=1) ? 'completed' : '' %>">
+                                                                    <span class="is-complete"></span>
+                                                                    <p>Ordered<br><span>
+                                                                            <%= (item.date) ? item.date : '' %>
+                                                                        </span></p>
+                                                                </div>
+                                                                <div
+                                                                    class="  order-tracking  <%= (item.status.length >=2) ? 'completed' : '' %>">
+                                                                    <span class="is-complete"></span>
+                                                                    <p>Shipped<br><span>
+                                                                            <%= (item.status[1]?.date) ?
+                                                                                item.status[1]?.date : '' %>
+                                                                        </span></p>
+                                                                </div>
+                                                                <div
+                                                                    class="  order-tracking  <%= (item.status.length >=3) ? 'completed' : '' %>">
+                                                                    <span class="is-complete"></span>
+                                                                    <p>Delivered<br><span>
+                                                                            <%= (item.status[2]?.date) ?
+                                                                                item.status[2]?.date : '' %>
+                                                                        </span></p>
+                                                                </div>
+                                                                <%}else if(item.cancel && !item.return){%>
+
+                                                                    <div class="order-tracking cancel">
+                                                                        <span class="is-complete"></span>
+                                                                        <p>Ordered<br><span>
+                                                                                <%= (item.status[0]?.date) ?
+                                                                                    item.status[0]?.date : '' %>
+                                                                            </span></p>
+                                                                    </div>
+                                                                    <div class="order-tracking cancel">
+                                                                        <span class="z-10">Canceld</span>
+
+                                                                    </div>
+                                                                    <div class="order-tracking  cancel">
+                                                                        <span class="is-complete"></span>
+                                                                        <p>Delivered<br><span>
+                                                                                <%= (item.status[2]?.date) ?
+                                                                                    item.status[2]?.date : '' %>
+                                                                            </span></p>
+                                                                    </div>
+                                                                    <%}else{%>
+                                                                        <!-- <div></div> -->
+                                                                        <div style="width: 50%;"
+                                                                            class="order-tracking <%= (item.return.length >=1) ? 'completed' : '' %>">
+                                                                            <span class="is-complete"></span>
+                                                                            <p>Ordered<br><span>
+                                                                                    <%= (item.return[0]?.date) ?
+                                                                                    new Date(item.return[0]?.date).toISOString().split('T')[0]  : '' %>
+                                                                                </span></p>
+                                                                        </div>
+
+                                                                        <div style="width: 50%;"
+                                                                            class="order-tracking  <%= (item.return.length >=2) ? 'completed' : '' %>">
+                                                                            <span class="is-complete"></span>
+                                                                            <p>Delivered<br><span>
+                                                                                    <%= (item.return[1]?.date) ?
+                                                                                    new Date(item.return[1]?.date).toISOString().split('T')[0] : '' %>
+                                                                                </span></p>
+                                                                        </div>
+
+                                                                        <%}%>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/orders/<%=item._id%>" class="pd-setting">All</a>
+                                            </td>
+                            </tr>
+                            <% }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.getElementById('filterSelect').addEventListener('change', function () {
+        var selectedOption = this.value;
+
+        var elements = document.querySelectorAll('.item-1');
+
+        elements.forEach(function (element) {
+            if (element.id === selectedOption) {
+                element.classList.remove('none')
+            } else {
+                element.classList.add('none')
+
+            }
+        });
+    });
+</script>

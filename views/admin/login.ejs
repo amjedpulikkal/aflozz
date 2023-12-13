@@ -1,0 +1,92 @@
+<!-- <div class="" style="">
+    <div class="container a-container" id="a-container"> -->
+<form class="form" id="ad-form">
+    <h2 class="form_title title">Sign in to Admin</h2>
+    <input class="form__input" type="text" placeholder="Email" name="Email">
+    <p style="color: red; margin-inline-start: -222px;" id="ade_err"></p>
+    <input class="form__input" type="password" placeholder="Password" name="Password">
+    <p style="color: red; margin-inline-start: -222px; " id="adp_err"></p>
+    <input class="form__button button " type="submit" id="ad-sub" value="SIGN IN">
+    <div class="button lorder lorder-hidden" id="ad-spinner">
+        <div class="dot-pulse">
+            <div class="dot-pulse__dot"></div>
+        </div>
+    </div>
+</form>
+<!-- </div>
+ 
+  </div>
+   -->
+<script>
+
+    let baform = document.getElementById("ad-form")
+    baform.addEventListener("submit", e => {
+        e.preventDefault();
+        const Email = document.forms["ad-form"]["Email"].value;
+        const Password = document.forms["ad-form"]["Password"].value;
+        // ///_______________________
+        const butten = document.getElementById("ad-sub")
+        const spinner = document.getElementById("ad-spinner")
+
+        butten.classList.add("lorder-hidden")
+        spinner.classList.remove("lorder-hidden")
+        const E_err = document.getElementById("ade_err")
+        const p_err = document.getElementById("adp_err")
+
+
+        if (Email === "") {
+            E_err.innerHTML = "Please choose a Email."
+            spinner.classList.add("lorder-hidden")
+            butten.classList.remove("lorder-hidden")
+            return false
+        } else {
+            E_err.innerHTML = ""
+        }
+        if (Password === "") {
+            p_err.innerHTML = "Please choose a password."
+            spinner.classList.add("lorder-hidden")
+            butten.classList.remove("lorder-hidden")
+            return false
+        } else {
+            p_err.innerHTML = ""
+
+        }
+
+
+        let data = {
+            Email: Email,
+            Password: Password
+        }
+        fetch("/admin/login", {
+            method: "POST",
+            body: new URLSearchParams(data)
+        })
+            .then((res) => {
+                if (res.status === 404) {
+                    console.log(res.status);
+                    spinner.classList.add("lorder-hidden")
+                    butten.classList.remove("lorder-hidden")
+                    res.json().then(data => E_err.innerHTML = data)
+                } else if (res.status === 406) {
+                    spinner.classList.add("lorder-hidden")
+                    butten.classList.remove("lorder-hidden")
+                    res.json().then(data => p_err.innerHTML = data)
+                } else if (res.status === 200) {
+                    console.log("gooooot");
+                    window.location.replace('/admin');
+                }
+            })
+            // .then((data) => {
+            //     console.log(data);
+            //     // butten.classList.remove("lorder-hidden")
+            //     // spinner.classList.add("lorder-hidden")
+            //     E_err.innerHTML = data
+
+            // })
+            .catch((error) => {
+                console.error("Fetch error:", error);
+            });
+    });
+
+
+</script>

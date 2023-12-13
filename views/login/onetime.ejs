@@ -1,0 +1,141 @@
+<!-- component -->
+<div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-slate-300 py-12">
+  <div class="relative bg-slate-800 px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl"
+    style="background-color: #ecf0f3;box-shadow: 10px 10px 10px #d1d9e6, -10px -10px 10px #f9f9f9;">
+    <div class="mx-auto flex w-full max-w-md flex-col space-y-16">
+      <div class="flex flex-col items-center justify-center text-center space-y-2">
+        <div class="font-semibold text-3xl text-black">
+          <p>Email Verification</p>
+        </div>
+        <div class="flex flex-row text-sm font-medium text-gray-400">
+          <p>We have sent a code to your email <%= Email%>
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <form id="form-1">
+          <div class="flex flex-col space-y-16">
+            <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
+              <div class="w-16 h-16 ">
+                <input
+                  class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                  style="font-size: 40px;" type="text" pattern="[0-9]*" name="num1" id="num1" maxlength="1">
+              </div>
+              <div class="w-16 h-16 ">
+                <input
+                  class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                  style="font-size: 40px;" type="text" pattern="[0-9]*" name="num2" id="num2" maxlength="1">
+              </div>
+              <div class="w-16 h-16 ">
+                <input
+                  class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                  style="font-size: 40px;" type="text" pattern="[0-9]*" name="num3" id="num3" maxlength="1">
+              </div>
+              <div class="w-16 h-16 ">
+                <input
+                  class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700 "
+                  style="font-size: 40px;" type="text" pattern="[0-9]*" name="num4" id="num4" maxlength="1">
+              </div>
+            </div>
+
+            <p style="color: red; position: absolute; bottom: 32%;right: 40%;left: 40%;" class="text-center " id="err">
+            </p>
+
+            <div class="flex flex-col space-y-5">
+              <div>
+                <input id="sub"
+                  class="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm"
+                  type="submit" value="Verify Account">
+                <div
+                  class="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm lorder-hidden"
+                  id="spinner">
+                  <div class="dot-pulse">
+                    <div class="dot-pulse__dot"></div>
+                  </div>
+
+                </div>
+
+                <!-- <div class="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
+                  <p>Didn't recieve code?</p> <a class="flex flex-row items-center text-blue-600" href="http://" target="_blank" rel="noopener noreferrer">Resend</a>
+                </div> -->
+              </div>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  if (window.history && window.history.replaceState) {
+    const stateObj = { page: 'submitted' };
+    const title = 'Submitted Page';
+    const url = '/';
+    window.history.replaceState(stateObj, title, url);
+  }
+
+</script>
+<script>
+  let form = document.getElementById("form-1")
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const number1 = document.forms["form-1"]["num1"].value
+    const number2 = document.forms["form-1"]["num2"].value
+    const number3 = document.forms["form-1"]["num3"].value
+    const number4 = document.forms["form-1"]["num4"].value
+    const otp = `${number1}${number2}${number3}${number4}`
+    const butten1 = document.getElementById("num1")
+    const butten2 = document.getElementById("num2")
+    const butten3 = document.getElementById("num3")
+    const butten4 = document.getElementById("num4")
+
+
+    const butten = document.getElementById("sub")
+    const spinner = document.getElementById("spinner")
+    const err = document.getElementById("err")
+
+    butten.classList.add("lorder-hidden")
+    spinner.classList.remove("lorder-hidden")
+
+    console.log(otp);
+    if (number1 === "" || number2 === "" || number3 === "" || number4 === "") {
+
+      spinner.classList.add("lorder-hidden")
+      butten.classList.remove("lorder-hidden")
+      butten1.classList.add("shadow-[0px_0px_4px_2px_#e53e3e]")
+      butten2.classList.add("shadow-[0px_0px_4px_2px_#e53e3e]")
+      butten3.classList.add("shadow-[0px_0px_4px_2px_#e53e3e]")
+      butten4.classList.add("shadow-[0px_0px_4px_2px_#e53e3e]")
+      err.innerHTML = "Please enter OTP"
+      err.style = "color: red; position: absolute; bottom: 32%; right: 30%;left: 30%;"
+
+      return false
+    }
+
+    fetch("/one-time-password-varify", {
+      method: "POST",
+      body: new URLSearchParams({ Otp: otp })
+    })
+      .then((res) => {
+        if (res.status === 404) {
+          return res.json()
+        } else {
+          
+          location.reload();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+        spinner.classList.add("lorder-hidden")
+        butten.classList.remove("lorder-hidden")
+        if (data) {
+          
+          err.innerHTML = data
+        }
+      })
+      .catch((error) => {
+        console.error("Fetch error:", error);
+      });
+  });
+
+</script>

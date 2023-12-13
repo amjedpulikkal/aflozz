@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Push Notifications Example</title>
+</head>
+
+<body>
+    <h1>Push Notifications Example</h1>
+    <button id="subscribeButton">Subscribe to Push Notifications</button>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const publicKey = 'BKLxNKnkxc-TdjswVmjljwTFPS20B58T7EWlNiDlAtu0dVee3SttxpugNeINTjpckj6fb1X6dlHCedYGYiWJ_6w'; // Replace with your VAPID public key
+
+            let subscription; // Store the subscription object
+
+            const subscribeButton = document.getElementById('subscribeButton');
+       
+
+            subscribeButton.addEventListener('click', async () => {
+                try {
+                    // Check if the browser supports service workers and PushManager
+                    if ('serviceWorker' in navigator && 'PushManager' in window) {
+                        const serviceWorkerRegistration = await navigator.serviceWorker.register('service-worker.js');
+                        subscription = await serviceWorkerRegistration.pushManager.subscribe({
+                            userVisibleOnly: true,
+                            applicationServerKey: urlBase64ToUint8Array(publicKey),
+                        });
+
+                        console.log('Push notification subscription successful:', subscription);
+                        sendSubscriptionToServer(subscription)
+                        async function sendSubscriptionToServer(subscription) {
+                            // Send a POST request to your server to store the subscription
+                            const response = await fetch('/subscribe', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(subscription),
+                            });
+
+                            if (response.status === 201) {
+                                console.log('Subscription sent to the server successfully=======.');
+                            } else {
+                                console.error('Failed to send subscription to the server.');
+                            }
+                        }
+                    } else {
+                        console.error('Push notifications are not supported in this browser.');
+                    }
+                } catch (error) {
+                    console.error('Error subscribing to push notifications:', error);
+                }
+            });
+
+            sendNotificationButton.addEventListener('click', async () => {
+                if (subscription) {
+                    try {
+                        // Send the subscription to the server for sending push notifications
+                        await fetch('/send-notification', {
+                            method: 'POST',
+                            body: JSON.stringify(subscription),
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        });
+
+                        console.log('Push notification sent to the server.');
+                    } catch (error) {
+                        console.error('Error sending push notification:', error);
+                    }
+                } else {
+                    console.error('Please subscribe to push notifications first.');
+                }
+            });
+
+            function urlBase64ToUint8Array(base64String) {
+                const padding = '='.repeat((4 - base64String.length % 4) % 4);
+                const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+                const rawData = atob(base64);
+                const outputArray = new Uint8Array(rawData.length);
+
+                for (let i = 0; i < rawData.length; i++) {
+                    outputArray[i] = rawData.charCodeAt(i);
+                }
+                return outputArray;
+            }
+        });
+    </script>
+</body>
+
+</html>

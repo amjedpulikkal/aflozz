@@ -1,0 +1,419 @@
+<style>
+    .none {
+
+        display: none;
+    }
+
+
+
+    /* Style the select element */
+    .filterSelect {
+        width: auto;
+        padding: 5px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    /* Style the options inside the select element */
+    .filterSelect option {
+        font-size: 14px;
+        background-color: #f5f5f5;
+        color: #333;
+    }
+</style>
+<div class="product-status mg-b-30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="product-status-wrap">
+                    <div class="flex justify-between ">
+                        <div>
+                            <h4>Order List</h4>
+                        </div>
+                        <div><select class="filterSelect" onclick="set()" id="YearSelect">
+                                <option value="2023">2023</option>
+                            </select>
+                        </div>
+                        <div><select class="filterSelect" id="monthSelect">
+                                <option value="">All month</option>
+                                <option value="0">January</option>
+                                <option value="1">February</option>
+                                <option value="2">March</option>
+                                <option value="3">April</option>
+                                <option value="4">May</option>
+                                <option value="5">June</option>
+                                <option value="6">July</option>
+                                <option value="7">August</option>
+                                <option value="8">September</option>
+                                <option value="9">October</option>
+                                <option value="10">November</option>
+                                <option value="11">December</option>
+                            </select>
+                        </div>
+                        <div>
+                            <select class="filterSelect" id="weekSelect"></select>
+                        </div>
+                        <div>
+                            <select class="filterSelect" id="daySelect"></select>
+                        </div>
+                        <div>
+                            <button onclick="exportToPDF()" class="text-white">PDF</button>
+                            <button id="downloadExcelButton" class="text-white">Excel</button>
+                        </div>
+
+                    </div>
+                    <table id="table-1">
+
+
+
+                        <!-- <tr>
+                <td>January</td>
+                <td>2023</td>
+                <td>$10,000</td>
+                <td>500</td>
+              </tr>
+              <tr>
+                <td>January</td>
+                <td>2023</td>
+                <td>$10,000</td>
+                <td>500</td>
+              </tr>
+              <tr>
+                <td>February</td>
+                <td>2023</td>
+                <td>$12,500</td>
+                <td>625</td>
+              </tr>
+              <tr>
+                <td>March</td>
+                <td>2023</td>
+                <td>$15,000</td>
+                <td>750</td>
+              </tr> -->
+                    </table>
+                    <div id="E_image" class="flex justify-center hidden">
+
+                        <img style=" width:70%;"" src="
+                            /image/sales_report_not_found_error_image_with_error_ti__1_-removebg-preview.png" alt="">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.getElementById('monthSelect').addEventListener('change', async function () {
+        var selectedOption = this.value;
+
+        console.log(selectedOption);
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = Number(selectedOption);
+        console.log(currentDate);
+
+        const weekSelect = document.getElementById("weekSelect");
+        weekSelect.innerHTML = ""
+        const weeksInJanuary = getWeeksInMonth(currentYear, currentMonth);
+        weeksInJanuary.forEach((week, index) => {
+            const option = document.createElement("option");
+            option.value = `${week.start} ${week.end}`;
+            option.text = `Week ${index + 1}: ${week.start} - ${week.end}`;
+            weekSelect.appendChild(option);
+        });
+        console.log(weeksInJanuary[0]);
+        let start = weeksInJanuary[0].start
+        let end = weeksInJanuary[0].end
+        setday(start, end)
+        let data = await getdata(new Date(weeksInJanuary[0].start), new Date(weeksInJanuary[weeksInJanuary.length - 1].end), "weeks")
+        console.log(data);
+        if (data.length) {
+
+            document.getElementById("E_image").classList.add("hidden")
+
+            const tr = document.createElement("tr");
+            document.getElementById("table-1").innerHTML = ""
+            tr.innerHTML = `
+            <td>Year</td>
+            <td>Month</td>
+            <td>Week</td>
+            <td>totalSales</td>
+            <td>totalProductsSold</td>
+            <td>topProduct</td>
+            <td>topUser</td>
+            `
+            document.getElementById("table-1").appendChild(tr)
+            data.forEach(item => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+            <td>${item.year}</td>
+            <td>${item.month}</td>
+            <td>${item.week}</td>
+            <td>${item.totalSales}</td>
+            <td>${item.totalProductsSold}</td>
+            <td>${item.topProduct}</td>
+            <td>${item.topUser}</td>`
+                document.getElementById("table-1").appendChild(tr)
+            })
+        } else {
+            document.getElementById("table-1").innerHTML = ""
+            document.getElementById("E_image").classList.remove("hidden")
+        }
+    });
+</script>
+<script>
+    async function getdata(start, end, method) {
+        console.log(method);
+        const res = await fetch("/admin/getReport", { method: "POST", body: new URLSearchParams({ start, end, method }) })
+        return await res.json()
+    }
+</script>
+<script>
+    function getWeeksInMonth(year, month) {
+        const weeks = [];
+        const firstDay = new Date(year, month, 1);
+        let lastDay = new Date(year, month + 1, 0);
+
+        while (firstDay <= lastDay) {
+            const startOfWeek = new Date(firstDay);
+            const endOfWeek = new Date(firstDay);
+            endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+            weeks.push({
+                start: startOfWeek.toDateString(),
+                end: endOfWeek.toDateString(),
+            });
+
+            firstDay.setDate(firstDay.getDate() + 7);
+        }
+
+        return weeks;
+    }
+</script>
+<script>
+
+    // Get the current year and month (January)
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = 0; // January (0-based index)
+
+    const weekSelect = document.getElementById("weekSelect");
+
+    const weeksInJanuary = getWeeksInMonth(currentYear, currentMonth);
+
+    const option = document.createElement("option");
+    option.text = `All`;
+    weekSelect.appendChild(option);
+    weeksInJanuary.forEach((week, index) => {
+        const option = document.createElement("option");
+        option.value = `${week.start} ${week.end}`;
+        option.text = `Week ${index + 1}: ${week.start} - ${week.end}`;
+        weekSelect.appendChild(option);
+
+    });
+    console.log(weeksInJanuary[0]);
+    let start = weeksInJanuary[0].start
+    let end = weeksInJanuary[0].end
+    setday(start, end)
+    set()
+    async function set() {
+        document.getElementById("table-1").innerHTML = ""
+        document.getElementById("E_image").classList.add("hidden")
+        const data = await getdata("2023-01-01T00:00:00.000Z", "2024-01-01T00:00:00.000Z")
+        console.log(data);
+        const tr = document.createElement("tr");
+        tr.innerHTML = ` <th>Month</th>
+                        <th>Year</th>
+                        <th>Total Sales</th>
+                        <th>Total Products Sold</th>`
+        document.getElementById("table-1").appendChild(tr)
+
+        if (data.length) {
+            data.forEach(item => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+              <td>${item.month}</td>
+              <td>${item.year}</td>
+              <td>${item.totalSales}</td>
+              <td>${item.totalProductsSold}</td>`
+
+                document.getElementById("table-1").appendChild(tr)
+
+            })
+        }
+    }
+
+    weekSelect.addEventListener("change", async () => {
+        const value = weekSelect.value
+        console.log(value);
+        const dateParts = value.split(" ");
+        const start = dateParts.slice(0, 4).join(' ');
+        const end = dateParts.slice(4).join(' ');
+        setday(start, end)
+
+        let data = await getdata(new Date(start), new Date(end), "day")
+        console.log(data);
+        if (data.length) {
+            document.getElementById("E_image").classList.add("hidden")
+
+            const tr = document.createElement("tr");
+            document.getElementById("table-1").innerHTML = ""
+            tr.innerHTML = `
+            <td>Year</td>
+            <td>Month</td>
+            <td>Week</td>
+            <td>day</td>
+            <td>totalSales</td>
+            <td>totalProductsSold</td>
+            <td>topProduct</td>
+            <td>topUser</td>
+            `
+            document.getElementById("table-1").appendChild(tr)
+            data.forEach(item => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+            <td>${item.year}</td>
+            <td>${item.month}</td>
+            <td>${item.week}</td>
+            <td>${item.day}</td>
+            <td>${item.totalSales}</td>
+            <td>${item.totalProductsSold}</td>
+            <td>${item.topProduct}</td>
+            <td>${item.topUser}</td>`
+                document.getElementById("table-1").appendChild(tr)
+            })
+        } else {
+            document.getElementById("table-1").innerHTML = ""
+            document.getElementById("E_image").classList.remove("hidden")
+        }
+
+
+    })
+
+
+    function setday(start, end) {
+
+        console.log(start, "  ", end);
+        const daySelect = document.getElementById("daySelect")
+        daySelect.innerHTML = ""
+
+        const days = [];
+        const currentDate = new Date(start);
+        console.log(currentDate);
+
+        while (currentDate <= new Date(end)) {
+            days.push(new Date(currentDate));
+            console.log(1);
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+        console.log(days);
+        const option = document.createElement("option");
+
+        option.text = `All`;
+        daySelect.appendChild(option);
+        days.forEach((day, index) => {
+            const option = document.createElement("option");
+            option.value = day.toDateString();
+            option.text = `${day.toDateString()}`;
+            daySelect.appendChild(option);
+
+        });
+
+
+
+    }
+
+
+    const day = document.getElementById("daySelect")
+    day.addEventListener("change", async (v) => {
+        let start = new Date(day.value)
+        let end = new Date(start)
+        end.setDate(start.getDate() + 1)
+        let data = await getdata(start, end, "Oneday")
+        if (data.length) {
+            document.getElementById("E_image").classList.add("hidden")
+            console.log(data);
+            const tr = document.createElement("tr");
+            document.getElementById("table-1").innerHTML = ""
+            tr.innerHTML = `
+            <td>Year</td>
+            <td>Month</td>
+            <td>Week</td>
+            <td>day</td>
+            <td>totalSales</td>
+            <td>totalProductsSold</td>
+            <td>topProduct</td>
+            <td>topUser</td>
+            `
+            document.getElementById("table-1").appendChild(tr)
+            data.forEach(item => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+            <td>${item.year}</td>
+            <td>${item.month}</td>
+            <td>${item.week}</td>
+            <td>${item.day}</td>
+            <td>${item.totalSales}</td>
+            <td>${item.totalProductsSold}</td>
+            <td>${item.topProduct}</td>
+            <td>${item.topUser}</td>`
+                document.getElementById("table-1").appendChild(tr)
+            })
+        } else {
+            document.getElementById("table-1").innerHTML = ""
+            document.getElementById("E_image").classList.remove("hidden")
+        }
+    })
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+<script>
+    function exportToPDF() {
+        const { jsPDF } = window.jspdf;
+        console.log(jsPDF)
+        const doc = new jsPDF();
+        doc.autoTable({ html: '#table-1' });
+        doc.save('table.pdf');
+    }
+</script>
+<script type="text/javascript" src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+<script>
+    function downloadExcel() {
+        const table = document.getElementById("table-1");
+        // Get the table data
+        const ws = XLSX.utils.table_to_sheet(table);
+        // Create a new workbook
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+        // Save the workbook to a file
+        XLSX.writeFile(wb, 'table_data.xlsx');
+    }
+    document.getElementById('downloadExcelButton').addEventListener('click', downloadExcel);
+    // jQuery(document).ready(function ($) {
+    //     const table = $('#table-1').DataTable();
+    //     // Rest of your code
+    // });
+
+    // // Initialize DataTable
+
+    // // Function to download Excel
+    // function downloadExcel() {
+    //     const table = $('#table-1').DataTable();
+    //     const data = table.rows().data().toArray();
+
+    //     const ws = XLSX.utils.aoa_to_sheet(data);
+    //     const wb = XLSX.utils.book_new();
+    //     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    //     // Save the workbook to a file
+    //     XLSX.writeFile(wb, 'table_data.xlsx');
+    // }
+
+    // // Attach the downloadExcel function to a button or trigger
+
+</script>

@@ -1,0 +1,97 @@
+<div class="product-status mg-b-30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="product-status-wrap">
+                    <div>
+                        <div class="container text-white">
+
+                            <div class="form-wrap mt-5">
+                                <form id="survey-form" action="/admin/banner" method="post"
+                                    enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Banner title</label>
+                                                <input type="" class="form-control" name="title"
+                                                    value="<%=data.title%>">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label id="email-label" for="body">body</label>
+                                                <input type="" name="body" class="form-control" required
+                                                    value="<%=data.body%>">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label id="number-label" for="number">link</label>
+                                                <input type="" min="1" name="link" required class="form-control"
+                                                    value="<%=data.link%>">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                           
+                                            <img id="imagePreview" src="/image/notification/<%=data.image%>" alt=""
+                                                style="width: 100%; height: 100%;">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                        </div>
+                                        <div class="col-md-6">
+
+                                                <div class="form-group">
+                                                    <label id="type-label" for="number">Image</label>
+                                                    <input type="file"id="imageInput" name="image" min="10" max="99" 
+                                                        class="form-control" </div>
+                                                </div>
+                                        </div>
+                                        <div class="d-flex justify-end my-5">
+                                            <div class="">
+                                                <button type="submit" id="submit" class="btn btn-primary btn-block">update banner</button>
+                                            </div>
+                                        </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="custom-pagination">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('imageInput').addEventListener('change', function() {
+    var file = this.files[0];
+
+    if (file) {
+        var reader = new FileReader();
+
+        reader.addEventListener('load', function() {
+            var imagePreview = document.getElementById('imagePreview');
+            imagePreview.src = reader.result;
+            imagePreview.style.display = 'block';
+        });
+
+        reader.readAsDataURL(file);
+    }
+});
+
+</script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>

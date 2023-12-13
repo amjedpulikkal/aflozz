@@ -1,0 +1,148 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input[type="number"] {
+            -moz-appearance: textfield;
+            /* Firefox */
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+    </style>
+    <style>
+        <style>#summary {
+            background-color: #f6f6f6;
+        }
+
+        /* CSS styles for the quantity input and select element */
+        :root {
+            --black: #000;
+            --white: #fff;
+            --gray: #ccc;
+            --smoke: #e2e2e2;
+            --disable: #f2f2f2;
+        }
+
+        .qty-input {
+            color: var(--black);
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+
+            .product-qty,
+            .qty-count {
+                background: transparent;
+                color: inherit;
+                font-weight: bold;
+                font-size: inherit;
+                border: none;
+                display: inline-block;
+                min-width: 0;
+                height: 2.5rem;
+                line-height: 1;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+
+            .product-qty {
+                width: 50px;
+                min-width: 0;
+                display: inline-block;
+                text-align: center;
+                appearance: textfield;
+
+                &::-webkit-outer-spin-button,
+                &::-webkit-inner-spin-button {
+                    appearance: none;
+                    margin: 0;
+                }
+            }
+
+            .qty-count {
+                bor padding: 0;
+                cursor: pointer;
+                width: 2.5rem;
+                font-size: 1.25em;
+                text-indent: -100px;
+                overflow: hidden;
+                position: relative;
+
+                &:before,
+                &:after {
+                    content: "";
+                    height: 2px;
+                    width: 10px;
+                    position: absolute;
+                    display: block;
+                    background: var(--black);
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    margin: auto;
+                }
+
+                &--minus {
+                    border-right: 1px solid var(--smoke);
+                }
+
+                &--add {
+                    border-left: 1px solid var(--smoke);
+
+                    &:after {
+                        transform: rotate(90deg);
+                    }
+                }
+
+                &:disabled {
+                    color: var(--gray);
+                    background: var(--disable);
+                    cursor: not-allowed;
+                    border-color: transparent;
+
+                    &:before,
+                    &:after {
+                        background: var(--gray);
+                    }
+                }
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 mt-16">
+    <div class="container mx-auto mt-10">
+        <div class="flex shadow-md my-10">
+            <div class="w-full bg-white px-10 py-10">
+                <div class="flex justify-between border-b pb-8">
+                    <h1 class="font-semibold text-2xl">Shopping Cart</h1>
+                    <h2 class="font-semibold text-2xl" id="Items">
+                      0 <span>Items</span>
+                    </h2>
+                </div>
+                <h1 class="text-center text-2xl">Empty Cart: Time to Shop!</h1>
+                <div class="flex justify-center">
+                    <img class="w-1/2" src="/image/6024626.webp" alt="">
+                </div>
+
+
+                        <a href="/" class="flex font-semibold text-indigo-600 text-sm mt-10">
+
+                            <svg class="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">
+                                <path
+                                    d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
+                            </svg>
+                            Continue Shopping
+                        </a>
+            </div>
+        </div>
+    </div>
+</body>

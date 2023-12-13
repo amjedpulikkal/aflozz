@@ -1,0 +1,814 @@
+<style>
+    input[type="radio"]:checked+span {
+        display: block;
+    }
+
+
+    .coupon-card {
+        background: linear-gradient(135deg, #7158fe, #9d4de6);
+        color: #fff;
+        text-align: center;
+        padding: 40px 80px;
+        border-radius: 15px;
+        box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.15);
+        position: relative;
+
+    }
+
+    .logo {
+        width: 80px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+
+    }
+
+    .coupon-card h3 {
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 40px;
+
+    }
+
+    .coupon-card p {
+        font-size: 15px;
+
+    }
+
+    .coupon-row {
+        display: flex;
+        align-items: center;
+        margin: 25px auto;
+        width: fit-content;
+
+    }
+
+    .cpnCode {
+        border: 1px dashed #fff;
+        padding: 10px 20px;
+        border-right: 0;
+
+    }
+
+    .cpnBtn {
+        border: 1px solid #fff;
+        background: #fff;
+        padding: 10px 20px;
+        color: #7158fe;
+        cursor: pointer;
+    }
+
+    .circle1,
+    .circle2 {
+        background: #f0fff3;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+
+    }
+
+    .circle1 {
+        left: -25px;
+    }
+
+    .circle2 {
+        right: -25px;
+    }
+</style>
+
+
+<!-- SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<body class="bg-gray-100">
+    <div class="container mx-auto mt-10">
+        <div class="flex shadow-md my-10 bg-gray-100" style="background-color: #FFFFFF;">
+            <div class="w-3/4 bg-white pl-10 py-10">
+
+                <form class="w-full max-w-screen-md " id="form-1">
+                    <fieldset class="space-y-6">
+                        <div class="flex items-center justify-between py-4 border-b border-gray-300">
+                            <legend class="text-2xl text-gray-700 mr-4">Change Address</legend>
+                        </div>
+                        <div class="grid gap-3">
+
+                            <% if (address.length>0) { %>
+                                <label for="plan0"
+                                    class="relative flex flex-col bg-white p-5 rounded-lg shadow-md cursor-pointer">
+                                    <p>
+                                        <%=address[0].name%>
+                                    </p>
+                                    <div class=" font-extralight">
+                                        <p>
+                                            <%=address[0].address%>
+                                        </p>
+                                        <p>
+                                            <%=address[0].city%>,<%=address[0].village%>-<%=address[0].pincode%>
+                                        </p>
+                                        <p>Phone: <%=address[0].Number%>
+                                        </p>
+                                    </div>
+                                    <input type="radio" name="address" id="plan0" value="0"
+                                        class="absolute h-0 w-0 appearance-none" checked />
+                                    <span aria-hidden="true"
+                                        class="hidden absolute inset-0 border-2 border-green-500 bg-green-200 bg-opacity-10 rounded-lg">
+                                        <span
+                                            class="absolute top-4 right-4 h-6 w-6 inline-flex items-center justify-center rounded-full bg-green-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                fill="currentColor" class="h-5 w-5 text-green-600">
+                                                <path fill-rule="evenodd"
+                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </span>
+                                    </span>
+                                </label>
+                                <%}%>
+
+                                    <% if (address) { %>
+                                        <% for (let i=1; i< address.length; i++) { %>
+                                            <label for="plan-<%=i%>"
+                                                class="relative flex flex-col bg-white p-5 rounded-lg shadow-md cursor-pointer">
+                                                <p>
+                                                    <%=address[i].name%>
+                                                </p>
+                                                <div class=" font-extralight">
+                                                    <p>
+                                                        <%=address[i].address%>
+                                                    </p>
+                                                    <p>
+                                                        <%=address[i].city%>,<%=address[i].village%>-
+                                                                <%=address[i].pincode%>
+                                                    </p>
+                                                    <p>Phone: <%=address[i].Number%>
+                                                    </p>
+                                                </div>
+                                                <input type="radio" name="address" id="plan-<%=i%>" value="<%=i%>"
+                                                    class="absolute h-0 w-0 appearance-none" />
+                                                <span aria-hidden="true"
+                                                    class="hidden absolute inset-0 border-2 border-green-500 bg-green-200 bg-opacity-10 rounded-lg">
+                                                    <span
+                                                        class="absolute top-4 right-4 h-6 w-6 inline-flex items-center justify-center rounded-full bg-green-200">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                            fill="currentColor" class="h-5 w-5 text-green-600">
+                                                            <path fill-rule="evenodd"
+                                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                                clip-rule="evenodd" />
+                                                        </svg>
+                                                    </span>
+                                                </span>
+                                            </label>
+                                            <%}%>
+                                                <%}%>
+
+                        </div>
+                    </fieldset>
+                </form>
+                <form id="address-form" class="mt-10 relative flex flex-col bg-white p-5 rounded-lg shadow-md ">
+                    <div class="space-y-12">
+
+                        <div class="border-b border-gray-900/10 pb-12">
+
+                            <h2 class="text-base font-semibold leading-7 text-gray-900">New address</h2>
+                            <p class="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can
+                                receive
+                                mail.</p>
+
+                            <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                                <div class="sm:col-span-3">
+                                    <label for="fname" class="block text-sm font-medium leading-6 text-gray-900">First
+                                        name</label>
+                                    <div class="mt-2">
+                                        <input type="text" name="fname" id="first-name" autocomplete="given-name"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            required>
+                                    </div>
+                                </div>
+
+                                <div class="sm:col-span-3">
+                                    <label for="last-name"
+                                        class="block text-sm font-medium leading-6 text-gray-900">Last
+                                        name</label>
+                                    <div class="mt-2">
+                                        <input type="text" name="lname" id="last-name" autocomplete="family-name"
+                                            required
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+
+                                <div class="sm:col-span-3">
+                                    <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email
+                                        address</label>
+                                    <div class="mt-2">
+                                        <input id="email" name="email" type="email" autocomplete="email"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Phone
+                                        Number</label>
+                                    <div class="mt-2">
+                                        <input id="email" name="Number" type="number" autocomplete="mobile"
+                                            inputmode="numeric" maxlength="10" minlength="10" required
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+
+                                <!--  <div class="sm:col-span-3">
+                                    <label for="country"
+                                        class="block text-sm font-medium leading-6 text-gray-900">Country</label>
+                                    <div class="mt-2">
+                                        <select id="country" name="country" autocomplete="country-name"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                            <option>United States</option>
+                                            <option>Canada</option>
+                                            <option>Mexico</option>
+                                        </select>
+                                    </div>
+                                </div> -->
+                                <div class="sm:col-span-1">
+                                    <br>
+                                    <div>
+                                        <button type="button" style="width: 107px; height: 36px;" id="fetchLocation"
+                                            class="rounded-md bg-indigo-600 px-3 py-2  font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Auto
+                                            location
+                                        </button>
+                                        <div class="lorder rounded-md hidden bg-indigo-600 px-3 py-2 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                            style="width: 107px; height: 36px;" id="spinner">
+                                            <div class="dot-pulse">
+                                                <div class="dot-pulse__dot"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-span-full">
+                                    <label for="street-address"
+                                        class="block text-sm font-medium leading-6 text-gray-900">Address</label>
+                                    <div class="mt-2">
+                                        <input type="text" name="address" id="Address" autocomplete="street-address"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+
+                                <div class="sm:col-span-2 sm:col-start-1">
+                                    <label for="city"
+                                        class="block text-sm font-medium leading-6 text-gray-900">City</label>
+                                    <div class="mt-2">
+                                        <input type="text" name="city" id="city" autocomplete="address-level2"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+
+                                <div class="sm:col-span-2">
+                                    <label for="region"
+                                        class="block text-sm font-medium leading-6 text-gray-900">village</label>
+                                    <div class="mt-2">
+                                        <input type="text" name="village" id="region" autocomplete="address-level1"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+
+                                <div class="sm:col-span-2">
+                                    <label for="postal-code"
+                                        class="block text-sm font-medium leading-6 text-gray-900">ZIP /
+                                        Postal code</label>
+                                    <div class="mt-2">
+                                        <input type="text" name="pincode" id="postal-code" autocomplete="postal-code"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex items-center justify-end gap-x-6">
+                        <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+                        <button type="submit"
+                            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+                    </div>
+                </form>
+            </div>
+            <div id="summary" class="w-1/4 px-8 py-10">
+                <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
+                <div class="flex justify-between mt-10 mb-5">
+                    <span class="font-semibold text-sm uppercase">Item></span>
+                    <span class="font-semibold text-sm" id="TotalPrice"></span>
+                </div>
+                <div>
+                    <label class="font-medium inline-block mb-3 text-sm uppercase">PRICE DETAILS %>
+                        Item)</label>
+                    <div class="flex  justify-between py-6 text-sm uppercase">
+                        <span>Total MRP</span>
+                        <span id="F-MRP"></span>
+                    </div>
+                    <div class="flex  justify-between py-6 text-sm uppercase">
+                        <span>Discount on MRP</span>
+                        <span id="F-d-MRP">
+                            <%="₹ "+price?.toFixed(2)||0%>
+                        </span>
+                    </div>
+
+                </div>
+                <div class=" py-10">
+                                <label for="promo" class="font-semibold inline-block mb-3 text-sm uppercase">Promo
+                                    Code</label>
+                                <input type="text" id="promo" placeholder="Enter your code" class="p-2 text-sm w-full">
+                                <p class="text-red-600" id="E_promo"></p>
+                    </div>
+                    <button onclick="showHTMLContent()"
+                        class="bg-red-500  hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">View
+                        coupons</button>
+                    <button onclick="promo()"
+                        class="bg-red-500  hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Apply</button>
+                    <div>
+                        <div class="border-t mt-8">
+                            <% if(!coupon){%>
+                                <div id="coupandiv"
+                                    class="flex font-semibold hidden justify-between py-6 text-sm uppercase">
+                                    <span>coupon discount</span>
+                                    <span id="cValue">
+                                    </span>
+                                </div>
+                                <%}else{%>
+                                    <div id="coupandiv"
+                                        class="flex font-semibold  justify-between py-6 text-sm uppercase">
+                                        <span>coupon discount</span>
+                                        <span id="cValue">
+                                        </span>
+                                    </div>
+                                    <%}%>
+                                        <div class="flex font-semibold justify-between py-6 text-sm uppercase">
+                                            <span>Total cost</span>
+                                            <span id="Ftotal">
+                                                <%="₹ "+price?.toFixed(2)||0%>
+                                        </span>
+                                    </div>
+                                    <div class=" mt-4 pb-4">
+                                                    <input id="default-radio-1" type="radio" value="cashOnDelivery"
+                                                        name="payment"
+                                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                    <label for="default-radio-1" class="ml-2 text-sm font-medium ">cash
+                                                        on
+                                                        Delivery</label>
+                                        </div>
+                                        <div class="mt-4 pb-4">
+                                            <input checked id="default-radio-2" type="radio" value="razorpay"
+                                                name="payment"
+                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="default-radio-2"
+                                                class="ml-2 text-sm font-medium ">Razorpay</label>
+                                        </div>
+                                        <div class="mt-4 pb-4 flex ">
+                                            <input id="default-radio-1" type="radio" value="cashOnDelivery" id="wallet"
+                                                name="payment"
+                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="default-radio-1"
+                                                class="ml-2 text-sm font-medium ">Wallet</label>
+                                            <div class="ml-2 hidden" id="tick-img">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                    style="fill: #44ff00"
+                                                    viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+
+                                                    <path
+                                                        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                                                </svg>
+                                            </div>
+
+                                        </div>
+                                        <button onclick="sub() " id="chBut"
+                                            class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+
+                                        <div class="bg-indigo-500 hidden flex justify-center  font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase "
+                                            style="height: 44px; width: 256px;" id="spinnerCh">
+
+                                            <div class="dot-pulse">
+                                                <div class="dot-pulse__dot"></div>
+                                            </div>
+
+                                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+            <script>
+
+                document.getElementById("F-MRP").innerHTML = "₹ " + (JSON.parse(localStorage.getItem('totalMRP')))
+
+                const fetchLocation = document.getElementById("fetchLocation")
+                const spinner = document.getElementById("spinner")
+                const but = document.getElementById("fetchLocation")
+                but.addEventListener("click", e => {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(position => {
+                            fetchLocation.classList.add("hidden")
+                            spinner.classList.remove("hidden")
+                            console.log(position.coords.latitude);
+                            console.log(position.coords.longitude);
+                            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
+                                .then(data => {
+                                    return data.json()
+                                })
+                                .then(data => {
+                                    console.log(data);
+                                    document.getElementById("Address").value = data.display_name
+                                    document.getElementById("postal-code").value = data.address.postcode
+                                    document.getElementById("city").value = data.address.county
+                                    document.getElementById("region").value = data.address.village || ""
+                                    fetchLocation.classList.remove("hidden")
+                                    spinner.classList.add("hidden")
+
+                                })
+                        });
+                    } else {
+                        x.innerHTML = "Geolocation is not supported by this browser.";
+                    }
+                })
+            </script>
+
+            <script>
+                const newaddress = document.getElementById("address-form")
+                newaddress.addEventListener("submit", e => {
+                    e.preventDefault()
+
+                    const data = {}
+                    data.name = `${newaddress.elements.fname.value}${newaddress.elements.lname.value}`;
+                    data.Number = newaddress.elements.Number.value;
+                    data.address = newaddress.elements.address.value;
+                    data.city = newaddress.elements.city.value;
+                    data.village = newaddress.elements.village.value;
+                    data.pincode = newaddress.elements.pincode.value;
+                    data.address = `${data.address},${data.city},${data.village}-${data.pincode}`
+                    console.log(data);
+                    fetch("/address", { method: "POST", body: new URLSearchParams(data) }).then(res => {
+                        if (res.status === 200) {
+
+                            window.location.replace('/cart/address');
+
+
+                        }
+                    })
+
+
+                })
+            </script>
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+            <script>
+                let discount = Number("<%=coupon?.value%>")
+                let discountID = "<%=coupon?.id%>" || null
+                let Total = "<%=price?.toFixed(2)||0%>"
+                console.log(Total);
+                let wallet = false
+
+                console.log(JSON.parse(localStorage.getItem("wallet")));
+                if (JSON.parse(localStorage.getItem("wallet"))) {
+                    wallet = true
+                    document.getElementById("tick-img").classList.remove("hidden")
+                    let lwallet = Number('<%= user && user.wallet !== undefined ? user.wallet.toFixed(2) : 0 %>');
+                    let total = Number("<%=price?.toFixed(2)%>")
+                    document.getElementById("Ftotal").innerHTML = "₹ " + (total -= lwallet).toFixed(2)
+
+                }
+                if (discount) {
+                    console.log(discount + 500);
+                    console.log(Total >= discount + 500);
+                    if (Total >= discount + 500) {
+                        // discountID
+                        document.getElementById("Ftotal").innerHTML = Total -= discount
+                        document.getElementById("cValue").innerHTML = "-" + discount
+
+                    } else {
+                        discountID = null
+                        document.getElementById("promo").value = "<%=coupon?.code%>"
+                        document.getElementById("E_promo").innerHTML = `You must purchase above ${"₹ " + discount + 500}`
+                    }
+                }
+                // discount ? document.getElementById("Ftotal").innerHTML = Total -= discount : console.log(false)
+                function promo() {
+
+
+                    const data = document.getElementById("promo").value
+
+                    fetch(`/promo/${data}`).then(data => {
+                        data.json().then(data => {
+                            // console.log(data)
+                            if (data) {
+                                toaster(1, "promo code added Success! ")
+                                console.log(data);
+                                document.getElementById("coupandiv").classList.remove("hidden")
+                                // document.getElementById("cValue").innerHTML = "-" + data.value
+                                discount = Number(data.value)
+                                if (Total >= discount + 500) {
+                                    discountID = data._id
+                                    document.getElementById("Ftotal").innerHTML = Total -= discount
+                                    document.getElementById("E_promo").innerHTML = ""
+                                    document.getElementById("cValue").innerHTML = "-" + discount
+                                } else {
+                                    document.getElementById("E_promo").innerHTML = `You must purchase above ${discount + 500}`
+                                }
+                            } else {
+                                document.getElementById("E_promo").innerHTML = `Invalid coupon code`
+
+                            }
+                        })
+                    }).catch(err => {
+                        console.log(err);
+                    })
+
+
+                    console.log(data);
+
+                }
+
+
+
+                function sub() {
+                    const form = document.getElementById('form-1');
+                    const radioButtons = form.querySelectorAll('input[type=radio][name=address]');
+                    const payradioButtons = document.querySelectorAll('input[type=radio][name=payment]');
+                    document.getElementById("chBut").classList.add("hidden")
+                    document.getElementById("spinnerCh").classList.remove("hidden")
+
+
+
+                    for (let i = 0; i < radioButtons.length; i++) {
+                        if (radioButtons[i].checked) {
+                            selectedValue = radioButtons[i].value;
+                            break;
+                        }
+                    }
+                    console.log(payradioButtons);
+                    console.log(payradioButtons.length);
+                    if (payradioButtons[0].checked) {
+                        localStorage.removeItem("wallet")
+                        console.log(Total - discount);
+                        fetch("/new-order", {
+                            method: "POST", headers: {
+                                'Content-Type': 'application/json'
+                            }, body: JSON.stringify({ index: selectedValue, paymentType: "Cash on Delivery", totalMRP: Total, price: "<%=price%>", wallet, discountID })
+                        })
+                            .then(res => {
+                                if (res.status === 200) {
+                                    // window.location.replace("/account/orders")
+                                    orderSuccess()
+                                }
+                            })
+                    } else if (payradioButtons[1].checked) {
+                        console.log(discountID);
+                        fetch("/online-payment-createid", {
+                            method: "POST", headers: {
+                                'Content-Type': 'application/json'
+                            }, body: JSON.stringify({ price: "<%=price%>", discountID, wallet })
+                        })
+                            .then(res => {
+
+                                console.log(res);
+                                return res.json()
+                            }).then(data => {
+                                console.log(data);
+                                console.log(data.orderId.id);
+                                var options = {
+                                    "key": "rzp_test_ISFWvbAXmN0zBI", // Enter the Key ID generated from the Dashboard
+                                    "currency": "INR",
+                                    "name": "Acme Corp",
+                                    "description": "Test Transaction",
+                                    "image": "https://example.com/your_logo",
+                                    "order_id": data.orderId.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                                    "modal": {
+                                        "ondismiss": function () {
+                                            toaster(2, "Payment cancelled")
+
+                                            document.getElementById("chBut").classList.remove("hidden")
+                                            document.getElementById("spinnerCh").classList.add("hidden")
+
+                                        }
+                                    },
+                                    "handler": function (response) {
+                                        localStorage.removeItem("wallet")
+                                        document.getElementById("spinnerCh").classList.add("bg-green-600")
+                                        fetch("/new-order", {
+                                            method: "POST", headers: {
+                                                'Content-Type': 'application/json'
+                                            }, body: JSON.stringify({ index: selectedValue, paymentType: "online", totalMRP: JSON.parse(localStorage.getItem('totalMRP')), discountID, wallet })
+                                        })
+                                            .then(res => {
+                                                if (res.status === 200) {
+                                                    // window.location.replace("/account/orders")
+                                                    orderSuccess()
+                                                }
+                                            })
+
+                                    },
+                                    // "prefill": {
+                                    //     "name": "Gaurav Kumar",
+                                    //     "email": "gaurav.kumar@example.com",
+                                    //     "contact": "9000090000"
+                                    // },
+                                    "notes": {
+                                        "address": "Razorpay Corporate Office"
+                                    },
+                                    "theme": {
+                                        "color": "#3399cc"
+                                    }
+                                };
+                                var rzp1 = new Razorpay(options);
+                                rzp1.on('payment.failed', function (response) {
+                                    // alert(response.error.code);
+                                    // alert(response.error.description);
+                                    // alert(response.error.source);
+                                    // alert(response.error.step);
+                                    // alert(response.error.reason);
+                                    // alert(response.error.metadata.order_id);
+                                    // alert(response.error.metadata.payment_id);
+                                    console.log("failed----");
+                                });
+                                rzp1.on("payment.close")
+                                console.log(rzp1.on());
+
+                                rzp1.open();
+
+                            })
+                    } else {
+                        function Wallet(params) {
+
+
+                            let lwallet = Number('<%=user?.wallet?.toFixed(2)||0%>')
+                            let total = Number("<%=price?.toFixed(2)||0%>")
+                            if (lwallet) {
+                                if (total <= lwallet) {
+                                    // fetch("/new-order", { method: "POST", body: new URLSearchParams({ index: selectedValue, paymentType: "wallet", totalMRP: Total - discount }) })
+                                    // .then(res => {
+                                    //     if (res.status === 200) {
+                                    //         window.location.replace("/account/orders")
+                                    //     }
+                                    // })
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Remaining Amount',
+                                        text: `The remaining amount is ${"₹ " + Number(lwallet-total).toFixed(2)}`,
+                                        confirmButtonText: 'Continue',
+                                        showCancelButton: true,
+                                        allowOutsideClick: false
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            wallet = true
+                                            document.getElementById("Ftotal").innerHTML = 0
+                                            localStorage.removeItem("wallet")
+                                            fetch("/new-order", { method: "POST", body: new URLSearchParams({ index: selectedValue, paymentType: "wallet", totalMRP: Total, wallet, discountID }) })
+                                                .then(res => {
+                                                    if (res.status === 200) {
+                                                        // window.location.replace("/account/orders")
+                                                        orderSuccess()
+                                                    }
+                                                })
+                                        } else {
+                                            document.getElementById("chBut").classList.remove("hidden")
+                                            document.getElementById("spinnerCh").classList.add("hidden")
+                                        }
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        icon: 'warning',
+                                        title: 'Payment Required',
+                                        text: `You must pay ${"₹ " + (total - lwallet).toFixed(2)} to proceed.`,
+                                        confirmButtonText: 'OK',
+                                        cancelButtonText: 'Cancel'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            wallet = true
+                                            toaster(1, "Your wallet has been successfully used.")
+                                            document.getElementById("Ftotal").innerHTML = (total -= lwallet).toFixed(2)
+                                            document.getElementById("tick-img").classList.remove("hidden")
+                                            localStorage.setItem("wallet", true)
+                                        }
+                                        document.getElementById("chBut").classList.remove("hidden")
+                                        document.getElementById("spinnerCh").classList.add("hidden")
+                                    });
+                                }
+                            } else {
+                                document.getElementById("chBut").classList.remove("hidden")
+                                document.getElementById("spinnerCh").classList.add("hidden")
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Empty Wallet',
+                                    text: `Your wallet amount is currently zero. Please add funds to proceed.`,
+                                    confirmButtonText: 'OK'
+                                });
+
+                            }
+
+
+
+                        }
+                        Wallet()
+                    }
+
+                }
+
+
+                //  orderSuccess()
+                function orderSuccess() {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Order Successful!',
+                        text: 'Your order has been processed successfully.',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Go to Order Page',
+                        showCancelButton: true,
+                        cancelButtonText: 'Continue Shopping',
+                        customClass: {
+                            popup: 'my-custom-size', // Add a custom class for the popup size (if desired)
+                        },
+                        allowOutsideClick: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Redirect to the order page
+                            window.location.href = '/account/orders';
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+                            window.location.href = '/';
+                        }
+                    });
+                    var duration = 15 * 1000;
+                    var animationEnd = Date.now() + duration;
+                    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+                    function randomInRange(min, max) {
+                        return Math.random() * (max - min) + min;
+                    }
+
+                    var interval = setInterval(function () {
+                        var timeLeft = animationEnd - Date.now();
+
+                        if (timeLeft <= 0) {
+                            return clearInterval(interval);
+                        }
+
+                        var particleCount = 50 * (timeLeft / duration);
+                        // since particles fall down, start a bit higher than random
+                        confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+                        confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+                    }, 250);
+                }
+            </script>
+
+            <style>
+                /* CSS */
+                /* Define the custom size for the SweetAlert popup */
+                .my-custom-size {
+                    width: 800px;
+                    /* Adjust the width as needed */
+                    font-size: 18px;
+                    /* Adjust the font size as needed */
+                }
+            </style>
+
+
+            <script>
+                function showHTMLContent() {
+                    const htmlContent = `
+      
+    <div class="container">
+            <div class="coupon-card">
+    
+                <% Coupons.forEach(items => { %>
+    <div class="coupon-row">
+        <span id="cpnCode-<%= items.code %>" class="cpnCode"><%= items.code %></span>
+        <span id="cpnBtn-<%= items.code %>" class="cpnBtn" onclick="cpnBtn('<%= items.code %>')" >Copy Code</span>
+    </div>
+<% }) %>
+
+                
+                
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+            </div>
+        </div>
+ 
+    `;
+
+                    Swal.fire({
+                        html: htmlContent,
+                        width: 'auto', // You can adjust the width as needed
+                        showCloseButton: true, // Optionally show a close button
+                    });
+                }
+
+                function cpnBtn(code) {
+
+                    var cpnBtn = document.getElementById(`cpnBtn-${code}`);
+                    var cpnCode = document.getElementById(`cpnCode-${code}`);
+                
+                    navigator.clipboard.writeText(cpnCode.innerHTML);
+                    cpnBtn.innerHTML = "COPIED";
+                    setTimeout(function () {
+                        cpnBtn.innerHTML = "COPY CODE";
+                    }, 3000);
+                
+              }
+            </script>

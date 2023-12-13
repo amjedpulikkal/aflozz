@@ -1,0 +1,61 @@
+
+  <style>
+    .div-1 {
+     
+      font-size: 26px;
+      width: 869px;
+      height: 575px;
+      flex-shrink: 0;
+      border-radius: 93px;
+      /* background: var(--black-bg, linear-gradient(180deg, #232323 0%, rgba(35, 35, 35, 0.26) 100%)); */
+    }
+
+    .center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .input-1 { 
+      padding-left: 20px;
+      width: 364px;
+      height: 44px;
+      flex-shrink: 0;
+      border-radius: 50px;
+      border: 3px solid #1BBFE9;
+      background: #FFF;
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    #sub {
+      padding-left:30px;
+      padding-right:30px;
+      padding-top: 5PX;
+      padding-bottom: 5PX;
+      font-size: 20px;
+      border-radius: 50px;
+      background: linear-gradient(90deg, #00FFD1 0%, #1F768D 100%);
+    }
+    .text{
+      color: #FFF;
+    }
+  </style>
+  
+<body style="height: 100vh;" class="bg-black center">
+  <div class="div-1 bg-slate-800 center ">
+    <div>
+      <form action="/login" method="post" >
+        <p class="text">Email</p>
+        <input class="input-1 h" name="Email" type="email">
+        <p class="text">Password</p>
+        <input class="input-1" name="Password" type="password">
+        <br>
+        <div class="center" style="margin-top:26px;">
+          <input id="sub" type="submit" value="Login">     
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,362 @@
+<%if(!data){%>
+
+<form id="address-form" class="mt-10 relative flex flex-col bg-white p-5 rounded-lg shadow-md ">
+    <div class="space-y-12">
+
+        <div class="border-b border-gray-900/10 pb-12">
+
+            <h2 class="text-base font-semibold leading-7 text-gray-900">New address</h2>
+            <p class="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can
+                receive
+                mail.</p>
+
+            <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div class="sm:col-span-3">
+                    <label for="fname" class="block text-sm font-medium leading-6 text-gray-900">First
+                        name</label>
+                    <div class="mt-2">
+                        <input type="text" name="fname" id="first-name" autocomplete="given-name"
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="last-name"
+                        class="block text-sm font-medium leading-6 text-gray-900">Last
+                        name</label>
+                    <div class="mt-2">
+                        <input type="text" name="lname" id="last-name" autocomplete="family-name"
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+                </div>
+
+                <div class="sm:col-span-3">
+                    <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email
+                        address</label>
+                    <div class="mt-2">
+                        <input id="email" name="email" type="email" autocomplete="email"
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+                </div>
+                <div class="sm:col-span-3">
+                    <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Phone
+                        Number</label>
+                    <div class="mt-2">
+                        <input id="email" name="Number" type="number" autocomplete="mobile"
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+                </div>
+
+                <!--  <div class="sm:col-span-3">
+                    <label for="country"
+                        class="block text-sm font-medium leading-6 text-gray-900">Country</label>
+                    <div class="mt-2">
+                        <select id="country" name="country" autocomplete="country-name"
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                            <option>United States</option>
+                            <option>Canada</option>
+                            <option>Mexico</option>
+                        </select>
+                    </div>
+                </div> -->
+                <div class="sm:col-span-1">
+                    <br>
+                    <div>
+                        <button type="button" style="width: 107px; height: 36px;" id="fetchLocation"
+                            class="rounded-md bg-indigo-600 px-3 py-2  font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Auto location
+                        </button>
+                        <div class="lorder rounded-md hidden bg-indigo-600 px-3 py-2 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            style="width: 107px; height: 36px;" id="spinner">
+                            <div class="dot-pulse">
+                                <div class="dot-pulse__dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-span-full">
+                    <label for="street-address"
+                        class="block text-sm font-medium leading-6 text-gray-900">Address</label>
+                    <div class="mt-2">
+                        <input type="text" name="address" id="Address" autocomplete="street-address"
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+                </div>
+
+                <div class="sm:col-span-2 sm:col-start-1">
+                    <label for="city"
+                        class="block text-sm font-medium leading-6 text-gray-900">City</label>
+                    <div class="mt-2">
+                        <input type="text" name="city" id="city" autocomplete="address-level2"
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label for="region"
+                        class="block text-sm font-medium leading-6 text-gray-900">village</label>
+                    <div class="mt-2">
+                        <input type="text" name="village" id="region" autocomplete="address-level1"
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label for="postal-code"
+                        class="block text-sm font-medium leading-6 text-gray-900">ZIP /
+                        Postal code</label>
+                    <div class="mt-2">
+                        <input type="text" name="pincode" id="postal-code" autocomplete="postal-code"
+                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-6 flex items-center justify-end gap-x-6">
+        <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+        <button type="submit"
+            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+    </div>
+</form>
+
+<script>
+    const fetchLocation = document.getElementById("fetchLocation")
+    const spinner = document.getElementById("spinner")
+    const but = document.getElementById("fetchLocation")
+    but.addEventListener("click", e => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                fetchLocation.classList.add("hidden")
+                spinner.classList.remove("hidden")
+                console.log(position.coords.latitude);
+                console.log(position.coords.longitude);
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
+                    .then(data => {
+                        return data.json()
+                    })
+                    .then(data => {
+                        console.log(data);
+                        document.getElementById("Address").value = data.display_name
+                        document.getElementById("postal-code").value = data.address.postcode
+                        document.getElementById("city").value = data.address.county
+                        document.getElementById("region").value = data.address.village || ""
+                        fetchLocation.classList.remove("hidden")
+                        spinner.classList.add("hidden")
+
+                    })
+            });
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    })
+</script>
+
+<script>
+    const newaddress = document.getElementById("address-form")
+    newaddress.addEventListener("submit", e => {
+        e.preventDefault()
+
+        const data = {}
+        data.name = `${newaddress.elements.fname.value}${newaddress.elements.lname.value}`;
+        data.Number = newaddress.elements.Number.value;
+        data.address = newaddress.elements.address.value;
+        data.city = newaddress.elements.city.value;
+        data.village = newaddress.elements.village.value;
+        data.pincode = newaddress.elements.pincode.value;
+        data.address = `${data.address},${data.city},${data.village}-${data.pincode}`
+        console.log(data);
+        fetch("/address", { method: "POST", body: new URLSearchParams(data) }).then(res => {
+            if (res.status === 200) {
+
+                window.location.replace('/account');
+
+
+            }
+        })
+
+
+    })
+</script>
+<%}else{%> 
+    <form id="address-form" class="mt-10 relative flex flex-col bg-white p-5 rounded-lg shadow-md ">
+        <div class="space-y-12">
+    
+            <div class="border-b border-gray-900/10 pb-12">
+    
+                <h2 class="text-base font-semibold leading-7 text-gray-900">New address</h2>
+                <p class="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can
+                    receive
+                    mail.</p>
+    
+                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                    <div class="sm:col-span-3">
+                        <label for="fname" class="block text-sm font-medium leading-6 text-gray-900">First
+                            name</label>
+                        <div class="mt-2">
+                            <input type="text" name="fname" id="first-name" autocomplete="given-name" value="<%=data.name%>"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+    
+                    <div class="sm:col-span-3">
+                        <label for="last-name"
+                            class="block text-sm font-medium leading-6 text-gray-900">Last
+                            name</label>
+                        <div class="mt-2">
+                            <input type="text" name="lname" id="last-name" autocomplete="family-name" value="<%=data.name%>"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+    
+                    <!-- <div class="sm:col-span-3">
+                        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email
+                            address</label>
+                        <div class="mt-2">
+                            <input id="email" name="email" type="email" autocomplete="email" value="<%=data.Email%>"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div> -->
+                    <div class="sm:col-span-3">
+                        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Phone
+                            Number</label>
+                        <div class="mt-2">
+                            <input id="email" name="Number" type="number" autocomplete="mobile" value="<%=data.Number%>"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+    
+                    <!--  <div class="sm:col-span-3">
+                        <label for="country"
+                            class="block text-sm font-medium leading-6 text-gray-900">Country</label>
+                        <div class="mt-2">
+                            <select id="country" name="country" autocomplete="country-name"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                <option>United States</option>
+                                <option>Canada</option>
+                                <option>Mexico</option>
+                            </select>
+                        </div>
+                    </div> -->
+                    <div class="sm:col-span-1">
+                        <br>
+                        <div>
+                            <button type="button" style="width: 107px; height: 36px;" id="fetchLocation"
+                                class="rounded-md bg-indigo-600 px-3 py-2  font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Auto location
+                            </button>
+                            <div class="lorder rounded-md hidden bg-indigo-600 px-3 py-2 shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                style="width: 107px; height: 36px;" id="spinner">
+                                <div class="dot-pulse">
+                                    <div class="dot-pulse__dot"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-span-full">
+                        <label for="street-address"
+                            class="block text-sm font-medium leading-6 text-gray-900">Address</label>
+                        <div class="mt-2">
+                            <input type="text" name="address" id="Address" autocomplete="street-address" value="<%=data.address%>"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+    
+                    <div class="sm:col-span-2 sm:col-start-1">
+                        <label for="city"
+                            class="block text-sm font-medium leading-6 text-gray-900">City</label>
+                        <div class="mt-2">
+                            <input type="text" name="city" id="city" autocomplete="address-level2" value="<%=data.city%>"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+    
+                    <div class="sm:col-span-2">
+                        <label for="region"
+                            class="block text-sm font-medium leading-6 text-gray-900">village</label>
+                        <div class="mt-2">
+                            <input type="text" name="village" id="region" autocomplete="address-level1" value="<%=data.village%>"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+    
+                    <div class="sm:col-span-2">
+                        <label for="postal-code"
+                            class="block text-sm font-medium leading-6 text-gray-900">ZIP /
+                            Postal code</label>
+                        <div class="mt-2">
+                            <input type="text" name="pincode" id="postal-code" autocomplete="postal-code" value="<%=data.pincode%>"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="mt-6 flex items-center justify-end gap-x-6">
+            <!-- <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button> -->
+            <button type="submit"
+                class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+        </div>
+    </form>
+    
+    <script>
+        const fetchLocation = document.getElementById("fetchLocation")
+        const spinner = document.getElementById("spinner")
+        const but = document.getElementById("fetchLocation")
+        but.addEventListener("click", e => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    fetchLocation.classList.add("hidden")
+                    spinner.classList.remove("hidden")
+                    console.log(position.coords.latitude);
+                    console.log(position.coords.longitude);
+                    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
+                        .then(data => {
+                            return data.json()
+                        })
+                        .then(data => {
+                            console.log(data);
+                            document.getElementById("Address").value = data.display_name
+                            document.getElementById("postal-code").value = data.address.postcode
+                            document.getElementById("city").value = data.address.county
+                            document.getElementById("region").value = data.address.village || ""
+                            fetchLocation.classList.remove("hidden")
+                            spinner.classList.add("hidden")
+    
+                        })
+                });
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        })
+    </script>
+    
+    <script>
+        const newaddress = document.getElementById("address-form")
+        newaddress.addEventListener("submit", e => {
+            e.preventDefault()
+    
+            const data = {}
+            data.name = `${newaddress.elements.fname.value}${newaddress.elements.lname.value}`;
+            data.Number = newaddress.elements.Number.value;
+            data.address = newaddress.elements.address.value;
+            data.city = newaddress.elements.city.value;
+            data.village = newaddress.elements.village.value;
+            data.pincode = newaddress.elements.pincode.value;
+            data.address = `${data.address},${data.city},${data.village}-${data.pincode}`
+            console.log(data);
+            fetch("/address", { method: "POST", body: new URLSearchParams(data) }).then(res => {
+                if (res.status === 200) {
+    
+                    window.location.replace('/account');
+    
+    
+                }
+            })
+    
+    
+        })
+    </script>
+    <%}%>

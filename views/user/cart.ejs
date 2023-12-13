@@ -1,0 +1,513 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input[type="number"] {
+            -moz-appearance: textfield;
+            /* Firefox */
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+    </style>
+    <style>
+        <style>#summary {
+            background-color: #f6f6f6;
+        }
+
+        /* CSS styles for the quantity input and select element */
+        :root {
+            --black: #000;
+            --white: #fff;
+            --gray: #ccc;
+            --smoke: #e2e2e2;
+            --disable: #f2f2f2;
+        }
+
+        .qty-input {
+            color: var(--black);
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+
+            .product-qty,
+            .qty-count {
+                background: transparent;
+                color: inherit;
+                font-weight: bold;
+                font-size: inherit;
+                border: none;
+                display: inline-block;
+                min-width: 0;
+                height: 2.5rem;
+                line-height: 1;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+
+            .product-qty {
+                width: 50px;
+                min-width: 0;
+                display: inline-block;
+                text-align: center;
+                appearance: textfield;
+
+                &::-webkit-outer-spin-button,
+                &::-webkit-inner-spin-button {
+                    appearance: none;
+                    margin: 0;
+                }
+            }
+
+            .qty-count {
+                bor padding: 0;
+                cursor: pointer;
+                width: 2.5rem;
+                font-size: 1.25em;
+                text-indent: -100px;
+                overflow: hidden;
+                position: relative;
+
+                &:before,
+                &:after {
+                    content: "";
+                    height: 2px;
+                    width: 10px;
+                    position: absolute;
+                    display: block;
+                    background: var(--black);
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    margin: auto;
+                }
+
+                &--minus {
+                    border-right: 1px solid var(--smoke);
+                }
+
+                &--add {
+                    border-left: 1px solid var(--smoke);
+
+                    &:after {
+                        transform: rotate(90deg);
+                    }
+                }
+
+                &:disabled {
+                    color: var(--gray);
+                    background: var(--disable);
+                    cursor: not-allowed;
+                    border-color: transparent;
+
+                    &:before,
+                    &:after {
+                        background: var(--gray);
+                    }
+                }
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 mt-16">
+    <div class="container mx-auto mt-10">
+        <div class="flex shadow-md my-10">
+            <div class="w-3/4 bg-white px-10 py-10">
+                <div class="flex justify-between border-b pb-8">
+                    <h1 class="font-semibold text-2xl">Shopping Cart</h1>
+                    <h2 class="font-semibold text-2xl" id="Items">
+                        <%=products.length%> <span>Items</span>
+                    </h2>
+                </div>
+                <div class="flex mt-10 mb-5">
+                    <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">Product Details</h3>
+                    <!-- <h3 class="font-semibold  text-gray-600 text-xs uppercase w-1/5 text-center">Size</h3> -->
+                    <h3 class="font-semibold  text-gray-600 text-xs uppercase w-1/5 text-center">Quantity</h3>
+                    <h3 class="font-semibold  text-gray-600 text-xs uppercase w-1/5 text-center">Price</h3>
+                    <h3 class="font-semibold  text-gray-600 text-xs uppercase w-1/5 text-center">Discount</h3>
+                    <h3 class="font-semibold  text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3>
+                </div>
+
+                <% for (let i=0; i< products.length; i++) { %>
+                    <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5 itmes" id="<%=products[i]._id %>">
+                        <div class="flex w-2/5"> <!-- product -->
+                            <div class="w-20">
+                                <img class="h-24" src="/image/products/<%=products[i].image[0]%>" alt="">
+                            </div>
+                            <div class="flex flex-col justify-between ml-4 flex-grow">
+                                <span class="font-bold text-sm">
+                                    <%=products[i].name%>
+                                </span>
+                                <span class="text-red-500 text-xs">
+                                    <%=products[i].brand%>
+                                </span>
+                                <a onclick="remove('<%=products[i]._id %>')"
+                                    class="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a>
+                            </div>
+                        </div>
+                        <div class="flex justify-center w-1/5 pt-1">
+                            <!-- <select id="sizeSelect<%=i%>" data-product-id="<%=products[i]._id %>"
+                                aria-label="Select quantity"
+                                class="border border-gray-200 mr-6 focus:outline-none text-black bg-white">
+                                <%products.size?.forEach(size=>{%>
+                                    <option><%=size%></option>
+                                  <%})%>
+                                  </select>
+                            </select> -->
+                            <%console.log(products[i].stock)%>
+                                <div class="qty-input">
+                                    <button
+                                        class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow qty-count--minus"
+                                        data-action="minus" type="button">-</button>
+                                    <input id="quantitySelect<%=i%>" data-product-id="<%=products[i]._id %>"
+                                        class="product-qty" type="number" name="product-qty" data-id="<%=i%>" min="1"
+                                        max="<%=products[i].stock%>" value="<%=products[i].quantity%>">
+                                    <button
+                                        class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow qty-count--add"
+                                        data-action="add" type="button">+</button>
+                                </div>
+                                <!-- <div class="flex items-center border-gray-100 " style="width: 100px;">
+                                <span
+                                    class="qty-count--minu qty-counts cursor-pointer rounded-l bg-gray-200 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50">-</span>
+                                <input
+                                    class="product-qty h-8 w-8 border bg-white text-black text-center text-xs outline-none"
+                                    type="number" value="1" min="1" max="10" readonly style="font-size: medium; " />
+                                <span
+                                    class="qty-count--add qty-count cursor-pointer rounded-r bg-gray-200 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">+</span>
+                            </div> -->
+                        </div>
+                        <span class="text-center w-1/5 font-semibold text-sm">
+                            ₹ <%=" "+products[i].price%>
+                            </span>
+                        <span class=" text-center w-1/5 font-semibold text-sm" id="discount<%=i%>">
+                                <%if(products[i].category[0]?.offer < products[i]?.discount){%>
+
+                                    <%=products[i].discount %>
+
+                                        <%}else{%>
+
+                                            <%=products[i].category[0]?.offer %>
+
+                                                <%}%>
+                        </span>
+                        <span class="text-center w-1/5 font-semibold text-sm"> ₹
+                            <span id="price<%=i%>" data-product-price="<%=products[i].price%>">
+
+                            </span>
+
+                        </span>
+                    </div>
+                    <% }%>
+
+
+                        <a href="/" class="flex font-semibold text-indigo-600 text-sm mt-10">
+
+                            <svg class="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">
+                                <path
+                                    d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
+                            </svg>
+                            Continue Shopping
+                        </a>
+            </div>
+
+            <div id="summary" class="w-1/4 px-8 py-10">
+                <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
+                <div class="flex justify-between mt-10 mb-5">
+                    <span class="font-semibold text-sm uppercase">Items </span>
+                    <span class="font-semibold text-sm" id="TotalPrice"></span>
+                </div>
+                <div>
+                    <!-- <label class="font-medium inline-block mb-3 text-sm uppercase">PRICE DETAILS (<%=products.length%>
+                            Item)</label> -->
+                    <div class="flex  justify-between py-6 text-sm uppercase">
+                        <span>Total MRP</span>
+                        <span id="F-MRP"></span>
+                    </div>
+                    <div class="flex  justify-between py-6 text-sm uppercase">
+                        <span>Discount on MRP</span>
+                        <span id="F-d-MRP">
+                            <%="₹ "+price.toFixed(2)%>
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class=" border-t mt-8">
+                                <div class="flex font-semibold justify-between py-6 text-sm uppercase">
+                                    <span>Total cost</span>
+                                    <span id="Ftotal">
+                                        <%="₹ "+price.toFixed(2)%>
+                        </span>
+                    </div>
+                    <%if(products.length!==0){%>
+                        <a href=" /cart/address"
+                                            class="bg-indigo-500 pl-4 pr-4 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
+                                            PLACE
+                                            ORDER</a>
+                                            <%}else{%>
+                                                <div id=""
+                                                    class="bg-red-500 text-center font-semibold hover:bg-red-600 py-3 text-sm text-white uppercase w-full">
+                                                    No items
+                                                </div>
+
+                                                <%}%>
+                                </div>
+                    </div>
+
+                </div>
+            </div>
+</body>
+<script>
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const qtyInputs = document.querySelectorAll(".qty-input");
+
+        qtyInputs.forEach((inputContainer) => {
+            const productQty = inputContainer.querySelector(".product-qty");
+            const minusBtn = inputContainer.querySelector(".qty-count--minus");
+            const addBtn = inputContainer.querySelector(".qty-count--add");
+
+            const qtyMin = parseInt(productQty.getAttribute("min"));
+            const qtyMax = parseInt(productQty.getAttribute("max"));
+
+
+
+            productQty.addEventListener("change", function () {
+                const qty = parseInt(productQty.value);
+
+                if (isNaN(qty) || qty < qtyMin) {
+                    productQty.value = qtyMin;
+                    toaster(2, "Sorry,product is out of stock.")
+                    minusBtn.disabled = true;
+                } else {
+                    minusBtn.disabled = false;
+                    if (qty >= qtyMax) {
+                        productQty.value = qtyMax;
+                        toaster(2, "Sorry,product is out of stock.")
+                        addBtn.disabled = true;
+                    } else {
+                        productQty.value = qty;
+                        addBtn.disabled = false;
+                    }
+                }
+            });
+
+            minusBtn.addEventListener("click", function () {
+                let qty = parseInt(productQty.value);
+                if (qty > qtyMin) {
+                    qty--;
+                    productQty.value = qty;
+                    inc(productQty.getAttribute("data-id"))
+                }
+                if (qty === qtyMin) {
+                    toaster(2, "Sorry,product is out of stock.")
+                    minusBtn.disabled = true;
+                }
+                if (qty < qtyMax) {
+
+                    addBtn.disabled = false;
+                }
+            });
+
+            addBtn.addEventListener("click", function () {
+                let qty = parseInt(productQty.value);
+                if (qty < qtyMax) {
+                    qty++;
+                    productQty.value = qty;
+                    console.log(productQty.getAttribute("data-id"));
+                    inc(productQty.getAttribute("data-id"))
+
+                }
+                if (qty === qtyMax) {
+                    toaster(2, "Sorry,product is out of stock.")
+                    addBtn.disabled = true;
+                }
+                if (qty > qtyMin) {
+                    minusBtn.disabled = false;
+                }
+            });
+        });
+
+        const selectElement = document.getElementById("ff");
+        selectElement.addEventListener("change", function () {
+            const selectedValue = selectElement.value;
+            console.log(selectedValue);
+        });
+    });
+
+</script>
+<script>
+    localStorage.removeItem("wallet")
+    function inc(i) {
+        let selectElement = document.getElementById(`quantitySelect${i}`);
+        let price = document.getElementById(`price${i}`)
+        let total = Number(price.getAttribute("data-product-price")) * Number(selectElement.value)
+        let discount = Number(document.getElementById(`discount${i}`).innerText)
+        console.log(discount);
+        let dis = (total * discount) / 100
+        console.log(dis);
+        totalMRP += Number(price.getAttribute("data-product-price")) * Number(selectElement.value)
+        price.innerHTML = (total - dis).toFixed(2)
+        // Add an event listener to detect changes in the selected option
+
+
+        const selectedValue = selectElement.value;
+        if (discount === 0) {
+            price.innerHTML = Number(price.getAttribute("data-product-price")) * Number(selectElement.value)
+        } else {
+
+            console.log(discount);
+            let dis = (total * discount) / 100
+            console.log(dis);
+            price.innerHTML = (total - dis).toFixed(2)
+        }
+        const id = selectElement.getAttribute("data-product-id")
+        Total()
+        console.log(id);
+        console.log("------------------");
+        console.log(selectedValue);
+        fetch("/cart", { method: "POST", body: new URLSearchParams({ id, quantity: selectedValue }) }).then(n => {
+            console.log(n);
+
+            n.json().then(data => console.log(data))
+
+        })
+
+    }
+    function remove(id) {
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                fetch(`cart/remove/${id}`).then(async res => {
+                    if (res.status === 200) {
+                        let data = await res.json()
+                        document.getElementById("cartN-1").innerHTML = parseInt(document.getElementById("cartN-1").textContent) - 1
+                        //     document.getElementById(id).remove()
+                        document.getElementById(id).remove()
+                        toaster(1, "Item removed successfully.")
+
+                        let items = document.getElementById("Items")
+                        let n = parseInt(items.textContent)
+                        n--
+                        items.innerText = n + "items"
+                        Total()
+
+
+                    }
+                })
+
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+            }
+        });
+
+
+    }
+</script>
+
+
+<script>
+
+    let totalMRP = 0
+
+    for (let i = 0; i < "<%=products.length %>"; i++) {
+        // Get a reference to the select element
+        let selectElement = document.getElementById(`quantitySelect${i}`);
+        let price = document.getElementById(`price${i}`)
+        let total = Number(price.getAttribute("data-product-price")) * Number(selectElement.value)
+        let discount = Number(document.getElementById(`discount${i}`).innerText)
+        console.log(discount);
+        let dis = (total * discount) / 100
+        console.log(dis);
+        totalMRP += Number(price.getAttribute("data-product-price")) * Number(selectElement.value)
+        price.innerHTML = (total - dis).toFixed(2)
+        // Add an event listener to detect changes in the selected option
+        function incress() {
+
+        }
+
+
+        function addToCart() {
+            const selectedValue = selectElement.value;
+            let total = Number(price.getAttribute("data-product-price")) * Number(selectElement.value)
+            let discount = Number(document.getElementById(`discount${i}`).innerText)
+            if (discount === 0) {
+                price.innerHTML = Number(price.getAttribute("data-product-price")) * Number(selectElement.value)
+            } else {
+
+                console.log(discount);
+                let dis = (total * discount) / 100
+                console.log(dis);
+                price.innerHTML = (total - dis).toFixed(2)
+            }
+            const id = selectElement.getAttribute("data-product-id")
+            Total()
+            console.log(id);
+            console.log(selectedValue);
+            fetch("/cart", { method: "POST", body: new URLSearchParams({ id, quantity: selectedValue }) }).then(n => {
+                console.log(n);
+
+                n.json().then(data => console.log(data))
+
+            })
+        }
+    }
+    console.log("total");
+    document.getElementById("F-MRP").innerHTML = "₹ " + totalMRP.toFixed(2)
+
+    localStorage.setItem('totalMRP', JSON.stringify(totalMRP.toFixed(2)));
+
+
+    function Total() {
+
+        let TotalPrice = []
+        const length = document.querySelectorAll(".itmes").length
+        console.log("length");
+        console.log(length);
+        console.log("length");
+        if (!length) {
+            document.getElementById("TotalPrice").innerHTML = 0
+            document.getElementById("Ftotal").innerHTML = 0
+            document.getElementById("F-d-MRP").innerHTML = 0
+            document.getElementById("F-MRP").innerHTML = 0
+            // localStorage.setItem("toaster-u", JSON.stringify({ icon: 1, message: "Order has been canceled successfully" }))
+            window.location.reload()
+        } else {
+
+            for (let j = 0; j < 20; j++) {
+                const price = document.getElementById(`price${j}`)
+                console.log(price?.innerText);
+                console.log(j);
+                console.log("Number(price?.getAttribute())");
+                console.log(Number(price?.getAttribute("data-product-price")));
+                console.log("Number(price?.getAttribute())");
+
+                TotalPrice.push(parseInt(price?.textContent) || 0)
+            }
+
+            document.getElementById("F-MRP").innerHTML = "₹ " + (TotalPrice?.reduce((n, l) => n + l)).toFixed(2)
+            document.getElementById("Ftotal").innerHTML = "₹ " + (TotalPrice?.reduce((n, l) => n + l)).toFixed(2)
+            document.getElementById("F-d-MRP").innerHTML = "₹ " + (TotalPrice?.reduce((n, l) => n + l)).toFixed(2)
+        }
+
+    }
+
+</script>

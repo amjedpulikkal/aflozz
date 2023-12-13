@@ -1,0 +1,97 @@
+<script src="https://cdn.tailwindcss.com"></script>
+
+    <div id="successModal" tabindex="-1" aria-hidden="true"
+        class="hidden">
+        <div class="p-4 w-full max-w-md md:h-auto">
+            <div class="p-4 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+                <div
+                    class="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900 p-2 flex items-center justify-center mx-auto mb-3.5">
+                    <svg aria-hidden="true" class="w-8 h-8 text-green-500 dark:text-green-400" fill="currentColor"
+                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Success</span>
+                </div>
+                <p class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Your password has been successfully changed.</p>
+                <button id="b-continue"
+                    class="py-2 px-3 text-sm font-medium text-center text-white rounded-lg bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:focus:ring-primary-900">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+<form class="form" id="ad-form">
+    <h2 class="form_title title">Enter your new password</h2>
+    <input class="form__input hidden" type="email" value="<%=Email%>"name="Email">
+    <input class="form__input text-black" type="password" placeholder="Password" name="Password">
+    <p style="color: red; margin-inline-start: -222px; " id="ade_err"></p>
+    <input class="form__input text-black" type="password" placeholder="conPassword" name="conPassword">
+    <p style="color: red; margin-inline-start: -222px; " id="c_err"></p>
+    <input class="form__button button " type="submit" id="ad-sub" value="SIGN IN">
+    <div class="button lorder lorder-hidden" id="ad-spinner">
+        <div class="dot-pulse">
+            <div class="dot-pulse__dot"></div>
+        </div>
+    </div>
+</form>
+<script>
+
+    let baform = document.getElementById("ad-form")
+    baform.addEventListener("submit", e => {
+        e.preventDefault();
+
+        const comPassword = document.forms["ad-form"]["conPassword"].value;
+        const Password = document.forms["ad-form"]["Password"].value;
+        const Email = document.forms["ad-form"]["Email"].value;
+        // ///_______________________
+        const butten = document.getElementById("ad-sub")
+        const spinner = document.getElementById("ad-spinner")
+       
+        butten.classList.add("lorder-hidden")
+        spinner.classList.remove("lorder-hidden")
+        const E_err = document.getElementById("ade_err")
+        const C_err = document.getElementById("c_err")
+
+
+
+        if (comPassword !== Password) {
+            C_err.innerHTML = "pless enter password"
+            spinner.classList.add("lorder-hidden")
+            butten.classList.remove("lorder-hidden")
+            return false
+        } else {
+            C_err.innerHTML = ""
+        }
+        if (Password === "") {
+            E_err.innerHTML = "pless chouse a password"
+            spinner.classList.add("lorder-hidden")
+            butten.classList.remove("lorder-hidden")
+            return false
+        } else {
+            E_err.innerHTML = ""
+        }
+        if (comPassword === "") {
+            C_err.innerHTML = "pless chouse a password"
+            spinner.classList.add("lorder-hidden")
+            butten.classList.remove("lorder-hidden")
+            return false
+        } else {
+            C_err.innerHTML = ""
+        }
+        const data={Email,Password}
+        fetch("/reste/password", {
+            method: "POST",
+            body: new URLSearchParams(data)
+        }).then(data=>{
+
+            if (data.status===200) {
+                document.getElementById("successModal").classList.remove("hidden")
+                document.getElementById("ad-form").classList.add("hidden")
+                document.getElementById("b-continue").addEventListener("click",E=>{window.location="/"  })
+            }
+        })
+    })
+</script>

@@ -1,0 +1,389 @@
+<%if(newUser){%>
+  <script>
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Welcome Aflozz! 🚀',
+      html: 'Thank you for joining us! Your presence here means a lot. Enjoy exploring and discovering all the fantastic things waiting for you. If you need any assistance along the way, feel free to reach out. Happy exploring! 🌟<br><br>You received 100 Rs from a referral!',
+      showConfirmButton: true,
+      confirmButtonText: 'OK'
+    });
+
+  </script>
+
+
+  <%}%>
+
+
+    <div class="mt-28 w-full flex justify-center items-center">
+      <div class="py-16 mt-6 bg-white border-double border-4 shadow-2xl border-sky-500" * />
+      <div class="container m-auto px-6 space-y-8 text-gray-500 md:px-12 lg:px-20">
+        <div class="justify-center text-center gap-6 md:text-left md:flex lg:items-center  lg:gap-16">
+          <div class="order-last mb-6 space-y-6 md:mb-0 md:w-6/12 lg:w-6/12">
+            <h1 class="text-4xl text-gray-700 font-bold md:text-5xl">
+              <%=banner[0].title%>
+            </h1>
+            <p class="text-lg">
+              <%=banner[0].body%>
+            </p>
+            <div class="flex flex-row-reverse flex-wrap justify-center gap-4 md:gap-6 md:justify-end">
+              <a type="button" href="<%=banner[0].link%>" title="Start buying"
+                class="w-full py-3 px-6 text-center rounded-xl transition bg-gray-700 shadow-xl hover:bg-gray-600 active:bg-gray-700 focus:bg-gray-600 sm:w-max">
+                <span class="block text-white font-semibold">
+                  Start buying
+                </span>
+              </a>
+
+              <!-- <button type="button" title="more about"
+                class="w-full order-first py-3 px-6 text-center rounded-xl bg-gray-100 transition hover:bg-gray-200 active:bg-gray-300 focus:bg-gray-200 sm:w-max">
+                <span class="block text-gray-600 font-semibold">
+                  More about
+                </span>
+              </button> -->
+            </div>
+          </div>
+          <div class=" md:w-5/12 lg:w-6/12">
+            <div class="">
+              <img src="/image/notification/<%=banner[0].image%>"
+                class="w-full h-full object-cover object-top rounded-xl" width="640" height="427" alt="shoes"
+                loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" /> -->
+      <!-- <div id="default-carousel" class="relative z-0 " style="width: 1050px;" data-carousel="slide"> -->
+      <!-- Carousel wrapper  -->
+      <!-- <div class="relative h-60 overflow-hidden rounded-lg md:h-96 shadow-2xl" style="height: 30rem;"> -->
+      <!-- Item 1 -->
+      <!-- <%banner.forEach(banner=>{%> -->
+      <!-- 
+      <div class="hidden duration-700 ease-in-out flex items-center justify-center bg-white" data-carousel-item>
+        <div class="container m-auto px-6 space-y-8 text-gray-500 md:px-12 lg:px-20">
+          <div class="justify-center text-center gap-6 md:text-left md:flex lg:items-center  lg:gap-16">
+            <div class="order-last mb-6 space-y-6 md:mb-0 md:w-6/12 lg:w-6/12">
+              <h1 class="text-4xl text-gray-700 font-bold md:text-5xl">
+                <%=banner.title%><span class="text-blue-500">
+                    <%=banner.offer%>%off
+                  </span>
+              </h1>
+              <p class="text-lg">
+                <%=banner.body%>
+              </p>
+              <div class="flex flex-row-reverse flex-wrap justify-center gap-4 md:gap-6 md:justify-end">
+                <a type="button" title="Start buying"
+                  class="w-full py-3 px-6 text-center rounded-xl transition bg-gray-700 shadow-xl hover:bg-gray-600 active:bg-gray-700 focus:bg-gray-600 sm:w-max">
+                  <span class="block text-white font-semibold">
+                    Start buying
+                  </span>
+                </a>
+                <button type="button" title="more about"
+                  class="w-full order-first py-3 px-6 text-center rounded-xl bg-gray-100 transition hover:bg-gray-200 active:bg-gray-300 focus:bg-gray-200 sm:w-max">
+                  <span class="block text-gray-600 font-semibold">
+                    More about
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div class=" md:w-5/12 lg:w-6/12">
+              <div class="">
+                <img src="/image/notification/<%=banner.image%>"
+                  class="w-full h-full object-cover object-top rounded-xl" width="640" height="427" alt="shoes"
+                  loading="lazy">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%})%>
+      <!-- Item 2 -->
+      <!-- <div class="hidden duration-700 ease-in-out" data-carousel-item>
+        <img src="https://flowbite.com/docs/images/carousel/carousel-2.svg"
+          class="absolute left-1/2 top-1/2 block w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
+      </div> -->
+      <!-- Item 3 -->
+      <!-- <div class="hidden duration-700 ease-in-out" data-carousel-item>
+        <img src="https://flowbite.com/docs/images/carousel/carousel-3.svg"
+          class="absolute left-1/2 top-1/2 block w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
+      </div> -->
+      <!-- Item 4 -->
+      <!-- <div class="hidden duration-700 ease-in-out" data-carousel-item>
+        <img src="https://flowbite.com/docs/images/carousel/carousel-4.svg"
+          class="absolute left-1/2 top-1/2 block w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
+      </div> -->
+      <!-- Item 5 -->
+      <!-- <div class="hidden duration-700 ease-in-out" data-carousel-item>
+        <img src="/docs/images/carousel/carousel-5.svg"
+          class="absolute left-1/2 top-1/2 block w-full -translate-x-1/2 -translate-y-1/2" alt="..." />
+      </div> 
+    </div>
+  
+    <div class="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse">
+      <button type="button" class="h-3 w-3 rounded-full" aria-current="true" aria-label="Slide 1"
+        data-carousel-slide-to="0"></button>
+      <button type="button" class="h-3 w-3 rounded-full" aria-current="false" aria-label="Slide 2"
+        data-carousel-slide-to="1"></button>
+      <button type="button" class="h-3 w-3 rounded-full" aria-current="false" aria-label="Slide 3"
+        data-carousel-slide-to="2"></button>
+      <button type="button" class="h-3 w-3 rounded-full" aria-current="false" aria-label="Slide 4"
+        data-carousel-slide-to="3"></button>
+      <button type="button" class="h-3 w-3 rounded-full" aria-current="false" aria-label="Slide 5"
+        data-carousel-slide-to="4"></button>
+    </div>
+    
+    <button type="button"
+      class="group absolute start-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none"
+      data-carousel-prev>
+      <span
+        class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white dark:bg-gray-800/30 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70">
+        <svg class="h-4 w-4 text-white rtl:rotate-180 dark:text-gray-800" aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5 1 1 5l4 4" />
+        </svg>
+        <span class="sr-only">Previous</span>
+      </span>
+    </button>
+    <button type="button"
+      class="group absolute end-0 top-0 z-30 flex h-full cursor-pointer items-center justify-center px-4 focus:outline-none"
+      data-carousel-next>
+      <span
+        class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/30 group-hover:bg-white/50 group-focus:outline-none group-focus:ring-4 group-focus:ring-white dark:bg-gray-800/30 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70">
+        <svg class="h-4 w-4 text-white rtl:rotate-180 dark:text-gray-800" aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="m1 9 4-4-4-4" />
+        </svg>
+        <span class="sr-only">Next</span>
+      </span>
+    </button>
+  </div> -->
+      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script> -->
+    </div>
+    <hr>
+    </div>
+    <!-- <div class=" flex overflow-x-visible">
+      
+      
+      
+     
+      <div class="mx-4 mt-12  flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 shadow-md">
+        <a class="relative m-3  h-60 overflow-hidden rounded-xl" href="/product/<%=products[0]._id%>">
+          <img class="object-cover" src="/image/products/<%=products[0].image[0]%>" alt="product image" />
+          <span class="absolute top-3 left-24 m-2 rounded-full bg-black px-2 text-center text-lg font-medium text-white">
+            30% OFF
+          </span>
+        </a>
+        <p></p>
+      </div>
+      
+    </div> -->
+    <div class="">
+      <div class="grid grid-cols-4 mt-3 mx-4 ">
+        <% products.forEach(function(item) { %>
+          <div class="mt-12  flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 shadow-md">
+            <a class="relative mx-3 mt-3  h-60 overflow-hidden rounded-xl" href="/product/<%=item._id%>">
+              <img class="object-cover" src="/image/products/<%=item.image[0]%>" alt="product image" />
+              <% if(item.discount!=0){%>
+                <%if(item?.category[0]?.offer < item?.discount){%>
+                  <span
+                    class="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
+                    <%=item.discount %>% OFF
+                  </span>
+                  <%}else{%>
+                    <span
+                      class="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
+                      <%=item.category[0]?.offer %>% OFF
+                    </span>
+                    <%}%>
+
+                      <%}%>
+
+                        <span href="#" title="Add to Favorites"
+                          class="text-5xl absolute right-2 top-0 text-gray-300 hover:text-red-500 duration-600">
+                          &hearts;</span>
+
+
+
+            </a>
+            <div class="mt-4 px-5 pb-5">
+              <a href="#">
+                <h5 class="text-xl tracking-tight text-slate-900" style="height: 56px;">
+                  <%=item.name %>
+                </h5>
+              </a>
+              <div class="mt-2 mb-5 flex items-center justify-between">
+                <p>
+                  <span class="text-3xl font-bold text-slate-900">
+                    <%="₹"+item.price%>
+                  </span>
+                  <!-- <span class="text-sm text-slate-900 line-through">$699</span> -->
+                </p>
+                <div class="flex items-center">
+                  <svg aria-hidden="true" class="h-5 w-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" class="h-5 w-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" class="h-5 w-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" class="h-5 w-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                    </path>
+                  </svg>
+                  <svg aria-hidden="true" class="h-5 w-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                    </path>
+                  </svg>
+                  <span class="mr-2 ml-3 rounded bg-yellow-200 px-2.5 py-0.5 text-xs font-semibold">5.0</span>
+                </div>
+              </div>
+              <a onclick="addtocart(`<%=item._id %>`) " id="but-<%=item._id %>"
+                class="flex items-center button-not justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-6 w-6" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                Add to cart</a>
+              <div id="spinner-<%=item._id %>"
+                class="hidden flex items-center button-not justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+                style=" width: 278px; height: 44px;">
+                <div class="dot-pulse">
+                  <div class="dot-pulse__dot"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% }); %>
+      </div>
+    </div>
+    <%console.log(totalproduct)%>
+      <div class="w-full flex items-center justify-center mt-5 mb-5">
+        <nav aria-label="Page navigation example">
+          <ul class="flex items-center -space-x-px h-8 text-sm">
+            <li>
+              <a href="/?limit=<%=limit?limit-8:0%>"
+                class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100  c c dark:text-gray-400 c c">
+                <span class="sr-only">Previous</span>
+                <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                  fill="none" viewBox="0 0 6 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M5 1 1 5l4 4" />
+                </svg>
+              </a>
+            </li>
+
+            <li>
+              <a href="/"
+                class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 dark:text-gray-400 ">
+                1</a>
+            </li>
+            <%for(let i=1;i<=totalproduct/8;i++){%>
+              <li>
+                <a href="/?limit=8"
+                  class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 dark:text-gray-400 c c">
+                  <%=i+1%>
+                </a>
+              </li>
+              <%}%>
+                <!-- <li>
+        <a href="/?limit=8" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 dark:text-gray-400 c c">2</a>
+      </li>
+      <li>
+        <a href="/?limit=8" aria-current="page" class="z-10 flex items-center justify-center px-3 h-8 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">3</a>
+      </li> -->
+                <!-- <li>
+        <a href="/?limit=16" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100  dark:text-gray-400 ">4</a>
+      </li>
+      <li>
+        <a href="/?limit=24" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100  dark:text-gray-400 ">5</a>
+      </li>
+      <li>  -->
+                <%if(limit+8<=totalproduct){%>
+                  <a href="/?limit=<%=limit+8%>"
+                    class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100  dark:text-gray-400 c c">
+                    <span class="sr-only">Next</span>
+                    <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                      fill="none" viewBox="0 0 6 10">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 9 4-4-4-4" />
+                    </svg>
+                  </a>
+                  <%}else{%>
+                    <div href="/?limit=<%=limit+8%>"
+                      class=" cursor-not-allowed flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100  dark:text-gray-400 c c">
+                      <span class="sr-only">Next</span>
+                      <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 6 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="m1 9 4-4-4-4" />
+                      </svg>
+                    </div>
+                    <%}%>
+                      </li>
+          </ul>
+        </nav>
+      </div>
+      <!-- </div> -->
+      <script>
+
+        function addtocart(id) {
+          document.getElementById(`but-${id}`).classList.add("hidden")
+          document.getElementById(`spinner-${id}`).classList.remove("hidden")
+          console.log("goooo");
+          console.log(id);
+          fetch(`/cart/${id}`, {
+            method: "POST"
+          })
+            .then(res => {
+              console.log(res);
+              if (res.ok) {
+
+                res.json().then(data => {
+                  toaster(1, "Success! a dd to cart.")
+                  document.getElementById(`but-${id}`).classList.remove("hidden")
+                  document.getElementById(`spinner-${id}`).classList.add("hidden")
+                  document.getElementById("cartCount")?.classList.remove("hidden")
+                  document.getElementById("cartN-1").innerHTML = data.cartLength
+                })
+              } else {
+                document.getElementById(`but-${id}`).classList.remove("hidden")
+                document.getElementById(`spinner-${id}`).classList.add("hidden")
+                toaster(2, "Sorry,product is out of stock.")
+
+                console.log(res.status);
+              }
+            }).catch(err => {
+              console.log(err);
+            })
+        }
+
+      </script>
+      <!-- <script>
+  $(document).ready(function() {
+   function c() {
+      $(".flash-2").addClass("animate--drop-in-fade-out");
+      setTimeout(function() {
+        $(".flash-2").removeClass("animate--drop-in-fade-out");
+      }, 3500);
+    };
+    c()
+  });
+</script> -->

@@ -1,0 +1,81 @@
+<div class="main">
+  <div class="container a-container" id="a-container">
+    <!-- <form class="form" id="a-form" action="/signup-otp" method="post">
+      <h2 class="form_title title">Create Account</h2>
+      <span class="form__span">or use email forregistration</span>
+      <input class="form__input" type="text" placeholder="Name" name="Name">
+      <p style="text-align:start; color:red; margin-inline-start: -222px;" id="n_err"></p>
+      <input class="form__input" type="text" placeholder="Email" name="Email">
+      <p style="text-align:start; color:red; margin-inline-start: -222px;" id="e_err"></p>
+      <input class="form__input" type="password" placeholder="Password" name="Password">
+      <p style="color: red; margin-inline-start: -222px;" id="p_err"></p>
+      <input class="form__button button "  id="a-sub"  type='submit' value="SIGN UP">
+      <div class="button lorder lorder-hidden" id="a-spinner" >
+        <div class="dot-pulse">
+          <div class="dot-pulse__dot"></div>
+        </div>
+      </div>
+    </form> -->
+    <form class="form" id="b-form" action="/login" method="post">
+      <h4 class="form_title title">Sign in to Aflozz</h4>
+      <input class="form__input" type="email" placeholder="Email" name="Email">
+      <p style="color: red; margin-inline-start: -222px;" id="le_err"></p>
+      <input class="form__input" type="password" placeholder="Password" name="Password">
+      <p style="color: red; margin-inline-start: -222px; " id="lp_err"></p>
+      <a class="form__link" href="/forgot/password">Forgot your password?</a>
+      <input class="form__button button " type="submit" id="b-sub" value="SIGN IN">
+      <div class="button lorder lorder-hidden" id="b-spinner" >
+        <div class="dot-pulse">
+          <div class="dot-pulse__dot"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="container b-container" id="b-container">
+    <!-- <form class="form" id="b-form" action="/login" method="post">
+      <h2 class="form_title title">Sign in to Website</h2>
+      <input class="form__input" type="text" placeholder="Email" name="Email">
+      <p style="color: red; margin-inline-start: -222px;" id="le_err"></p>
+      <input class="form__input" type="password" placeholder="Password" name="Password">
+      <p style="color: red; margin-inline-start: -222px; " id="lp_err"></p>
+      <a class="form__link">Forgot your password?</a>
+      <input class="form__button button " type="submit" id="b-sub" value="SIGN IN">
+      <div class="button lorder lorder-hidden" id="b-spinner" >
+        <div class="dot-pulse">
+          <div class="dot-pulse__dot"></div>
+        </div>
+      </div>
+    </form> -->
+    <form class="form" id="a-form" action="/signup-otp" method="post">
+      <h2 class="form_title title">Create Account</h2>
+      <span class="form__span">or use email forregistration</span>
+      <input class="form__input" type="text" placeholder="Name" name="Name">
+      <p style="text-align:start; color:red; margin-inline-start: -222px;" id="n_err"></p>
+      <input class="form__input" type="email" placeholder="Email" name="Email">
+      <p style="text-align:start; color:red; margin-inline-start: -222px;" id="e_err"></p>
+      <input class="form__input" type="password" placeholder="Password" name="Password">
+      <p style="color: red; margin-inline-start: -222px;" id="p_err"></p>
+      <input class="form__input" type="text" placeholder="Referral code (option)" name="referral">
+      <input class="form__button button "  id="a-sub"  type='submit' value="SIGN UP">
+      <div class="button lorder lorder-hidden" id="a-spinner" >
+        <div class="dot-pulse">
+          <div class="dot-pulse__dot"></div>
+        </div>
+      </div>
+    </form> 
+  </div>
+  <div class="switch" id="switch-cnt">
+    <div class="switch__circle"></div>
+    <div class="switch__circle switch__circle--t"></div>
+    <div class="switch__container" id="switch-c1">
+      <h2 class="switch__title title">Welcome Back !</h2>
+      <p class="switch__description description">To keep connected with us please login with your personal info</p>
+      <button class="switch__button button switch-btn">GO TO SIGN IN</button>
+    </div>
+    <div class="switch__container is-hidden" id="switch-c2">
+      <h2 class="switch__title title">Hello Friend !</h2>
+      <p class="switch__description description">Enter your personal details and start journey with us</p>
+      <button class="switch__button button switch-btn">GO TO SIGN UP</button>
+    </div>
+  </div>
+</div>

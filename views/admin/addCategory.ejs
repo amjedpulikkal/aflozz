@@ -1,0 +1,61 @@
+<div class="bg-white pt-16">
+    <div class="flex items-start justify-between p-5 border-b rounded-t">
+        <h3 class="text-xl font-semibold">
+            Add category
+        </h3>
+    </div>
+
+    <div class="p-6 space-y-6">
+        <form action="category" enctype="multipart/form-data" method="post">
+            <div class="grid grid-cols-6 gap-6">
+                <div class="col-span-6 sm:col-span-3">
+                    <label for="category" class="text-sm font-medium text-gray-900 block">Category</label>
+                    <input type="text" name="category" id="category" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Electronics" required="">
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                    <label for="category" class="text-sm font-medium text-gray-900 block">offer</label>
+                    <input type="number" name="offer" id="offer" max="100" min="1" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="15%" required>
+                </div>
+                    <div class="">
+                        <div class="form-input border-none">
+                                <div class="preview me-4">
+                                    <img id="file-ip-1-preview"> 
+                                </div>
+                            <label for="file-ip-1">Upload Image</label>
+                            <input type="file" class="hidden" id="file-ip-1" name="image" accept="image/*"
+                                onchange="showPreview(event);">
+                        </div>
+                    </div>
+         
+            </div>
+            <div class="p-6 border-t border-gray-200 rounded-b">
+                <!-- <input type="submit" name="" value="Save all" id=""> -->
+                <button
+                    class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 p-2.5 text-center"
+                    type="submit">Save all</button>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+<script>
+    document.getElementById("offer").addEventListener("change",(e)=>{
+        let value=document.getElementById("offer").value
+         if(value>100){
+             document.getElementById("offer").value =100
+            // toaster(1, 'Please enter a valid offer')
+            alert('Please enter a valid offer') 
+         }
+    })
+</script>
+<script type="text/javascript">
+    function showPreview(event) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("file-ip-1-preview");
+            preview.src = src;
+            preview.style.display = "block";
+        }
+    }
+</script>

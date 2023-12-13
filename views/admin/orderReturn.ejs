@@ -1,0 +1,60 @@
+<div class="product-status mg-b-30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="product-status-wrap">
+                    <h4>Order List</h4>
+                    <table>
+                        <tr>
+                            <th>User</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                        <% orders.forEach(function(item){ %>
+                            <tr>
+                                <td>
+                                    <%= item.user[0].Email%>
+                                </td>
+                                <td>
+                                    <%= item.date%>
+                                </td>
+                                <td>
+                                    <div class="row-auto">
+                                        <div class="col-12 col-10 hh-grayBox pt-4">
+                                            <div class="flex justify-center">
+                                                <div 
+                                                class="order-tracking <%= (item.return.length >=1) ? 'completed' : '' %>" >
+                                                <span class="is-complete"></span>
+                                                <p>Ordered<br><span>
+                                                        <%= (item.return[0]?.date) ? item.return[0]?.date
+                                                            : '' %>
+                                                    </span></p>
+                                            </div>
+                                           
+                                            <div"                
+                                                class="order-tracking  <%= (item.return.length >=2) ? 'completed' : '' %>" >
+                                                <span class="is-complete"></span>
+                                                <p>Delivered<br><span>
+                                                        <%= (item.return[2]?.date) ? ite.return[2]?.date
+                                                            : '' %>
+                                                    </span></p>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+
+                                    <a href="/admin/orders/<%=item._id%>"
+                                        class="pd-setting">All</a>
+
+                                </td>
+            
+                               
+                            </tr>
+                        <% }); %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

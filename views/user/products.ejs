@@ -1,0 +1,230 @@
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-36">
+  <div class="flex flex-col md:flex-row -mx-4">
+    <div class="md:flex-1 px-4">
+      <div x-data="{ image: 1 }" x-cloak>
+        <div class="h-64 md:h-80 rounded-lg shadow  mb-4">
+          <div x-show="image === 1" class="h-64 md:h-80 rounded-lg  mb-4 flex items-center justify-center">
+            <img  id="image-1" src="/image/products/<%=product.image[0]%>" alt="">
+          </div>
+          <div x-show="image === 2" class="h-64 md:h-80 rounded-lg  mb-4 flex items-center justify-center">
+            <img  src="/image/products/<%=product.image[1]%>"alt="">
+          </div>
+
+          <div x-show="image === 3" class="h-64 md:h-80 rounded-lg  mb-4 flex items-center justify-center">
+            <img class="image-preview image-preview-js1" src="/image/products/<%=product.image[2]%>" alt="">
+          </div>
+
+          <div x-show="image === 4" class="h-64 md:h-80 rounded-lg  mb-4 flex items-center justify-center">
+            <img src="/image/products/<%=product.image[3]%>" alt="">
+          </div>
+        </div>
+
+        <div class="flex -mx-2 mb-4">
+          <!-- <template x-for="i in 4"> -->
+          <div class="flex-1 px-2">
+            <button x-on:click="image = 1" :class="{ 'ring-2 ring-indigo-300 ring-inset': image === 1 }"
+              style="background-image: url('/image/products/<%=product.image[0]%>'); background-size: cover; background-position: center;"
+              class="focus:outline-none w-full shadow rounded-lg h-24 md:h-32 bg-gray-100 flex items-center justify-center overflow-hidden">
+            </button>
+          </div>
+          <div class="flex-1 px-2">
+            <button x-on:click="image = 2" :class="{ 'ring-2 ring-indigo-300 ring-inset': image === 2 }"
+              style="background-image: url('/image/products/<%=product.image[1]%>'); background-size: cover; background-position: center;"
+              class="focus:outline-none w-full shadow rounded-lg h-24 md:h-32 bg-gray-100 flex items-center justify-center overflow-hidden">
+            </button>
+          </div>
+          <div class="flex-1 px-2">
+            <button x-on:click="image = 3" :class="{ 'ring-2 ring-indigo-300 ring-inset': image === 3 }"
+              style="background-image: url('/image/products/<%=product.image[2]%>'); background-size: cover; background-position: center;"
+              class="focus:outline-none w-full shadow rounded-lg h-24 md:h-32 bg-gray-100 flex items-center justify-center overflow-hidden">
+            </button>
+          </div>
+          <div class="flex-1 px-2">
+            <button x-on:click="image = 4" :class="{ 'ring-2 ring-indigo-300 ring-inset': image === 4 }"
+              style="background-image: url('/image/products/<%=product.image[3]%>'); background-size: cover; background-position: center;"
+              class="focus:outline-none w-full shadow rounded-lg h-24 md:h-32 bg-gray-100 flex items-center justify-center overflow-hidden">
+            </button>
+          </div>
+
+          <!-- </template> -->
+        </div>
+      </div>
+    </div>
+    <div class="md:flex-1 px-4">
+      <h2 class="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
+        <%=product.name%>
+      </h2>
+      <p class="text-gray-500 text-sm">By <a href="#" class="text-indigo-600 hover:underline">
+          <%=product.brand%>
+        </a></p>
+
+      <div class="flex items-center space-x-4 my-4">
+        <div>
+          <div class="rounded-lg bg-gray-100 flex py-2 px-3">
+            <span class="text-indigo-400 mr-1 mt-1">₹</span>
+            <span class="font-bold text-indigo-600 text-3xl">
+              <%=product.price%>
+            </span>
+          </div>
+        </div>
+        <div class="flex-1">
+          <%if(product.discount>0){%>
+            <p class="text-green-500 text-xl font-semibold">Save <%=product.discount%>%</p>
+            <%}%>
+              <p class="text-gray-400 text-sm">Inclusive of all Taxes.</p>
+        </div>
+      </div>
+
+      <p class="text-gray-500">
+        <%=product.deitails%>
+      </p>
+
+      <div class="flex py-4 space-x-4">
+        <div class="relative">
+          <div class="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-400 tracking-wide font-semibold">Size</div>
+          <select id="size" class="cursor-pointer appearance-none rounded-xl border border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1">
+        <%product.size.forEach(size=>{%>
+            <option><%=size%></option>
+          <%})%>
+          </select>
+
+        </div>
+        <div style="width: 133px; height: 56px;" class=" hidden lorder h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white"
+          id="spinner">
+          <div class="dot-pulse">
+            <div class="dot-pulse__dot"></div>
+          </div>
+        </div>
+        <button type="button" id="but" onclick="addtocart(`<%=product._id%>`)" class="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<script>
+  function addtocart(id) {
+    const selectElement = document.getElementById('size');
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const size = selectedOption.value;
+    console.log(size);
+    document.getElementById("spinner").classList.remove("hidden")
+    document.getElementById("but").classList.add("hidden")
+    console.log("goooo");
+    console.log(id);
+    fetch(`/cart/${id}`, {
+      method: "POST",body:new URLSearchParams(size)
+    })
+      .then(res => {
+        console.log(res);
+        document.getElementById("spinner").classList.add("hidden")
+        document.getElementById("but").classList.remove("hidden")
+      })
+  }
+</script>
+<script>
+  // most efficient way to add HTML, faster than innerHTML
+  const parseHTML = htmlStr => {
+    const range = document.createRange()
+    range.selectNode(document.body) // required in Safari
+    return range.createContextualFragment(htmlStr)
+  }
+
+  // pass this function any image element to add magnifying functionality
+  const makeImgMagnifiable = img => {
+    const magnifierFragment = parseHTML(`
+    <div class="magnifier-container">
+      <div class="magnifier">
+        <img class="magnifier__img" src="${img.src}"/>
+      </div>
+    </div>
+  `)
+
+    // This preserves the original element reference instead of cloning it.
+    img.parentElement.insertBefore(magnifierFragment, img)
+    const magnifierContainerEl = document.querySelector('.magnifier-container')
+    img.remove()
+    magnifierContainerEl.appendChild(img)
+
+    // query the DOM for the newly added elements
+    const magnifierEl = magnifierContainerEl.querySelector('.magnifier')
+    const magnifierImg = magnifierEl.querySelector('.magnifier__img')
+
+    // set up the transform object to be mutated as mouse events occur
+    const transform = {
+      translate: [0, 0],
+      scale: 2.5,
+    }
+
+    // shortcut function to set the transform css property
+    const setTransformStyle = (el, { translate, scale }) => {
+      const [xPercent, yRawPercent] = translate
+      const yPercent = yRawPercent < 0 ? 0 : yRawPercent
+
+      // make manual pixel adjustments to better center
+      // the magnified area over the cursor.
+      const [xOffset, yOffset] = [
+        `calc(-${xPercent}% + 250px)`,
+        `calc(-${yPercent}% + 70px)`,
+      ]
+
+      el.style = `
+      transform: scale(${scale}) translate(${xOffset}, ${yOffset});
+    `
+    }
+
+    // show magnified thumbnail on hover
+    img.addEventListener('mousemove', event => {
+      const [mouseX, mouseY] = [event.pageX, event.pageY]
+      const { top, left, bottom, right } = img.getBoundingClientRect()
+      transform.translate = [
+        ((mouseX - left) / right) * 700,  // Adjust this value for horizontal positioning
+        ((mouseY - top) / bottom) * 80,   // Adjust this value for vertical positioning
+      ]
+
+      magnifierEl.style = `
+      display: block;
+      top: ${mouseY - 150}px;
+      left: ${mouseX - 200}px;
+    `
+      setTransformStyle(magnifierImg, transform)
+    })
+
+
+    // zoom in/out with mouse wheel
+    img.addEventListener('wheel', event => {
+      event.preventDefault()
+      const scrollingUp = event.deltaY < 0
+      const { scale } = transform
+      transform.scale = scrollingUp && scale < 2
+        ? scale + 0.1
+        : !scrollingUp && scale > 1
+          ? scale - 0.1
+          : scale
+      setTransformStyle(magnifierImg, transform)
+    })
+
+    // reset after mouse leaves
+    img.addEventListener('mouseleave', () => {
+      magnifierEl.style = ''
+      magnifierImg.style = ''
+    })
+
+
+  }
+
+  const img1 = document.querySelector('.image-preview-js1')
+  const img2 = document.querySelector('.image-preview-js2')
+  const img3 = document.querySelector('.image-preview-js3')
+  const img4 = document.querySelector('.image-preview-js4')
+  makeImgMagnifiable(img1)
+  makeImgMagnifiable(img2)
+  makeImgMagnifiable(img3)
+  makeImgMagnifiable(img4)
+
+
+
+</script>

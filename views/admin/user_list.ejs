@@ -1,0 +1,129 @@
+<% function timeAgo(date) { const now=new Date(); const seconds=Math.floor((now - date) / 1000); let
+    interval=Math.floor(seconds / 31536000); if (interval>= 1) {
+    return interval + " years ago";
+    }
+    interval = Math.floor(seconds / 2592000);
+    if (interval >= 1) {
+    return interval + " months ago";
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval >= 1) {
+    return interval + " days ago";
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval >= 1) {
+    return interval + " hours ago";
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval >= 1) {
+    return interval + " minutes ago";
+    }
+    return Math.floor(seconds) + " seconds ago";
+    }
+
+    %>
+    <div class="product-status mg-b-30">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="product-status-wrap">
+                        <h4>user List</h4>
+                        <!-- <div class="add-product">
+                        <a href="/admin/add/category">Add category</a>
+                    </div> -->
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Setting</th>
+                            </tr>
+                            <% user.forEach(function(item) { %>
+                                <tr>
+                                    <td>
+                                        <%= item.Name%>
+                                    </td>
+                                    <td>
+                                        <%= item.Email%>
+                                    </td>
+                                    <td>
+                                        <%if(item.presence==="online" ){%>
+                                            <p class="" id="Status<%=item._id%>">Online</p>
+                                            <%}else{%>
+                                                <p id="Status<%=item._id%>">
+                                                    <%=timeAgo(new Date(item.presence))%>
+                                                </p>
+                                                <%}%>
+                                    </td>
+                                    <td>
+                                        <% if(item.status===false){ %>
+                                            <a href="/admin/block?_id=<%=item._id%>&status=true"
+                                                class="ds-setting">Disabled</a>
+                                            <%}else{%>
+                                                <a href="/admin/block?_id=<%=item._id%>&status=false"
+                                                    class="pd-setting">Active</a>
+                                                <%}%>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </table>
+                        <!-- <div class="custom-pagination">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.js"></script>
+    <script>
+        // Connect to the WebSocket server
+        const socket = io.connect();
+
+        socket.on("UStatus", (data) => {
+
+            console.log(data);
+            function timeAgo(date) {
+                const now = new Date()
+                const seconds = Math.floor((now - date) / 1000);
+
+                let interval = Math.floor(seconds / 31536000);
+
+                if (interval >= 1) {
+                    return interval + " years ago";
+                }
+                interval = Math.floor(seconds / 2592000);
+                if (interval >= 1) {
+                    return interval + " months ago";
+                }
+                interval = Math.floor(seconds / 86400);
+                if (interval >= 1) {
+                    return interval + " days ago";
+                }
+                interval = Math.floor(seconds / 3600);
+                if (interval >= 1) {
+                    return interval + " hours ago";
+                }
+                interval = Math.floor(seconds / 60);
+                if (interval >= 1) {
+                    return interval + " minutes ago";
+                }
+                return Math.floor(seconds) + " seconds ago";
+            }
+
+            document.getElementById(`Status${data.userId}`).innerHTML =data.Status === "online" ? data.Status:timeAgo(new Date(data.Status))
+            // const orderIN =document.getElementById(`order${data.orderID}`).querySelectorAll(".order-tracking") 
+            // console.log(orderIN.length)
+            // orderIN[data.status].classList.add("completed")
+
+
+        })
+
+    </script>

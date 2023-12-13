@@ -1,0 +1,115 @@
+<%-include("account-layout")%>
+    <div class="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
+        <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
+        <div class="flex justify-start item-start space-y-2 flex-col">
+            <h1 class="text-3xl  lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">Order #  <%= data.no ? data.no : data._id %>
+            </h1>
+            <p class="text-base  font-medium leading-6 "> <%=data.date%></p>
+        </div>
+        <div
+            class="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
+            <div class="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
+                <div
+                    class="flex justify-center  md:flex-row flex-col items-stretch w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
+                    <div class="flex flex-col px-4 py-6 md:p-6 xl:p-8 w-full border-gray-200 space-y-6">
+                        <h3 class="text-xl  font-semibold leading-5 text-gray-800">Summary</h3>
+                        <div
+                            class="flex justify-center items-center w-full space-y-4 flex-col border-gray-200 border-b pb-4">
+                            <div class="flex justify-between w-full">
+                                <p class="text-base  leading-4 text-gray-800">Subtotal</p>
+                                <p class="text-base leading-4 text-gray-600"><%="₹ "+Number(data.totalMRP).toFixed(2)%></p>
+                            </div>
+                            <div class="flex justify-between items-center w-full">
+                                <p class="text-base  leading-4 text-gray-800">Discount <span
+                                        class=" p-1 text-xs font-medium bg-white  leading-3 text-gray-800">STUDENT</span>
+                                </p>
+                                <p class="text-base  leading-4 text-gray-600"><%="₹ "+Number(data.price).toFixed(2)%></p>
+                            </div>
+                            <div class="flex justify-between items-center w-full">
+                                <p class="text- leading-4 text-gray-800">Shipping</p>
+                                <p class="text-base  leading-4 text-gray-600">0</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center w-full">
+                            <p class="text-base  font-semibold leading-4 text-gray-800">Total</p>
+                            <p class="text-base font-semibold leading-4 text-gray-600">
+                                <%="₹ "+Number(data.price).toFixed(2)%>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center px-4 pb-6 md:p-6 xl:p-8 w-full bg-gray-50  space-y-6">
+                        <h3 class="text-xl  font-semibold leading-5 text-gray-800">Shipping</h3>
+                        <div class="container">
+                            <div class="row-auto">
+                                <div class="col-12 col-10 hh-grayBox pt-4">
+                                    <div class="flex justify-between">
+                                        <div class="order-tracking  <%= (data.status.length >=1) ? 'completed' : '' %>">
+                                            <span class="is-complete"></span>
+                                            <p>Ordered<br><span><%= (data.status[0]?.date) ? data.status[0]?.date : '' %></span></p>
+                                        </div>
+                                        <div class="order-tracking <%= (data.status.length >=2) ? 'completed' : '' %>">
+                                            <span class="is-complete"></span>
+                                            <p>Shipped<br><span><%= (data.status[1]?.date) ? data.status[1]?.date : '' %></span></p>
+                                        </div>
+                                        <div class="order-tracking <%= (data.status.length >=3) ? 'completed' : '' %>">
+                                            <span
+                                                class="is-complete "></span>
+                                            <p>Delivered<br><span><%= (data.status[2]?.date) ? data.status[2]?.date : '' %></span></p>
+                                            <div class="text">
+                                                <p ><%= (data.status[2]?.place) ? data.status[2]?.place : '' %></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-start items-start  bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full">
+                        <p class="text-lg md:text-xl  font-semibold leading-6 xl:leading-5 text-gray-800">
+                            Customer’s Cart</p>
+                        <% products.forEach(function(items) { %>
+                    <div
+                        class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
+                            <div class="pb-4 md:pb-8 w-full md:w-40">
+                                <img class="w-24" src="/image/products/<%=items.image[0]%>"
+                                    alt="dress" />
+
+                            </div>
+                            <div
+                                class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
+                                <div class="w-full flex flex-col justify-start items-start space-y-8">
+                                    <h5 class="text-xl xl:text-2xl font-semibold leading-6 text-gray-800">
+                                        <%=items.name%>
+                                    </h5>
+                                    <div class="flex justify-start items-start flex-col space-y-2">
+                                        <p class="text-sm leading-none text-gray-800"><span
+                                                class=" text-gray-300">Brand:
+                                            </span><%=items.brand%>
+                                        </p>
+                                        <!-- <p class="text-sm leading-none text-gray-800"><span class=" text-gray-300">Size:
+                                            </span>
+                                            Small</p> -->
+                                    </div>
+                                </div>
+                                <div class="flex justify-start space-x-8 items-start w-full">
+                                    <!-- <p class="text-base xl:text-lg leading-6">$36.00 <span
+                                    class="text-red-300 line-through"> $45.00</span></p> -->
+                                    <p class="text-base w-full xl:text-lg leading-6 text-gray-800 me-14">Quantity: <%=items.quantity%></p>
+                                    <p class="text-base w-full xl:text-lg font-semibold leading-6 text-gray-800">price: ₹<%=" "+items.price%>
+                                    </p>
+                                    <div class=" w-full">
+                                       <a href="/chat?id=<%=items._id%>"> <img title="Add to Favorites" style="width: 35px; height: 35px;" class=" ms-auto me-14"
+                                        src="/image/share_2958791 (1).png" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <%})%>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>

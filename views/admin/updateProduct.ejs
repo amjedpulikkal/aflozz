@@ -1,0 +1,298 @@
+<!-- <div class="bg-white pt-16">
+
+  <div class="flex items-start justify-between p-5 border-b rounded-t">
+    <h3 class="text-xl font-semibold">
+      Add product
+    </h3>
+  </div>
+
+  <div class="p-6 space-y-6">
+    <form action="product" method="post">
+      <div class="grid grid-cols-6 gap-6">
+        <div class="col-span-6 sm:col-span-3">
+          <input type="text" class="hidden" name="_id"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+            placeholder="nike" required="" value="<%= product._id %>">
+          <label for="product-name" class="text-sm font-medium text-gray-900 block mb-2">Product Name</label>
+          <input type="text" name="name" id="category"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+            placeholder="nike" required="" value="<%= product.name %>">
+        </div>
+        <div class="col-span-6 sm:col-span-3">
+          <label for="category" class="text-sm font-medium text-gray-900 block mb-2">Category</label>
+      <input list="browsers-1" name="category" id="category"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+            placeholder="Electronics"> -->
+<!-- <select id="category" placeholder="Electronics"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+            name="category" required="">
+            <% category.forEach(function(item) { %>
+
+              <option value="<%= item._id %>">
+                <%=item.category %>
+              </option>
+              <% }); %>
+          </select>
+
+        </div>
+        <div class="col-span-6 sm:col-span-3">
+          <label for="brand" class="text-sm font-medium text-gray-900 block mb-2">Brand</label>
+          <input type="text" name="brand" id="brand"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+            placeholder="Nalik" required="" value="<%= product.brand %>">
+        </div>
+        <div class="col-span-6 sm:col-span-3 flex justify-evenly">
+          <div class="w-36">
+            <label for="price" class="text-sm font-medium text-gray-900 block ">Price</label>
+            <input type="number" name="price" id="price"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+              placeholder="₹2300" required="" value="<%= product.price %>">
+          </div>
+          <div class="w-36">
+            <label for="price" class="text-sm font-medium text-gray-900 block">Discount</label>
+            <input type="number" name="discount" id="price"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+              placeholder="50%" required="" value="<%= product.discount %>">
+          </div>
+          <div class="w-36">
+            <label for="price" class="text-sm font-medium text-gray-900 block">Stock</label>
+            <input type="number" name="stock" id="price"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+              placeholder="10" required="" value="<%= product.stock %>">
+          </div>
+        </div>
+
+        <div class="col-span-full">
+          <label for="product-details" class="text-sm font-medium text-gray-900 block mb-2">Product
+            Details</label>
+          <textarea id="product-details" rows="6"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4"
+            placeholder="Details" name="Details" value="<%=product.Details%>"></textarea>
+        </div>
+        <div class="col-span-12">
+          <div class="preview me-4">
+            <img id="file-ip-1-preview" src="/image/products/<%=product.image[0] %>">
+          </div>
+          <label for="file-ip-1">Upload Image</label>
+          <input type="file" class="hidden" id="file-ip-1" name="myFile" accept="image/*"
+            onchange="showPreview(event);" multiple="true">
+        </div>
+        <!-- <div class="flex justify-between">
+          <div class="form-input border-none">
+            <div class=" flex justify-between " style="width: 100vh;">
+              <div class="preview me-4">
+                <img id="file-ip-1-preview">
+              </div>
+              <div class="preview me-4">
+                <img id="file-ip-2-preview">
+              </div>
+              <div class="preview me-4">
+                <img id="file-ip-3-preview">
+              </div>
+              <div class="preview me-4">
+                <img id="file-ip-4-preview">
+              </div>
+            </div>
+            <label for="file-ip-1">Upload Image</label>
+            <input type="file" class="hidden" id="file-ip-1" name="myFile" accept="image/*"
+              onchange="showPreview(event);" multiple="true">
+          </div> -->
+<!-- <div class="form-input">
+                        <div class="preview">
+                            <img id="file-ip-1-preview">
+                        </div>
+                        <label for="file-ip-1">Upload Image</label>
+                        <input type="file" id="file-ip-1" accept="image/*" onchange="showPreview(event);">
+                    </div>
+                    <div class="form-input">
+                        <div class="preview">
+                            <img id="file-ip-1-preview">
+                        </div>
+                        <label for="file-ip-1">Upload Image</label>
+                        <input type="file" id="file-ip-1" accept="image/*" onchange="showPreview(event);">
+                    </div>
+                    <div class="form-input">
+                        <div class="preview">
+                            <img id="file-ip-1-preview">
+                        </div>
+                        <label for="file-ip-1">Upload Image</label>
+                        <input type="file" id="file-ip-1" accept="image/*" onchange="showPreview(event);" multiple="true">
+                    </div>
+      </div>
+
+  </div>
+  <div class="p-6 border-t border-gray-200 rounded-b">
+  <input type="submit" name="" value="Save all" id=""> 
+    <button
+      class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+      type="submit">Save all</button>
+  </div>
+  </form>
+
+</div>
+
+</div>
+<script type="text/javascript">
+  function showPreview(event) {
+    if (event.target.files.length > 0) {
+      var src = URL.createObjectURL(event.target.files[0]);
+      var preview = document.getElementById("file-ip-1-preview");
+      preview.src = src;
+      preview.style.display = "block";
+    }
+  }
+</script> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="bg-white pt-16">
+
+  <div class="flex items-start justify-between p-5 border-b rounded-t">
+    <h3 class="text-xl font-semibold">
+      Add product
+    </h3>
+  </div>
+
+  <div class="p-6 space-y-6">
+    <form action="/admin/product/update/" id="form-1" enctype="multipart/form-data" method="post">
+      <div class="grid grid-cols-6 gap-6">
+        <div class="col-span-6 sm:col-span-3">
+          <input type="text" name="id" class="hidden" value="<%=product._id%>">
+          <label for="product-name" class="text-sm font-medium text-gray-900 block mb-2">Product Name</label>
+          <input type="text" name="name" value="<%=product.name%>" id="category"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+            placeholder="nike" required="">
+        </div>
+        <div class="col-span-6 sm:col-span-3">
+          <label for="category" class="text-sm font-medium text-gray-900 block mb-2">Category</label>
+          <!-- <input list="browsers-1" name="category" id="category"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+            placeholder="Electronics"> -->
+          <select id="category" placeholder="Electronics"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+            name="category" required="">
+            <!-- <% category.forEach(function(item) { %>      
+              <% if(item._id === product._id){%> 
+                  <option value="<%= item._id %>"><%=item.category%></option>
+              <% }; %>
+
+              <% }); %> -->
+            <% category.forEach(function(item) { %>
+              <%if(item._id.toString()===product.category.toString()){%>
+                <option selected value="<%= item._id %>">
+                  <%=item.category%>
+                </option>
+                <%}else{%>
+                  <option value="<%= item._id %>">
+                    <%=item.category%>
+                  </option>
+                  <%}%>
+                  <% }); %>
+          </select>
+
+        </div>
+        <div class="col-span-6 sm:col-span-3">
+          <label for="brand" class="text-sm font-medium text-gray-900 block mb-2">Brand</label>
+          <input type="text" name="brand" id="brand"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+            placeholder="Nalik" value="<%=product.brand %>" required="">
+        </div>
+        <div class="col-span-6 sm:col-span-3 flex justify-evenly">
+          <div class="w-36">
+            <label for="price" class="text-sm font-medium text-gray-900 block ">Price</label>
+            <input type="number" value="<%=product.price %>" name="price" id="price"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+              placeholder="₹2300" required="">
+          </div>
+          <div class="w-36">
+            <label for="price" class="text-sm font-medium text-gray-900 block">Discount</label>
+            <input type="number" value="<%=product.discount %>" name="discount" id="price"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+              placeholder="50%" required="">
+          </div>
+          <div class="w-36">
+            <label for="price" class="text-sm font-medium text-gray-900 block">Stock</label>
+            <input type="number" name="stock" value="<%=product.stock%>" id="price"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+              placeholder="10" required="">
+          </div>
+        </div>
+        <div class="col-span-6 sm:col-span-3">
+          <label for="brand" class="text-sm font-medium text-gray-900 block mb-2">size</label>
+          <input type="text" name="size" value="<%=product.size%>"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+            placeholder="7,8,9,11,10" required="">
+        </div>
+        <div class="col-span-full">
+          <label for="product-details" class="text-sm font-medium text-gray-900 block mb-2">Product
+            Details</label>
+          <textarea id="product-details" name="deitails" rows="6"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4"
+            placeholder="Details"><%=product.deitails%></textarea>
+        </div>
+        <!-- <div class="mx-auto max-w-xs">
+                    <label for="example1" class="mb-1 block text-sm font-medium text-gray-700">Upload file</label>
+                    <input id = "myFile" name = "myFile" multiple = "true" type="file" class="mt-2 block w-full text-sm file:mr-4 file:rounded-md file:border-0 file:bg-teal-500 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-white hover:file:bg-teal-700 focus:outline-none disabled:pointer-events-none disabled:opacity-60" />
+                </div>  -->
+        <div class="flex justify-between col-span-6">
+          <% for(let i=0;i<4;i++){ %>
+            <div class="form-input border-none">
+              <div class=" flex justify-around">
+                <div class="preview ">
+                  <img id="file-ip-<%=i%>-preview" src="/image/products/<%=product.image[i]%>">
+                </div>
+              </div>
+              <label for="file-ip-<%=i%>">Upload</label>
+              <input type="file" class="hidden" id="file-ip-<%=i%>" name="<%=i%>" accept="image/*"
+                onchange="showPreview(event,'<%=i%>','<%=product.image[i]%>');">
+            </div>
+            <% }; %>
+        </div>
+      </div>
+      <div class="p-6 border-t border-gray-200 rounded-b">
+        <button
+          class="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+          type="submit">Save all</button>
+      </div>
+    </form>
+
+  </div>
+
+</div>
+
+<script type="text/javascript">
+  const image = []
+  const form = document.getElementById("form-1")
+  function showPreview(event, i, name) {
+    if (event.target.files.length > 0) {
+      var src = URL.createObjectURL(event.target.files[0]);
+      var preview = document.getElementById(`file-ip-${i}-preview`);
+      preview.src = src;
+      preview.style.display = "block";
+      console.log("name")
+      console.log(name)
+      var input = document.getElementById(`file-ip-${i}`);
+      var originalName = input.getAttribute("data-original-name");
+
+    }
+  }
+  console.log(image);
+
+</script>

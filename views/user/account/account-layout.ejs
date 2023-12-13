@@ -1,0 +1,269 @@
+<link rel="stylesheet" href="/profile-style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+    .container-1 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .label-1 {
+        padding: 10px;
+        font-size: 18px;
+        color: #111;
+    }
+
+    .copy-text {
+        position: relative;
+        padding: 10px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        display: flex;
+    }
+
+    .copy-text input.text {
+        padding: 10px;
+        font-size: 18px;
+        color: #555;
+        border: none;
+        outline: none;
+    }
+
+    .copy-text button {
+        padding: 10px;
+        background: #111827;
+        color: #fff;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .copy-text button:active {
+        background: #809ce2;
+    }
+
+    .copy-text button:before {
+        content: "Copied";
+        position: absolute;
+        top: -45px;
+        right: 0px;
+        background: #111827;
+        padding: 8px 10px;
+        border-radius: 20px;
+        font-size: 15px;
+        display: none;
+    }
+
+    .copy-text button:after {
+        content: "";
+        position: absolute;
+        top: -20px;
+        right: 25px;
+        width: 10px;
+        height: 10px;
+        background: #172711;
+        transform: rotate(45deg);
+        display: none;
+    }
+
+    .copy-text.active button:before,
+    .copy-text.active button:after {
+        display: block;
+    }
+</style>
+<div class="profile-header mt-16">
+    <div class="profile-img" style="z-index: 0;">
+        <img id="p-imge" src="/image/Aflozz_shoe_and_shoe_brand_is_Aflozz__product.jpg" width="200" alt="Profile Image">
+
+    </div>
+    <div class="profile-nav-info ms-10">
+        <h3 class="user-name">
+            <%=user.Name%>
+        </h3>
+        <div class="address">
+            <p id="state" class="state">
+                <%=user.Email%>
+            </p>
+            <!-- <span id="country" class="country"></span> -->
+        </div>
+        <div class=" flex items-center b">
+            <img width="32" height="32" src="https://img.icons8.com/windows/32/wallet.png" alt="wallet" />
+            <h1 class="text-xl ms-2"> ₹<%=user?.wallet?.toFixed(2)||0%>
+            </h1>
+
+        </div>
+        <div class="container-1">
+            <div class="label-1">
+                Referral code
+            </div>
+            <div class="copy-text">
+                <input type="text" id="referral" class="text" disabled value="<%=user.referral%>" />
+                <button onclick="copy()"><i class="fa fa-clone"></i></button>
+            </div>
+        </div>
+        <!-- <p>Wallet </p> -->
+
+    </div>
+
+</div>
+<div class="main-bd">
+    <div class="right-side">
+        <div class="right-side">
+            <div class="nav">
+                <ul>
+                    <li onclick="tabs(2)" class="user-setting <%= (selection === 'profile') ? 'active' : '' %>"><a
+                            href="/account/profile">Edit Profile </a></li>
+                    <li onclick="tabs(0)" class="user-post <%= (selection === 'address') ? 'active' : '' %>"><a
+                            href="/account">Address </a></li>
+                    <li onclick="tabs(1)" class="user-review <%= (selection === 'order') ? 'active' : '' %>"><a
+                            href="/account/orders">Orders </a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="default-modal" tabindex="-1" aria-hidden="true"
+    class=" hidden flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Terms of Service
+                </h3>
+                <button type="button" onclick="stopCameraAndClose()"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    data-modal-hide="default-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <video id="video" style="display: none;"></video>
+            <img src="" alt="Profile Photo" id="profilePhoto">
+            <!-- Modal footer -->
+            <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                <button data-modal-hide="default-modal" type="button" onclick="capturePhoto()"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Capture Photo</button>
+                <button data-modal-hide="default-modal hidden" type="button" id="Capture" onclick="updateImage()"
+                    class="text-white ms-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Capture</button>
+                <button data-modal-hide="default-modal" type="button" onclick="openCamera()"
+                    class="ms-3 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Open
+                    Camera</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let Capture = document.getElementById('Capture');
+    var profilePhoto = document.getElementById('profilePhoto');
+    let modal = document.getElementById('default-modal')
+    let imData;
+    document.getElementById("p-imge").addEventListener("click", () => {
+        console.log("dfd");
+        modal.classList.remove("hidden")
+        openCamera()
+
+
+    })
+    function openCamera() {
+        Capture.classList.add("hidden")
+
+        profilePhoto.classList.add("hidden")
+        video = document.getElementById('video');
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function (userStream) {
+                stream = userStream;
+                video.style.display = 'block';
+                video.srcObject = stream;
+                video.play();
+            })
+            .catch(function (error) {
+                console.log("Error accessing camera: ", error);
+            });
+    }
+    function capturePhoto() {
+        Capture.classList.remove("hidden")
+        var canvas = document.createElement('canvas');
+        var context = canvas.getContext('2d');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        var dataURL = canvas.toDataURL('image/png');
+        profilePhoto.classList.remove("hidden")
+        profilePhoto.src = dataURL;
+        imData = dataURL
+        stopCamera();
+    }
+
+    function stopCamera() {
+        if (stream) {
+            stream.getTracks().forEach(function (track) {
+                track.stop();
+            });
+            video.pause();
+            video.style.display = 'none';
+        }
+    }
+    function stopCameraAndClose() {
+        if (stream) {
+            stream.getTracks().forEach(function (track) {
+                track.stop();
+            });
+            video.pause();
+            video.style.display = 'none';
+        }
+        modal.classList.add("hidden")
+    }
+
+    function updateImage() {
+        // var formData = new FormData();
+        // formData.append('imageData', imData);
+        // fetch(`/update-image/${imData}`, { method: "POST"}).then(data => {q
+        // })
+    }
+    function copy() {
+    let referralInput = document.getElementById("referral");
+    
+    // Create a temporary textarea to copy the text
+    let tempTextArea = document.createElement("textarea");
+    tempTextArea.value = referralInput.value;
+    document.body.appendChild(tempTextArea);
+
+    // Select the text in the textarea
+    tempTextArea.select();
+    tempTextArea.setSelectionRange(0, 99999); // For mobile devices
+    
+    // Copy the selected text to the clipboard
+    document.execCommand("copy");
+    toaster(1, "Referral code copied!")
+    // Remove the temporary textarea
+    document.body.removeChild(tempTextArea);
+
+    // Visual feedback (optional)
+    let copyText = document.querySelector(".copy-text");
+    copyText.classList.add("active");
+    setTimeout(function () {
+        copyText.classList.remove("active");
+    }, 2500);
+}
+
+
+
+
+
+</script>
