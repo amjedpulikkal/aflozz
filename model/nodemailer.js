@@ -91,7 +91,7 @@ function sendmailForPassword(userEmail,name) {
                   <span style="font-weight: bold;"> 2 minutes</span>. If the passcode
                   does not work, you can use this login verification link:
                 </p>
-                <a href="http://localhost:3000/forgot/password/${link}" style="padding-left: 1.25rem; padding-right: 1.25rem; padding-top: 0.5rem; padding-bottom: 0.5rem; margin-top: 1.5rem; font-size: 14px; font-weight: bold; text-transform: capitalize; background-color: #f97316; color: #fff; transition-property: background-color; transition-duration: 300ms; transform: none; border-radius: 0.375rem; border-width: 1px; border: none; outline: none; cursor: pointer;">
+                <a href="https://www.aflozz.shop/forgot/password/${link}" style="padding-left: 1.25rem; padding-right: 1.25rem; padding-top: 0.5rem; padding-bottom: 0.5rem; margin-top: 1.5rem; font-size: 14px; font-weight: bold; text-transform: capitalize; background-color: #f97316; color: #fff; transition-property: background-color; transition-duration: 300ms; transform: none; border-radius: 0.375rem; border-width: 1px; border: none; outline: none; cursor: pointer;">
                   Verify email
                 </a>
                 <p style="margin-top: 2rem; color: #4b5563; ">

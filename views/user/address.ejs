@@ -95,7 +95,7 @@
                         </div>
                         <div class="grid gap-3">
 
-                            <% if (address.length>0) { %>
+                            <% if (address.length) { %>
                                 <label for="plan0"
                                     class="relative flex flex-col bg-white p-5 rounded-lg shadow-md cursor-pointer">
                                     <p>
@@ -126,7 +126,10 @@
                                         </span>
                                     </span>
                                 </label>
-                                <%}%>
+                                <%}else{%>
+                                    
+                                    <h2>Create new address</h2>
+                                    <%}%>
 
                                     <% if (address) { %>
                                         <% for (let i=1; i< address.length; i++) { %>
@@ -529,19 +532,38 @@
 
                 function sub() {
                     const form = document.getElementById('form-1');
-                    const radioButtons = form.querySelectorAll('input[type=radio][name=address]');
+                    const selectedRadioButton = form.querySelectorAll('input[type=radio][name=address]:checked');
                     const payradioButtons = document.querySelectorAll('input[type=radio][name=payment]');
                     document.getElementById("chBut").classList.add("hidden")
                     document.getElementById("spinnerCh").classList.remove("hidden")
 
 
 
-                    for (let i = 0; i < radioButtons.length; i++) {
-                        if (radioButtons[i].checked) {
-                            selectedValue = radioButtons[i].value;
-                            break;
-                        }
+                    // for (let i = 0; i < radioButtons.length; i++) {
+                    //     if (radioButtons[i].checked) {
+                    //        var selectedValue = radioButtons[i].value;
+                    //         break;
+                    //     }
+                    // }
+
+                    console.log(selectedRadioButton.length)
+                    if (selectedRadioButton.length) {
+                        var selectedValue = selectedRadioButton.value;
+                        console.log(selectedValue);
+                    } else {
+                        // If no radio button is selected, show a SweetAlert
+                        Swal.fire({
+                            title: "Please select a address or crate one!",
+                            // text: "Please select a address or crate one!",
+                            icon: "error",
+                            button: "OK",
+                        });
+                        document.getElementById("chBut").classList.remove("hidden")
+                        document.getElementById("spinnerCh").classList.add("hidden")
+                        return null
                     }
+                    // return
+
                     console.log(payradioButtons);
                     console.log(payradioButtons.length);
                     if (payradioButtons[0].checked) {
@@ -650,7 +672,7 @@
                                     Swal.fire({
                                         icon: 'success',
                                         title: 'Remaining Amount',
-                                        text: `The remaining amount is ${"₹ " + Number(lwallet-total).toFixed(2)}`,
+                                        text: `The remaining amount is ${"₹ " + Number(lwallet - total).toFixed(2)}`,
                                         confirmButtonText: 'Continue',
                                         showCancelButton: true,
                                         allowOutsideClick: false
@@ -803,12 +825,12 @@
 
                     var cpnBtn = document.getElementById(`cpnBtn-${code}`);
                     var cpnCode = document.getElementById(`cpnCode-${code}`);
-                
+
                     navigator.clipboard.writeText(cpnCode.innerHTML);
                     cpnBtn.innerHTML = "COPIED";
                     setTimeout(function () {
                         cpnBtn.innerHTML = "COPY CODE";
                     }, 3000);
-                
-              }
+
+                }
             </script>
