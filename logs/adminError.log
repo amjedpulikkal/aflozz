@@ -1,0 +1,5 @@
+
+{"level":"error",
+"message":"Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer",
+"stack":"BSONError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer\n at new ObjectId (C:\\Users\\manua\\OneDrive\\Desktop\\Aflozz\\node_modules\\bson\\lib\\bson.cjs:2055:23)\n    at Object.findOne_product (C:\\Users\\manua\\OneDrive\\Desktop\\Aflozz\\model\\productModel.js:78:52)\n    at getUpdate (C:\\Users\\manua\\OneDrive\\Desktop\\Aflozz\\controller\\productCoantroller.js:77:48)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+"timestamp":"2023-12-16 10:42:06"}

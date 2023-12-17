@@ -507,10 +507,13 @@
                                 // document.getElementById("cValue").innerHTML = "-" + data.value
                                 discount = Number(data.value)
                                 if (Total >= discount + 500) {
-                                    discountID = data._id
-                                    document.getElementById("Ftotal").innerHTML = Total -= discount
-                                    document.getElementById("E_promo").innerHTML = ""
-                                    document.getElementById("cValue").innerHTML = "-" + discount
+                                    if(!discountID === data._id){
+                                        discountID = data._id
+                                        document.getElementById("Ftotal").innerHTML = Total - discount
+                                        document.getElementById("E_promo").innerHTML = ""
+                                        document.getElementById("cValue").innerHTML = "-" + discount
+                                    }
+
                                 } else {
                                     document.getElementById("E_promo").innerHTML = `You must purchase above ${discount + 500}`
                                 }

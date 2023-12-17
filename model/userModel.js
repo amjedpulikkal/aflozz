@@ -33,7 +33,7 @@ module.exports = {
     async claimCoupon(id, userId) {
         return await db_coupon.findOneAndUpdate({ _id: new ObjectId(id), Limit: { $gt: 0 }, user: { $not: { $elemMatch: { $eq: new ObjectId(userId) } } }, exDate: { $gte: new Date() } }, { $inc: { Limit: -1 }, $push: { user: new ObjectId(userId) } })
     },
-    async updataUserPresence(id, presence) {
+    async updateUserPresence(id, presence) {
         console.log(presence);
         console.log(id)
         return await db_user.updateOne({ _id: new ObjectId(id) }, { $set: { presence } })
@@ -565,8 +565,8 @@ module.exports = {
         console.log(webPush)
         console.log("webPush")
         return await db_subscription.updateOne({ endpoint: webPush.endpoint }, { $set: webPush }, {
-            upsert: true, 
-            returnOriginal: false 
+            upsert: true,
+            returnOriginal: false
         })
     },
     async wallet(id, amount) {

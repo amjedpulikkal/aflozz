@@ -5,7 +5,9 @@ const jwt = require("../model/JWT")
 const nocache = require("nocache")
 const { ifuser, nouser } = require("../model/aouth")
 const userController = require("../controller/userCantroller")
-
+const multer = require("multer")
+const storage = multer.memoryStorage();
+const upload = multer({ storage })
 
 
 
@@ -58,6 +60,8 @@ router.post("/unsubscribe",ifuser,userController.unsubscribe)
 router.post("/online-payment-createid",ifuser,userController.onlinePayment)
 
 router.get("/promo/:code",ifuser,userController.couponCode)
+router.get("/wallet/history",ifuser,userController.walletHistory)
+router.post("/updateImag",ifuser,upload.single("imageData"),userController.updateImage)
 
 router.route("/chat").get(ifuser,userController.chat).post(ifuser,userController.sendMassage)
 // router.get("/re")

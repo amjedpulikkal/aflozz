@@ -37,5 +37,5 @@ const{notification}=require("./model/socket.js").Server(server)
 module.exports ={notification}
 
 server.listen(process.env.PORT,()=>{
-  console.log(`start-1 ${process.env.PORT}`);
+  console.log(`start ${process.env.PORT}`);
 })

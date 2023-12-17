@@ -8,6 +8,7 @@ const Razorpay = require("razorpay")
 const { db_coupon, db_user, db_order, db_otp, db_product, db_subscription } = require("../model/db")
 const { ObjectId } = require("mongodb");
 const categoryModel = require('../model/categoryModel');
+const logger = require("../model/winstonLogger").userLogger
 require("dotenv").config()
 
 function generateUniqueID() {
@@ -39,7 +40,7 @@ module.exports = {
       req.session.newUser = null
       res.render("user/home", { layout: "user/layout", products, titel: "Aflozz", cartLength: req.session.user.cart.length, user: req.session.user, totalproduct, limit, banner, newUser })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
   },
@@ -48,7 +49,7 @@ module.exports = {
 
       res.render("login/sign-login", { layout: "login/layout-log" })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
   },
@@ -65,7 +66,7 @@ module.exports = {
         res.status(err.status).json(err.err)
       })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
   },
@@ -75,10 +76,9 @@ module.exports = {
 
       const id = req.params.id
       const product = await productModel.findOne_product(id)
-
       res.render("user/products", { layout: "user/layout", product, titel: "Aflozz", cartLength: req.session.user.cart.length, user: req.session.user })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
   },
@@ -88,7 +88,7 @@ module.exports = {
 
       res.render("user/category", { layout: "user/layout", category })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
   },
@@ -103,7 +103,7 @@ module.exports = {
         res.status(409).json({ err })
       })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -116,7 +116,7 @@ module.exports = {
       res.render("login/onetime", { Email: data.Email, layout: "login/layout" })
 
     } catch (error) {
-      console.log(error)
+      logger.error(error)
 
       return res.status(500).render("500", { layout: "login/layout" })
 
@@ -156,7 +156,7 @@ module.exports = {
 
 
     } catch (error) {
-      console.log(error)
+      logger.error(error)
 
       return res.status(500).render("500", { layout: "login/layout" })
 
@@ -168,7 +168,7 @@ module.exports = {
     try {
       res.render("login/email", { layout: "login/layout-log" })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -187,7 +187,7 @@ module.exports = {
 
       }
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -203,7 +203,7 @@ module.exports = {
         res.redirect("/")
       }
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -216,7 +216,7 @@ module.exports = {
       await userModel.update_pass(Password, Email)
       res.status(200).json()
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -228,7 +228,7 @@ module.exports = {
       req.session.user = null
       res.redirect("/")
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -238,7 +238,7 @@ module.exports = {
       const user = await userModel.all_user()
       res.render("admin/user_list", { layout: 'admin/layout', user })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -254,7 +254,7 @@ module.exports = {
         return res.status(500).json({ message: 'Internal server error' });
       })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -271,7 +271,7 @@ module.exports = {
         res.render("user/cart-empty", { layout: "user/layout", titel: "Aflozz-cart", cartLength: req.session.user.cart.length, user: req.session.user })
       }
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -297,7 +297,7 @@ module.exports = {
       res.status(200).json({ cartLength: req.session.user.cart.lengtgh - data.modifiedCount })
 
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -326,7 +326,7 @@ module.exports = {
       const price = await userModel.getAmount(req.session.user._id)
       res.render("user/address", { layout: "user/layout", titel: "Aflozz-cart", price, address, cartLength: req.session.user.cart.length, coupon: req.session?.coupon, user: req.session.user, Coupons })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -351,7 +351,7 @@ module.exports = {
       orders.forEach(i => { i.status.forEach(i => { i.date = new Date(i.date).toLocaleDateString('en-US', options) }) });
       res.render("user/account/order", { layout: "user/layout", titel: "Aflozz-cart", selection: "order", orders, user: req.session.user, cartLength: req.session.user.cart.length, user: req.session.user })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -403,7 +403,7 @@ module.exports = {
       await userModel.removeCart(id)
       res.status(200).json("ok")
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -426,7 +426,7 @@ module.exports = {
       await userModel.newAdress(user_id, body)
       res.status(200).json("ok")
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -447,7 +447,7 @@ module.exports = {
       console.log(products);
       res.render("user/account/order-items", { layout: "user/layout", titel: "Aflozz-Account", selection: "order", data: orders, products, user: req.session.user, cartLength: req.session.user.cart.length, user: req.session.user })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -457,7 +457,7 @@ module.exports = {
       await userModel.removeAddress(req.session.user._id, req.params.index)
       res.redirect("/account")
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -468,7 +468,7 @@ module.exports = {
 
       res.render("user/account/profile", { layout: "user/layout", titel: "Aflozz-Account", selection: "profil", user: req.session.user, cartLength: req.session.user.cart.length, user: req.session.user })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -482,7 +482,7 @@ module.exports = {
       console.log("---------------------------------------------");
       res.status(200).json("ok")
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -502,7 +502,7 @@ module.exports = {
         res.status(400).json(err)
       })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -513,7 +513,7 @@ module.exports = {
 
       res.render("user/newAddress", { layout: "user/layout", titel: "Aflozz-Account", data: null, cartLength: req.session.user.cart.length, user: req.session.user })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -525,7 +525,7 @@ module.exports = {
       console.log(data);
       res.render("user/newAddress", { layout: "user/layout", titel: "Aflozz-Account", data, cartLength: req.session.user.cart.length, user: req.session.user })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -563,7 +563,7 @@ module.exports = {
       console.log(id);
       res.status(200).json({ orderId: id })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -583,7 +583,7 @@ module.exports = {
         res.json(false)
       }
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -597,7 +597,7 @@ module.exports = {
       const message = await userModel.getMessage()
       res.render("user/chat", { layout: "user/layout", titel: "chat", message, cartLength: req.session.user.cart.length, user: req.session.user, product })
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -611,7 +611,7 @@ module.exports = {
 
       res.json("ok")
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -624,7 +624,7 @@ module.exports = {
       await userModel.returnOrder(id, req.body, req.session.user._id)
       res.status(200).json("")
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -638,7 +638,7 @@ module.exports = {
       await userModel.webPush(req.session.user._id, subscription)
       res.status(200).json("")
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -653,7 +653,7 @@ module.exports = {
       res.render("user/search", { layout: "user/layout", titel: "Aflozz-Account", user: req.session.user, cartLength: req.session.user.cart.length, user: req.session.user, products, category })
 
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -662,24 +662,25 @@ module.exports = {
   postSearch: async (req, res) => {
     try {
       const query = req.query.query
-      console.log(query);
-      const products = await productModel.search(query)
+      const category = req.body.categoryArray
+      const size = req.body.size
+      console.log(req.body);
+      const products = await productModel.search(query,category,size)
       console.log(products.length);
       res.json(products)
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
   },
   updateImage: async (req, res) => {
     try {
+      
+      console.log(req.file)
 
-
-      console.log(req.params);
-      console.log(req.url);
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -691,7 +692,7 @@ module.exports = {
       await db_user.updateOne({ _id: new ObjectId(req.session.user._id) }, { $set: data })
       res.redirect("/account/profile")
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
 
@@ -702,7 +703,7 @@ module.exports = {
      res.status(200).json(data)
 
     } catch (error) {
-      console.log(error)
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
   },
@@ -712,7 +713,17 @@ module.exports = {
      res.status(200).json(data)
 
     } catch (error) {
-      console.log(error)
+      logger.error(error)
+      return res.status(500).render("500", { layout: "login/layout" })
+    }
+  },
+  walletHistory:async (req, res) => {
+    try{
+     
+      res.render("user/account/history", { layout: "user/layout", titel: "Aflozz-Account", selection: "profile", user: req.session.user, cartLength: req.session.user.cart.length, user: req.session.user })
+
+    } catch (error) {
+      logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
   }

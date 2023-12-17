@@ -1,0 +1,54 @@
+<%-include("account-layout")%>
+
+<table class="table-auto mt-40" id="table">
+    <thead>
+      <tr>
+        <th>Song</th>
+        <th>Artist</th>
+        <th>Year</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
+        <td>Malcolm Lockyer</td>
+        <td>1961</td>
+      </tr>
+      <tr>
+        <td>Witchy Woman</td>
+        <td>The Eagles</td>
+        <td>1972</td>
+      </tr>
+      <tr>
+        <td>Shining Star</td>
+        <td>Earth, Wind, and Fire</td>
+        <td>1975</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+<script>
+    $(document).ready(function() {
+	//Only needed for the filename of export files.
+	//Normally set in the title tag of your page.
+	document.title='Simple DataTable';
+	// DataTable initialisation
+	$('#table').DataTable(
+		{
+			"dom": '<"dt-buttons"Bf><"clear">lirtp',
+			"paging": true,
+			"autoWidth": true,
+			"buttons": [
+				'colvis',
+				'copyHtml5',
+        'csvHtml5',
+				'excelHtml5',
+        'pdfHtml5',
+				'print'
+			]
+		}
+	);
+});
+</script>

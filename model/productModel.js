@@ -19,7 +19,7 @@ module.exports = {
             data.price = Number(data.price)
             data.discount = Number(data.discount)
             data.stock = Number(data.stock)
-            data.category =new  ObjectId(data.category)
+            data.category = new ObjectId(data.category)
             return await db_product.insertOne(data)
         } catch (errr) {
             console.log(errr);
@@ -39,22 +39,22 @@ module.exports = {
 
             const products = await db_product.aggregate([
                 {
-                  $match: {
-                    $and: [
-                      { stock: { $gt: 0 } },
-                      { status: true }
-                    ]
-                  }
+                    $match: {
+                        $and: [
+                            { stock: { $gt: 0 } },
+                            { status: true }
+                        ]
+                    }
                 },
                 {
-                  $lookup: {
-                    from: "category",
-                    localField: "category", // Field in product collection referring to category ID
-                    foreignField: "_id",      // Field in category collection to match
-                    as: "category"        // New field name to store joined category information
-                  }
+                    $lookup: {
+                        from: "category",
+                        localField: "category", // Field in product collection referring to category ID
+                        foreignField: "_id",      // Field in category collection to match
+                        as: "category"        // New field name to store joined category information
+                    }
                 }
-              ]).skip(limit).limit(8).toArray()
+            ]).skip(limit).limit(8).toArray()
 
             const totalproduct = await db_product.countDocuments({ $and: [{ stock: { $gt: 0 } }, { status: true }] })
             return { products, totalproduct }
@@ -91,7 +91,7 @@ module.exports = {
             console.log(id);
             console.log(data);
             data.stock = Number(data.stock)
-             data.category =new  ObjectId(data.category)
+            data.category = new ObjectId(data.category)
             await db_product.updateOne({ _id: new ObjectId(id) }, { $set: data }).then(async e => {
 
                 return await db_product.updateOne({ _id: new ObjectId(id) }, { $set: image })
@@ -124,22 +124,31 @@ module.exports = {
             throw errr
         }
     },
-    async search(data) {
+    async search(data, category, size) {
         data = data || ''
         const regexPattern = new RegExp(data, 'i'); // 'i' for case-insensitive
-
-        return await db_product.find({
+        const query = {
             $or: [
                 { name: { $regex: regexPattern } },
                 { title: { $regex: regexPattern } },
-                { category: { $regex: regexPattern } }
+
             ]
-        }).toArray()
+        };
+
+        if (category.length) {
+            const categoryIds = category.map(i => new ObjectId(i));
+            query.category = { $in: categoryIds };
+        }
+        if (size.length) {
+            query.size = { $in: size };
+        }
+        console.log(query)
+        return await db_product.find(query).toArray()
 
     },
     async updateStock(value, id) {
 
-        const product = await db_order.findOneAndUpdate({ _id: new ObjectId(id) },{ $set: { "return.1.stock": value }});
+        const product = await db_order.findOneAndUpdate({ _id: new ObjectId(id) }, { $set: { "return.1.stock": value } });
         console.log(product);
         if (value === "increment") {
             const productUpdates = product.value.products.map((element) => ({

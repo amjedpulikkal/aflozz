@@ -1,5 +1,5 @@
 const socketIO = require("socket.io")
-const { updataUserPresence, checkUserPresence } = require("./userModel")
+const { updateUserPresence, checkUserPresence } = require("./userModel")
 const userSockets = new Map()
 const user = new Array()
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
                 const userId = res
                 userSockets.set(userId, socket)
                 user.push({ userId, socketId: socket.id })
-                await updataUserPresence(userId, "online")
+                await updateUserPresence(userId, "online")
                 io.emit("UStatus", { userId,Status:"online"})
 
             })
@@ -29,13 +29,11 @@ module.exports = {
             socket.on('disconnect', async() => {
                 // console.log();
                 const userId = user.filter(data => data.socketId === socket.id)
-                conset = await updataUserPresence(userId[0]?.userId, socket.handshake.time)
+                await updateUserPresence(userId[0]?.userId, socket.handshake.time)
                 setTimeout(async()=>{
                     if (userId.length) {
                         const User = await checkUserPresence(userId[0].userId)
-                        console.log("------------r--------------");
                         console.log(User);
-                        console.log("-----------r---------------");
                         if(!User){ 
                             io.emit("UStatus", {userId:userId[0].userId,Status:socket.handshake.time})
                             console.log('disconnected.');

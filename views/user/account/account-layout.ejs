@@ -92,8 +92,12 @@
         </div>
         <div class=" flex items-center b">
             <img width="32" height="32" src="https://img.icons8.com/windows/32/wallet.png" alt="wallet" />
+            <input type="file" class="hidden" id="image">   
             <h1 class="text-xl ms-2"> ₹<%=user?.wallet?.toFixed(2)||0%>
             </h1>
+            <a href="/wallet/history"> <img width="20" height="20" class="ml-5" src="/image/326655_history_icon.svg"
+                    alt="wallet" />
+
 
         </div>
         <div class="container-1">
@@ -181,7 +185,6 @@
     })
     function openCamera() {
         Capture.classList.add("hidden")
-
         profilePhoto.classList.add("hidden")
         video = document.getElementById('video');
         navigator.mediaDevices.getUserMedia({ video: true })
@@ -207,6 +210,7 @@
         profilePhoto.classList.remove("hidden")
         profilePhoto.src = dataURL;
         imData = dataURL
+        document.getElementById("image").value = imData
         stopCamera();
     }
 
@@ -231,36 +235,37 @@
     }
 
     function updateImage() {
-        // var formData = new FormData();
-        // formData.append('imageData', imData);
-        // fetch(`/update-image/${imData}`, { method: "POST"}).then(data => {q
-        // })
+        var formData = new FormData();
+        formData.append('imageData', imData);
+        fetch(`/updateImag`, { method: "POST",body:formData }).then(data => {
+            
+        })
     }
     function copy() {
-    let referralInput = document.getElementById("referral");
-    
-    // Create a temporary textarea to copy the text
-    let tempTextArea = document.createElement("textarea");
-    tempTextArea.value = referralInput.value;
-    document.body.appendChild(tempTextArea);
+        let referralInput = document.getElementById("referral");
 
-    // Select the text in the textarea
-    tempTextArea.select();
-    tempTextArea.setSelectionRange(0, 99999); // For mobile devices
-    
-    // Copy the selected text to the clipboard
-    document.execCommand("copy");
-    toaster(1, "Referral code copied!")
-    // Remove the temporary textarea
-    document.body.removeChild(tempTextArea);
+        // Create a temporary textarea to copy the text
+        let tempTextArea = document.createElement("textarea");
+        tempTextArea.value = referralInput.value;
+        document.body.appendChild(tempTextArea);
 
-    // Visual feedback (optional)
-    let copyText = document.querySelector(".copy-text");
-    copyText.classList.add("active");
-    setTimeout(function () {
-        copyText.classList.remove("active");
-    }, 2500);
-}
+        // Select the text in the textarea
+        tempTextArea.select();
+        tempTextArea.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the selected text to the clipboard
+        document.execCommand("copy");
+        toaster(1, "Referral code copied!")
+        // Remove the temporary textarea
+        document.body.removeChild(tempTextArea);
+
+        // Visual feedback (optional)
+        let copyText = document.querySelector(".copy-text");
+        copyText.classList.add("active");
+        setTimeout(function () {
+            copyText.classList.remove("active");
+        }, 2500);
+    }
 
 
 
