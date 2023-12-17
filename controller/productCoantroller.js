@@ -115,7 +115,7 @@ module.exports = {
           
             
                 await productModel.update_status(req.query).then(s => {
-                    res.status(200).join("ok")
+                    res.status(200).json("ok")
                 })
             
         } catch (error) {
