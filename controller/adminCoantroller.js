@@ -215,6 +215,7 @@ module.exports = {
     },
     getAdmin: async (req, res) => {
         try {
+            
             const yearlyOrders = await db.totalSales()
             const OneDay = await db.OneDay()
             const chart = await db.Report()
@@ -242,7 +243,9 @@ module.exports = {
             db.admin_find(admin).then(data => {
                
                 req.session.admin = data
-                res.status(200).json()
+                const url = req.session?.adminUrl?req.session.adminUrl:"/admin"
+                console.log(url)
+                res.status(200).json(url)
             }).catch(err => {
                 console.log(err.err);
                 res.status(err.status).json(err.err)

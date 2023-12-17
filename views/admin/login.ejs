@@ -20,7 +20,7 @@
 <script>
 
     let baform = document.getElementById("ad-form")
-    baform.addEventListener("submit", e => {
+    baform.addEventListener("submit",async e => {
         e.preventDefault();
         const Email = document.forms["ad-form"]["Email"].value;
         const Password = document.forms["ad-form"]["Password"].value;
@@ -61,7 +61,7 @@
             method: "POST",
             body: new URLSearchParams(data)
         })
-            .then((res) => {
+            .then(async (res) => {
                 if (res.status === 404) {
                     console.log(res.status);
                     spinner.classList.add("lorder-hidden")
@@ -72,8 +72,11 @@
                     butten.classList.remove("lorder-hidden")
                     res.json().then(data => p_err.innerHTML = data)
                 } else if (res.status === 200) {
-                    console.log("gooooot");
-                    window.location.replace('/admin');
+                    let data = await res.json()
+                    console.log(data)
+                    window.location.replace(data)
+
+
                 }
             })
             // .then((data) => {

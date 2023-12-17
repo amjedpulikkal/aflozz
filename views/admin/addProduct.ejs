@@ -8,66 +8,81 @@
   </div>
 
   <div class="p-6 space-y-6">
-    <form action="product" enctype="multipart/form-data" method="post">
+    <form action="product" enctype="multipart/form-data" method="post" id="form">
       <div class="grid grid-cols-6 gap-6">
         <div class="col-span-6 sm:col-span-3">
           <label for="product-name" class="text-sm font-medium text-gray-900 block mb-2">Product Name</label>
-          <input type="text" name="name" id="category"
+          <input type="text" name="name" id="product"
             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-            placeholder="nike" required="">
+            placeholder="nike">
+            <p class="text-red-500" id="err-product"></p>
         </div>
         <div class="col-span-6 sm:col-span-3">
           <label for="category" class="text-sm font-medium text-gray-900 block mb-2">Category</label>
           <!-- <input list="browsers-1" name="category" id="category"
             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
             placeholder="Electronics"> -->
-          <select id="category"  placeholder=""  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"  name="category"  required="">
+          <select id="category"  placeholder=""  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"  name="category" >
             <option value=""></option>
             <% category.forEach(function(item) { %>      
               
               <option value="<%= item._id %>"><%=item.category %></option>
               <% }); %>
           </select>
+          <p class="text-red-500" id="err-category"></p>
+
 
         </div>
         <div class="col-span-6 sm:col-span-3">
           <label for="brand" class="text-sm font-medium text-gray-900 block mb-2">Brand</label>
           <input type="text" name="brand" id="brand"
             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-            placeholder="Nalik" required="">
+            placeholder="Nalik">
+          <p class="text-red-500" id="err-brand"></p>
+
         </div>
         <div class="col-span-6 sm:col-span-3 flex justify-evenly">
           <div class="w-36">
             <label for="price" class="text-sm font-medium text-gray-900 block ">Price</label>
             <input type="number" name="price" id="price"
               class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-              placeholder="₹2300" required="">
+              placeholder="₹2300">
+          <p class="text-red-500" id="err-price"></p>
+
           </div>
           <div class="w-36">
             <label for="price" class="text-sm font-medium text-gray-900 block">Discount</label>
-            <input type="number" name="discount" id="price"
+            <input type="number" name="discount" id="discount"
               class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-              placeholder="50%" required="">
+              placeholder="50%">
+          <p class="text-red-500" id="err-discount"></p>
+
           </div>
           <div class="w-36">
             <label for="price" class="text-sm font-medium text-gray-900 block">Stock</label>
-            <input type="number" name="stock" id="price"
+            <input type="number" name="stock" id="stock"
               class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-              placeholder="10" required="">
+              placeholder="10">
+          <p class="text-red-500" id="err-stock"></p>
+
           </div>
         </div>
         <div class="col-span-6 sm:col-span-3">
           <label for="brand" class="text-sm font-medium text-gray-900 block mb-2">size</label>
-          <input type="text" name="size"
+          <input type="text" name="size" id="size"
             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-            placeholder="7,8,9,11,10" required="">
+            placeholder="7,8,9,11,10">
+          <p class="text-red-500" id="err-size"></p>
+
         </div>
         <div class="col-span-full">
           <label for="product-details" class="text-sm font-medium text-gray-900 block mb-2">Product
             Details</label>
-          <textarea id="product-details" name="details"  rows="6"
+          <textarea id="product-details" name="details"  rows="6" 
             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4"
             placeholder="Details"></textarea>
+          <p class="text-red-500" id="err-product-details"></p>
+
         </div>
         <!-- <div class="mx-auto max-w-xs">
                     <label for="example1" class="mb-1 block text-sm font-medium text-gray-700">Upload file</label>
@@ -89,9 +104,9 @@
                 <img id="file-ip-4-preview">
               </div>
             </div>
-            <label for="file-ip-1">Upload Image</label>
+            <label for="file-ip-1">Upload Image</label> 
             <input type="file" class="hidden" id="file-ip-1" name="myFile" accept="image/*"
-              onchange="showPreview(event);" multiple="true">
+              onchange="showPreview(event);" multiple="true" > 
           </div>
         </div>
       </div>
@@ -129,5 +144,63 @@
     }
   }
 
+  let form = document.getElementById("form")
+  form.addEventListener("submit",(e)=>{
+    e.preventDefault()
+    
+    let arr=["product-details","size" ,"discount","price","brand","category","product","stock"]
+    let ing=["discount","price","stock"]
+    let validation = true
+    arr.forEach(item=>{
+      if (document.getElementById(item).value.trim()==="") {
+        validation = false 
+        document.getElementById(`err-${item}`).innerHTML = `Please enter a ${item}`
+      }else{
+        console.log(item)
+        document.getElementById(`err-${item}`).innerHTML = ""
+      }
+    })
+  if(!validation) return toaster(2,"Please fill in all fields.")
+    ing.forEach(item=>{
+      if (isNaN(document.getElementById(item).value.trim())) {
+        validation = false 
+        document.getElementById(`err-${item}`).innerHTML = `Please enter valid ${item}`
+      }else{
+        console.log(item)
+        document.getElementById(`err-${item}`).innerHTML = ""
+      }
+    })
+    if(!validation) return toaster(2,"Please fill in all fields.")
+    const discountInput = parseFloat(document.getElementById("discount").value);
+
+
+    if(discountInput>100||0>discountInput||isNaN(discountInput)){
+      validation = false
+      toaster(2,"Please enter a valid discount (between 0 and 100).")
+      document.getElementById(`err-discount`).innerHTML ="Please enter a valid discount (between 0 and 100)."
+      return
+    }else{
+      document.getElementById(`err-discount`).innerHTML =""
+    }
+    const stockInput =parseFloat( document.getElementById("stock").value)
+    if(0>stockInput||isNaN(stockInput)){
+      validation = false
+      toaster(2,"Please enter a valid stock (between 0 and n).")
+      document.getElementById(`err-stock`).innerHTML ="Please enter a valid stock (between 0 and n)."
+      return
+    }else{
+      document.getElementById(`err-stock`).innerHTML =""
+    }
+    const sequenceRegex = /^(\s*\d+\s*,\s*)*\s*\d+\s*$/;
+    if(!sequenceRegex.test(document.getElementById("size").value)){
+      document.getElementById(`err-size`).innerHTML ="Please enter a valid sequence (e.g., 12,15,25,...)"
+      toaster(2,"Please enter a valid sequence (e.g., 12,15,25,...)")
+      return 
+    }
+    form.submit()
+    
+    
+  })
 
 </script>
+

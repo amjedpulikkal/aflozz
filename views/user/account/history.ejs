@@ -1,54 +1,88 @@
 <%-include("account-layout")%>
 
-<table class="table-auto mt-40" id="table">
-    <thead>
-      <tr>
-        <th>Song</th>
-        <th>Artist</th>
-        <th>Year</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-        <td>Malcolm Lockyer</td>
-        <td>1961</td>
-      </tr>
-      <tr>
-        <td>Witchy Woman</td>
-        <td>The Eagles</td>
-        <td>1972</td>
-      </tr>
-      <tr>
-        <td>Shining Star</td>
-        <td>Earth, Wind, and Fire</td>
-        <td>1975</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="w-full p-11">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+        <thead class="text-xs text-gray-700 uppercase ">
+          <tr>
+            <th scope="col" class="px-6 py-3 bg-gray-50 ">
+              From
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Time
+            </th>
+            <th scope="col" class="px-6 py-3 bg-gray-50">
+              type
+            </th>
+            <th scope="col" class="px-6 py-3 ">
+              Price
+            </th>
+            <th scope="col" class="px-6 py-3 bg-gray-50">
+              balance
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <%user?.walletHistory.reverse().forEach(item=>{%>
+
+            <tr class="border-b border-gray-200 ">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 ">
+                <%=item.from%>
+              </th>
+              <td class="px-6 py-4">
+                <%=new Date(item.date).toISOString().split('T')[0]%>
+              </td>
+              <%if(item.type==="Credit"){%>
+                <td class="px-6 py-4  text-green-600  bg-gray-50">
+                  <%=item.type%>+ 
+                </td>
+                <%}else{%>
+                  <td class="px-6 py-4  text-red-600  bg-gray-50">
+                    <%=item.type%>-
+                  </td>
+                  <%}%>
+              <%if(item.type==="Credit"){%>
+                <td class="px-6 py-4  text-green-600">
+                  +<%=item.price%>
+                </td>
+                <%}else{%>
+                  <td class="px-6 py-4  text-red-600">
+                    -<%=item.price.toFixed(2)%>
+                  </td>
+                  <%}%>
+                  <td class="px-6 py-4  text-gray-900 whitespace-nowrap  font-medium">
+                    <%=item.balance%>
+                  </td>
+            </tr>
+
+            <%})%>
+             
+        </tbody>
+      </table>
+    </div>
+  </div>
 
 
-
-<script>
-    $(document).ready(function() {
-	//Only needed for the filename of export files.
-	//Normally set in the title tag of your page.
-	document.title='Simple DataTable';
-	// DataTable initialisation
-	$('#table').DataTable(
-		{
-			"dom": '<"dt-buttons"Bf><"clear">lirtp',
-			"paging": true,
-			"autoWidth": true,
-			"buttons": [
-				'colvis',
-				'copyHtml5',
-        'csvHtml5',
-				'excelHtml5',
-        'pdfHtml5',
-				'print'
-			]
-		}
-	);
-});
-</script>
+  <script>
+    $(document).ready(function () {
+      //Only needed for the filename of export files.
+      //Normally set in the title tag of your page.
+      document.title = 'Simple DataTable';
+      // DataTable initialisation
+      $('#table').DataTable(
+        {
+          "dom": '<"dt-buttons"Bf><"clear">lirtp',
+          "paging": true,
+          "autoWidth": true,
+          "buttons": [
+            'colvis',
+            'copyHtml5',
+            'csvHtml5',
+            'excelHtml5',
+            'pdfHtml5',
+            'print'
+          ]
+        }
+      );
+    });
+  </script>

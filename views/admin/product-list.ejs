@@ -30,10 +30,10 @@
                                 <td>
                                     <% if(item.status===false){ %>
                                         <a onclick="updateStatus('<%=item._id%>',true)"  id="statusB<%=item._id%>" 
-                                            class="ds-setting but-a">Disabled</a>
+                                            class="ds-setting but-a cursor-pointer">Disabled</a>
                                         <%}else{%>
                                             <a onclick="updateStatus('<%=item._id%>',false)" id="statusB<%=item._id%>" 
-                                                class="pd-setting but-a">Active</a>
+                                                class="pd-setting but-a cursor-pointer">Active</a>
                                             <%}%>
                                 </td>
                                 <td>

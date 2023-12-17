@@ -39,6 +39,7 @@ function ifadmin(req, res, next) {
     if (req.session.admin) {
         next()
     } else {
+        req.session.adminUrl = req.url
         res.redirect("/admin/login")
     }
 }

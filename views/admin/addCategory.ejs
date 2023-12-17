@@ -6,27 +6,36 @@
     </div>
 
     <div class="p-6 space-y-6">
-        <form action="category" enctype="multipart/form-data" method="post">
+        <form action="category" enctype="multipart/form-data" method="post" id="form">
             <div class="grid grid-cols-6 gap-6">
                 <div class="col-span-6 sm:col-span-3">
                     <label for="category" class="text-sm font-medium text-gray-900 block">Category</label>
-                    <input type="text" name="category" id="category" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Electronics" required="">
+                    <input type="text" name="category" id="category"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="Electronics">
+                    <p class="text-red-500" id="err-category"></p>
+
                 </div>
                 <div class="col-span-6 sm:col-span-3">
                     <label for="category" class="text-sm font-medium text-gray-900 block">offer</label>
-                    <input type="number" name="offer" id="offer" max="100" min="1" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="15%" required>
+                    <input type="number" name="offer" id="offer" max="100" min="1"
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                        placeholder="15%">
+                    <p class="text-red-500" id="err-offer"></p>
+
                 </div>
-                    <div class="">
-                        <div class="form-input border-none">
-                                <div class="preview me-4">
-                                    <img id="file-ip-1-preview"> 
-                                </div>
-                            <label for="file-ip-1">Upload Image</label>
-                            <input type="file" class="hidden" id="file-ip-1" name="image" accept="image/*"
-                                onchange="showPreview(event);">
+                <div class="">
+                    <div class="form-input border-none">
+                        <div class="preview me-4">
+                            <img id="file-ip-1-preview">
                         </div>
+                        <label for="file-ip-1">Upload Image</label>
+                        <input type="file" class="hidden" id="file-ip-1" name="image" accept="image/*"
+                            onchange="showPreview(event)" >
+                        <p class="text-red-500" id="err-file-ip-1"></p>
                     </div>
-         
+                </div>
+
             </div>
             <div class="p-6 border-t border-gray-200 rounded-b">
                 <!-- <input type="submit" name="" value="Save all" id=""> -->
@@ -40,13 +49,39 @@
 
 </div>
 <script>
-    document.getElementById("offer").addEventListener("change",(e)=>{
-        let value=document.getElementById("offer").value
-         if(value>100){
-             document.getElementById("offer").value =100
-            // toaster(1, 'Please enter a valid offer')
-            alert('Please enter a valid offer') 
-         }
+
+    document.getElementById("form").addEventListener("submit", (e) => {
+        e.preventDefault()
+        let validation =true
+        let arr = ["offer", "category"]
+        arr.forEach(item => {
+            if (document.getElementById(item).value.trim() === "") {
+                validation = false
+                document.getElementById(`err-${item}`).innerHTML = `Please enter a ${item}`
+            } else {
+                console.log(item)
+                document.getElementById(`err-${item}`).innerHTML = ""
+            }
+        })
+        const discountInput =document.getElementById("offer").value
+        if (!validation) return toaster(2, "Please fill in all fields.")
+        
+        if (discountInput > 100 || 0 > discountInput || isNaN(discountInput)) {
+            validation = false
+            toaster(2, "Please enter a valid discount (between 0 and 100).")
+            document.getElementById(`err-offer`).innerHTML = "Please enter a valid discount (between 0 and 100)."
+            return
+        } else {
+            document.getElementById(`err-offer`).innerHTML = ""
+        }
+        const fileInput = document.getElementById('file-ip-1')
+        if(!fileInput || !fileInput.files || fileInput.files.length === 0){
+
+            document.getElementById('err-file-ip-1').innerHTML ="Please select a file."
+            toaster(2,"Please select a file.")
+            return
+        }
+        document.getElementById("form").submit()
     })
 </script>
 <script type="text/javascript">

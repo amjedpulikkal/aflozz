@@ -46,7 +46,7 @@ module.exports = {
   },
   getlogin: (req, res) => { // Code for rendering login page
     try {
-
+      req.session.newUser =null
       res.render("login/sign-login", { layout: "login/layout-log" })
     } catch (error) {
       logger.error(error)
@@ -97,6 +97,7 @@ module.exports = {
       const data = req.body
       data.status = true
       userModel.find_insert(data).then(data => {
+
         res.status(200).send("ok")
       }).catch(err => {
         console.log(err.message)
@@ -111,7 +112,13 @@ module.exports = {
   psotSingOtp: async (req, res, next) => {
     try {
 
-      const data = req.body
+      if (!req.session?.newUser) {
+        req.session.newUser = req.body
+      }
+      console.log(req.body)
+      console.log(req.session.newUser)
+      // const data =  req.body
+      const data = req.session.newUser
       await userModel.storeOtp({ user: data, ex_date: new Date(new Date().getTime() + 2 * 60000) })
       res.render("login/onetime", { Email: data.Email, layout: "login/layout" })
 
@@ -134,9 +141,21 @@ module.exports = {
         if (new Date() < userData.ex_date) {
           if (userData.otp === data.Otp) {
             if (userData.user.referral) {
-              let data = await userModel.claimReferral(userData.user.referral)
+              let data = await userModel.claimReferral(userData.user.referral, userData.user.Name)
+              if (data.value) {
 
-              data.value ? userData.user.wallet = 100 : userData.user.wallet = 0
+                const walletHistory = {
+                  from: `Credited referral code "${data.value?.referral}" for user ${data.value?.Name}`,
+                  date: new Date(),
+                  type: "Credit",
+                  balance: 100,
+                  price: 100
+                }
+                userData.user.walletHistory = [walletHistory]
+                userData.user.wallet = 100
+              } else {
+                userData.user.wallet = 0
+              }
               req.session.newUser = true
             }
             userData.user.referral = generectCoupon()
@@ -373,18 +392,31 @@ module.exports = {
       if (req.body.wallet) {
         console.log("---------------wallet------------------------------------------------");
         if (data.price < req.session.user?.wallet) {
+          const walletHistory = {
+            from: `new order #${data.no}`,
+            date: new Date(),
+            type: "Debit",
+            balance: req.session.user?.wallet - data.price,
+            price: data.price
+          }
           console.log("resssssssssswalletssssssssssssssssssssss");
           console.log(req.session.user?.wallet)
           console.log(data.price)
           console.log(req.session.user?.wallet - data.price)
           const remaining = req.session.user?.wallet - data.price
           console.log(data.price)
-          await userModel.wallet(req.session.user._id, remaining)
+          await userModel.wallet(req.session.user._id, remaining, walletHistory)
 
         } else {
-          console.log("wwwwwwwwwwwwalletwwwwwsssssss");
+          const walletHistory = {
+            from: `new order #${data.no}`,
+            date: new Date(),
+            type: "Debit",
+            balance: 0,
+            price: data.price
+          }
           data.price -= req.session.user?.wallet
-          await userModel.wallet(req.session.user._id, 0)
+          await userModel.wallet(req.session.user._id, 0, walletHistory)
         }
       }
       console.log("----------------end-----------------------------------------------");
@@ -477,9 +509,9 @@ module.exports = {
     try {
       const id = req.params.id
       console.log(id);
-      console.log("---------------------------------------------");
-      await userModel.cancelOrder(id, req.session.user._id)
-      console.log("---------------------------------------------");
+
+      await userModel.cancelOrder(id, req.session.user._id, req.session.user?.wallet)
+
       res.status(200).json("ok")
     } catch (error) {
       logger.error(error)
@@ -631,9 +663,9 @@ module.exports = {
   },
   webPush: async (req, res) => {
     try {
-      const {subscription,method} = req.body
+      const { subscription, method } = req.body
       console.log(method);
-      subscription.type = method 
+      subscription.type = method
       console.log(subscription)
       await userModel.webPush(req.session.user._id, subscription)
       res.status(200).json("")
@@ -665,7 +697,7 @@ module.exports = {
       const category = req.body.categoryArray
       const size = req.body.size
       console.log(req.body);
-      const products = await productModel.search(query,category,size)
+      const products = await productModel.search(query, category, size)
       console.log(products.length);
       res.json(products)
     } catch (error) {
@@ -676,7 +708,7 @@ module.exports = {
   },
   updateImage: async (req, res) => {
     try {
-      
+
       console.log(req.file)
 
     } catch (error) {
@@ -697,29 +729,30 @@ module.exports = {
     }
 
   },
-  checkWebPush:async (req, res) => {
-    try{
-     const data = await db_subscription.findOne({"webPush.endpoint":req.body.subscribe,userId:new ObjectId(req.session.user._id)})
-     res.status(200).json(data)
+  checkWebPush: async (req, res) => {
+    try {
+      const data = await db_subscription.findOne({ "webPush.endpoint": req.body.subscribe, userId: new ObjectId(req.session.user._id) })
+      res.status(200).json(data)
 
     } catch (error) {
       logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
   },
-  unsubscribe:async (req, res) => {
-    try{
-     const data = await db_subscription.deleteOne({"webPush.endpoint":req.body.subscribe})
-     res.status(200).json(data)
+  unsubscribe: async (req, res) => {
+    try {
+      const data = await db_subscription.deleteOne({ "webPush.endpoint": req.body.subscribe })
+      res.status(200).json(data)
 
     } catch (error) {
       logger.error(error)
       return res.status(500).render("500", { layout: "login/layout" })
     }
   },
-  walletHistory:async (req, res) => {
-    try{
-     
+  walletHistory: async (req, res) => {
+    try {
+
+
       res.render("user/account/history", { layout: "user/layout", titel: "Aflozz-Account", selection: "profile", user: req.session.user, cartLength: req.session.user.cart.length, user: req.session.user })
 
     } catch (error) {

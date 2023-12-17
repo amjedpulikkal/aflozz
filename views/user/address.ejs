@@ -127,45 +127,45 @@
                                     </span>
                                 </label>
                                 <%}else{%>
-                                    
+
                                     <h2>Create new address</h2>
                                     <%}%>
 
-                                    <% if (address) { %>
-                                        <% for (let i=1; i< address.length; i++) { %>
-                                            <label for="plan-<%=i%>"
-                                                class="relative flex flex-col bg-white p-5 rounded-lg shadow-md cursor-pointer">
-                                                <p>
-                                                    <%=address[i].name%>
-                                                </p>
-                                                <div class=" font-extralight">
+                                        <% if (address) { %>
+                                            <% for (let i=1; i< address.length; i++) { %>
+                                                <label for="plan-<%=i%>"
+                                                    class="relative flex flex-col bg-white p-5 rounded-lg shadow-md cursor-pointer">
                                                     <p>
-                                                        <%=address[i].address%>
+                                                        <%=address[i].name%>
                                                     </p>
-                                                    <p>
-                                                        <%=address[i].city%>,<%=address[i].village%>-
-                                                                <%=address[i].pincode%>
-                                                    </p>
-                                                    <p>Phone: <%=address[i].Number%>
-                                                    </p>
-                                                </div>
-                                                <input type="radio" name="address" id="plan-<%=i%>" value="<%=i%>"
-                                                    class="absolute h-0 w-0 appearance-none" />
-                                                <span aria-hidden="true"
-                                                    class="hidden absolute inset-0 border-2 border-green-500 bg-green-200 bg-opacity-10 rounded-lg">
-                                                    <span
-                                                        class="absolute top-4 right-4 h-6 w-6 inline-flex items-center justify-center rounded-full bg-green-200">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                            fill="currentColor" class="h-5 w-5 text-green-600">
-                                                            <path fill-rule="evenodd"
-                                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                                                clip-rule="evenodd" />
-                                                        </svg>
+                                                    <div class=" font-extralight">
+                                                        <p>
+                                                            <%=address[i].address%>
+                                                        </p>
+                                                        <p>
+                                                            <%=address[i].city%>,<%=address[i].village%>-
+                                                                    <%=address[i].pincode%>
+                                                        </p>
+                                                        <p>Phone: <%=address[i].Number%>
+                                                        </p>
+                                                    </div>
+                                                    <input type="radio" name="address" id="plan-<%=i%>" value="<%=i%>"
+                                                        class="absolute h-0 w-0 appearance-none" />
+                                                    <span aria-hidden="true"
+                                                        class="hidden absolute inset-0 border-2 border-green-500 bg-green-200 bg-opacity-10 rounded-lg">
+                                                        <span
+                                                            class="absolute top-4 right-4 h-6 w-6 inline-flex items-center justify-center rounded-full bg-green-200">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                                fill="currentColor" class="h-5 w-5 text-green-600">
+                                                                <path fill-rule="evenodd"
+                                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                                    clip-rule="evenodd" />
+                                                            </svg>
+                                                        </span>
                                                     </span>
-                                                </span>
-                                            </label>
-                                            <%}%>
+                                                </label>
                                                 <%}%>
+                                                    <%}%>
 
                         </div>
                     </fieldset>
@@ -186,9 +186,9 @@
                                         name</label>
                                     <div class="mt-2">
                                         <input type="text" name="fname" id="first-name" autocomplete="given-name"
-                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                            required>
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                     </div>
+                                    <p class="text-red-500" id="err-first-name"></p>
                                 </div>
 
                                 <div class="sm:col-span-3">
@@ -197,9 +197,9 @@
                                         name</label>
                                     <div class="mt-2">
                                         <input type="text" name="lname" id="last-name" autocomplete="family-name"
-                                            required
                                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                     </div>
+                                    <p class="text-red-500" id="err-last-name"></p>
                                 </div>
 
                                 <div class="sm:col-span-3">
@@ -207,18 +207,20 @@
                                         address</label>
                                     <div class="mt-2">
                                         <input id="email" name="email" type="email" autocomplete="email"
-                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                            required>
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                     </div>
+                                    <p class="text-red-500" id="err-email"></p>
                                 </div>
                                 <div class="sm:col-span-3">
                                     <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Phone
                                         Number</label>
                                     <div class="mt-2">
-                                        <input id="email" name="Number" type="number" autocomplete="mobile"
-                                            inputmode="numeric" maxlength="10" minlength="10" required
+                                        <input id="number" name="Number" type="number" autocomplete="mobile"
+                                            inputmode="numeric" maxlength="10" minlength="10"
                                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                     </div>
+                                    <p class="text-red-500" id="err-number"></p>
+
                                 </div>
 
                                 <!--  <div class="sm:col-span-3">
@@ -256,6 +258,8 @@
                                         <input type="text" name="address" id="Address" autocomplete="street-address"
                                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                     </div>
+                                    <p class="text-red-500" id="err-Address"></p>
+
                                 </div>
 
                                 <div class="sm:col-span-2 sm:col-start-1">
@@ -265,6 +269,8 @@
                                         <input type="text" name="city" id="city" autocomplete="address-level2"
                                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                     </div>
+                                    <p class="text-red-500" id="err-city"></p>
+
                                 </div>
 
                                 <div class="sm:col-span-2">
@@ -274,6 +280,8 @@
                                         <input type="text" name="village" id="region" autocomplete="address-level1"
                                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                     </div>
+                                    <p class="text-red-500" id="err-region"></p>
+
                                 </div>
 
                                 <div class="sm:col-span-2">
@@ -284,13 +292,14 @@
                                         <input type="text" name="pincode" id="postal-code" autocomplete="postal-code"
                                             class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                                     </div>
+                                    <p class="text-red-500" id="err-postal-code"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="mt-6 flex items-center justify-end gap-x-6">
-                        <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+                        <button type="reset" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
                         <button type="submit"
                             class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
                     </div>
@@ -433,11 +442,34 @@
                     }
                 })
             </script>
+            <script>
 
+            </script>
             <script>
                 const newaddress = document.getElementById("address-form")
                 newaddress.addEventListener("submit", e => {
                     e.preventDefault()
+                    let validation = true
+                    let arr = ["postal-code", "region", "city", "Address", "number", "email", "last-name", "first-name"]
+                    arr.forEach(item => {
+                        if (document.getElementById(item).value.trim() === "") {
+                            validation = false
+                            document.getElementById(`err-${item}`).innerHTML = `Please enter a ${item}`
+                        } else {
+                            document.getElementById(`err-${item}`).innerHTML = ""
+
+                        }
+                    })
+                    var regexp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/;
+
+                    if (!validation) return toaster(2, "Please fill in all fields.")
+                    if (!regexp.test(newaddress.elements.address.value)) {
+                        toaster(2, "Please choose a valid Email.")
+                        document.getElementById("err-email").innerHTML = "Please choose a valid Email."
+                        return
+                    }
+
+
 
                     const data = {}
                     data.name = `${newaddress.elements.fname.value}${newaddress.elements.lname.value}`;
@@ -448,6 +480,9 @@
                     data.pincode = newaddress.elements.pincode.value;
                     data.address = `${data.address},${data.city},${data.village}-${data.pincode}`
                     console.log(data);
+
+
+
                     fetch("/address", { method: "POST", body: new URLSearchParams(data) }).then(res => {
                         if (res.status === 200) {
 
@@ -496,7 +531,14 @@
 
 
                     const data = document.getElementById("promo").value
+                    if (!data.trim()) {
+                        toaster(2, "Please choose a code.")
+                        document.getElementById("E_promo").innerHTML = "Please choose a code."
+                        return
+                    }else{
+                        document.getElementById("E_promo").innerHTML = ""
 
+                    }
                     fetch(`/promo/${data}`).then(data => {
                         data.json().then(data => {
                             // console.log(data)
@@ -507,7 +549,7 @@
                                 // document.getElementById("cValue").innerHTML = "-" + data.value
                                 discount = Number(data.value)
                                 if (Total >= discount + 500) {
-                                    if(!discountID === data._id){
+                                    if (!discountID === data._id) {
                                         discountID = data._id
                                         document.getElementById("Ftotal").innerHTML = Total - discount
                                         document.getElementById("E_promo").innerHTML = ""
@@ -699,7 +741,7 @@
                                 } else {
                                     Swal.fire({
                                         icon: 'warning',
-                                        title: 'Payment Required',
+                                        title: 'Payment ',
                                         text: `You must pay ${"₹ " + (total - lwallet).toFixed(2)} to proceed.`,
                                         confirmButtonText: 'OK',
                                         cancelButtonText: 'Cancel'

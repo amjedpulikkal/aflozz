@@ -61,6 +61,9 @@
                 </div> -->
               </div>
             </div>
+            <div class="flex justify-center -mt-6" style=" margin-top: 1.5rem">
+              <h2><span id="timer"></span></h2> 
+            </div>
         </form>
       </div>
     </div>
@@ -120,7 +123,7 @@
         if (res.status === 404) {
           return res.json()
         } else {
-          
+          localStorage.setItem('timerValue', 60 * 5)
           location.reload();
         }
       })
@@ -129,7 +132,7 @@
         spinner.classList.add("lorder-hidden")
         butten.classList.remove("lorder-hidden")
         if (data) {
-          
+
           err.innerHTML = data
         }
       })
@@ -137,5 +140,43 @@
         console.error("Fetch error:", error);
       });
   });
+  function startTimer(duration, display) {
+    let timer = duration, minutes, seconds;
+    let intervalId = setInterval(function () {
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      display.textContent = minutes + ":" + seconds;
+
+      if (--timer < 0) {
+        clearInterval(intervalId);
+        localStorage.setItem('timerValue', 60 * 5)
+        display.innerHTML = ` <a onclick="resend()" class="text-blue-500 cursor-pointer">Resend OTP</a>`
+        timer = duration;
+      }
+      localStorage.setItem('timerValue', timer);
+    }, 1000);
+  }
+
+  function resend() {
+
+    fetch("/signup-otp", { method: "POST" }).then(res => {
+      if (res.text) {
+        let fiveMinutes = 60 * 5,
+        display = document.getElementById('timer');
+        startTimer(fiveMinutes, display);
+      }
+    })
+  }
+  window.onload = function () {
+    let fiveMinutes = 60 * 5,
+      display = document.getElementById('timer');
+    let storedTimerValue = localStorage.getItem('timerValue');
+    let timerValue = storedTimerValue ? parseInt(storedTimerValue) : fiveMinutes;
+    startTimer(timerValue, display);
+  };
 
 </script>

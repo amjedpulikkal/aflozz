@@ -39,7 +39,7 @@ window.addEventListener("load", mainF);
 let form = document.getElementById("a-form")
 form.addEventListener("submit", e => {
     e.preventDefault();
-    const Name = document.forms["a-form"]["Name"].value;
+    const Name = document.forms["a-form"]["Name"].value
     const Email = document.forms["a-form"]["Email"].value;
     const Password = document.forms["a-form"]["Password"].value;
     // ///_______________________
@@ -48,24 +48,24 @@ form.addEventListener("submit", e => {
 
     butten.classList.add("lorder-hidden")
     spinner.classList.remove("lorder-hidden")
-
+    let validate = true
     const E_err = document.getElementById("e_err")
     const p_err = document.getElementById("p_err")
     const n_err = document.getElementById("n_err")
 
-    if (Name === "") {
+    if (Name.trim() === "") {
         n_err.innerHTML = "Please Enter  a name."
         spinner.classList.add("lorder-hidden")
         butten.classList.remove("lorder-hidden")
-        return false
+        validate = false
     } else {
         n_err.innerHTML = ""
     }
-    if (Email === "") {
+    if (Email.trim() === "") {
         E_err.innerHTML = "Please choose a Email."
         spinner.classList.add("lorder-hidden")
         butten.classList.remove("lorder-hidden")
-        return false
+        validate = false
     } else {
         E_err.innerHTML = ""
     }
@@ -73,19 +73,23 @@ form.addEventListener("submit", e => {
         E_err.innerHTML = "Please choose a valid Email."
         spinner.classList.add("lorder-hidden")
         butten.classList.remove("lorder-hidden")
-        return false
+        validate = false
     } else {
 
         E_err.innerHTML = ""
     }
-    if (Password === "") {
+    if (Password.trim() === "") {
         p_err.innerHTML = "Please choose a password."
         spinner.classList.add("lorder-hidden")
         butten.classList.remove("lorder-hidden")
-        return false
+        validate = false
     } else {
         p_err.innerHTML = ""
 
+    }
+
+    if(!validate){
+        return false
     }
 
 
@@ -136,11 +140,12 @@ bform.addEventListener("submit", e => {
     const p_err = document.getElementById("lp_err")
     var regexp =  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/;
 
-    if (Email === "") {
+    let validation =true
+    if (Email.trim() === "") {
         E_err.innerHTML = "Please choose a Email."
         spinner.classList.add("lorder-hidden")
         butten.classList.remove("lorder-hidden")
-        return false
+        validation = false
     } else {
         E_err.innerHTML = ""
     }
@@ -148,18 +153,22 @@ bform.addEventListener("submit", e => {
         E_err.innerHTML = "Please choose a valid Email."
         spinner.classList.add("lorder-hidden")
         butten.classList.remove("lorder-hidden")
-        return false
+        validation = false
     } else {
         E_err.innerHTML = ""
     }
-    if (Password === "") {
+    if (Password.trim() === "") {
         p_err.innerHTML = "Please choose a password."
         spinner.classList.add("lorder-hidden")
         butten.classList.remove("lorder-hidden")
-        return false
+        validation = false
     } else {
         p_err.innerHTML = ""
 
+    }
+
+    if (!validation) {
+        return false  
     }
 
 

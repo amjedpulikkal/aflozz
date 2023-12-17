@@ -167,7 +167,8 @@
             top: 50%;
             transform: translate(0, -50%);
         }
-        .none{
+
+        .none {
             display: block;
         }
 
@@ -259,8 +260,8 @@
                         setTimeout(function () {
                             $(".flash-2").removeClass("animate--drop-in-fade-out");
                             $(".flash-2").css({
-                            "display": "none"
-                        })
+                                "display": "none"
+                            })
                         }, 3500);
                     };
                     c()
@@ -275,11 +276,18 @@
             <span class="sr-only">Error icon</span>
         </div>`
 
+
                 $(document).ready(function () {
                     function c() {
                         $(".flash-2").addClass("animate--drop-in-fade-out");
+                        $(".flash-2").css({
+                            "display": "block"
+                        })
                         setTimeout(function () {
                             $(".flash-2").removeClass("animate--drop-in-fade-out");
+                            $(".flash-2").css({
+                                "display": "none"
+                            })
                         }, 3500);
                     };
                     c()
@@ -294,7 +302,7 @@
 
 <body>
     <div class="flash-1">
-        <div class="flash-2" style="z-index: 100;" >
+        <div class="flash-2" style="z-index: 100;">
             <!-- <div class="flash__icon-2">
                 <i class="icon fa fa-check-circle-o"></i>
             </div>
@@ -350,11 +358,12 @@
                                             List</span></a></li>
                                 <li><a title="Product List" href="/admin/sales-report/"><span
                                             class="mini-sub-pro">sales-report</span></a></li>
-                                            </span></a></li>
-                                <li><a title="Product List" href="/admin/banner/"><span
-                                            class="mini-sub-pro">Banner</span></a></li>
-                            </ul>
+                                </span></a>
                         </li>
+                        <li><a title="Product List" href="/admin/banner/"><span class="mini-sub-pro">Banner</span></a>
+                        </li>
+                    </ul>
+                    </li>
 
                     </ul>
                 </nav>
@@ -565,7 +574,11 @@
                                         <li><a data-toggle="collapse" data-target="#Pagemob" href="#">Pages <span
                                                     class="admin-project-icon nalika-icon nalika-down-arrow"></span></a>
                                             <ul id="Pagemob" class="collapse dropdown-header-top">
-                                                <li><a href="login.html">Login</a>
+                                                <li>
+                                                    <form action="/logout" method="post" id="form-log">
+                                                        <a
+                                                            onclick="()=>{document.getElementById('form-log').submit()}">Login</a>
+                                                    </form>
                                                 </li>
                                                 <li><a href="register.html">Register</a>
                                                 </li>
