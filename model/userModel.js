@@ -31,7 +31,7 @@ module.exports = {
     },
     async addMessage(id, data) {
         data.date = new Date()
-        data.id = new ObjectId(data.id)
+        data.id = data.id!=="null"?new ObjectId(data.id):null
         return await db_community.insertOne({ userId: new ObjectId(id), data })
     },
     async findCoupon(code, userId) {
