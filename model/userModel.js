@@ -27,6 +27,13 @@ module.exports = {
                 foreignField: "_id",
                 as: "product"
             }
+        },{
+            $lookup: {
+                from: "user",
+                localField: "userId",
+                foreignField: "_id",
+                as: "user"
+            }
         }]).sort({ 'data.date': -1 }).sort({ 'data.date': -1 }).limit(5).toArray()
     },
     async addMessage(id, data) {
