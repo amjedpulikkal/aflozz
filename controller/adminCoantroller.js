@@ -245,7 +245,7 @@ module.exports = {
                 req.session.admin = data
                 const url = req.session?.adminUrl?req.session.adminUrl:"/admin"
                 console.log(url)
-                res.status(200).json(url)
+                res.status(200).json("/admin"+url)
             }).catch(err => {
                 console.log(err.err);
                 res.status(err.status).json(err.err)
