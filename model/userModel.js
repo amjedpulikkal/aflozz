@@ -19,11 +19,19 @@ module.exports = {
         }
         return product
     },
-    async getMessage(data) {
-        return await db_community.find().sort({ 'data.date': -1 }).limit(5).toArray()
+    async getMessage() {
+        return await db_community.aggregate([{
+            $lookup: {
+                from: "products",
+                localField: "data.id",
+                foreignField: "_id",
+                as: "product"
+            }
+        }]).sort({ 'data.date': -1 }).sort({ 'data.date': -1 }).limit(5).toArray()
     },
     async addMessage(id, data) {
         data.date = new Date()
+        data.id = new ObjectId(data.id)
         return await db_community.insertOne({ userId: new ObjectId(id), data })
     },
     async findCoupon(code, userId) {
@@ -62,7 +70,7 @@ module.exports = {
 
 
     },
-    async cancelOrder(id, userId,wallet) {
+    async cancelOrder(id, userId, wallet) {
 
         const product = await db_order.findOneAndUpdate({ _id: new ObjectId(id) }, { $set: { cancel: true } })
 
@@ -70,14 +78,14 @@ module.exports = {
 
         if (['online', 'wallet'].includes(product.value.paymentType)) {
             console.log("yessssssssssssssssssssssssssss ");
-             const walletHistory ={
-                from:`cancel order #${product?.value?.no}`,
-                date:new Date(),
-                type:"Credit",
+            const walletHistory = {
+                from: `cancel order #${product?.value?.no}`,
+                date: new Date(),
+                type: "Credit",
                 balance: wallet + product.value.price,
-                price:product.value.price 
-             }
-            const re = await db_user.updateOne({ _id: new ObjectId(userId) }, { $inc: { wallet: product.value.price},$push:{walletHistory}})
+                price: product.value.price
+            }
+            const re = await db_user.updateOne({ _id: new ObjectId(userId) }, { $inc: { wallet: product.value.price }, $push: { walletHistory } })
             console.log(re)
         }
         product.value.products.forEach(async (element) => {
@@ -574,18 +582,18 @@ module.exports = {
             returnOriginal: false
         })
     },
-    async wallet(id, amount,walletHistory) {
-        return await db_user.updateOne({ _id: new ObjectId(id) }, { $set: { wallet: amount },$push:{walletHistory} })
+    async wallet(id, amount, walletHistory) {
+        return await db_user.updateOne({ _id: new ObjectId(id) }, { $set: { wallet: amount }, $push: { walletHistory } })
     },
-    async claimReferral(code,name) {
+    async claimReferral(code, name) {
         const walletHistory = {
             from: `Credited ₹200 for using referral code "${code}" by ${name}`,
             date: new Date(),
             type: "Credit",
-            balance:200,
+            balance: 200,
             price: 200
-          }
-        return await db_user.findOneAndUpdate({ referral: code }, { $inc: { wallet: 200 },$push:{walletHistory}})
+        }
+        return await db_user.findOneAndUpdate({ referral: code }, { $inc: { wallet: 200 }, $push: { walletHistory } })
     },
     async getUserCoupon(id) {
         return await db_coupon.find({ user: { $nin: [new ObjectId(id)] } }).toArray()

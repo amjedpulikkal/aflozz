@@ -20,3 +20,6 @@
 {"level":"error","message":false,"timestamp":"2023-12-17 15:30:00"}
 {"level":"error","message":false,"timestamp":"2023-12-17 15:33:05"}
 {"level":"error","message":false,"timestamp":"2023-12-17 15:35:05"}
+{"level":"error","message":{},"timestamp":"2023-12-17 22:37:42"}
+{"level":"error","message":{},"timestamp":"2023-12-17 22:42:35"}
+{"level":"error","message":"Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer","stack":"BSONError: Argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer\n    at new ObjectId (C:\\Users\\manua\\OneDrive\\Desktop\\Aflozz\\node_modules\\bson\\lib\\bson.cjs:2055:23)\n    at Object.addMessage (C:\\Users\\manua\\OneDrive\\Desktop\\Aflozz\\model\\userModel.js:27:18)\n    at sendMassage (C:\\Users\\manua\\OneDrive\\Desktop\\Aflozz\\controller\\userCantroller.js:642:23)\n    at Layer.handle [as handle_request] (C:\\Users\\manua\\OneDrive\\Desktop\\Aflozz\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (C:\\Users\\manua\\OneDrive\\Desktop\\Aflozz\\node_modules\\express\\lib\\router\\route.js:144:13)\n    at ifuser (C:\\Users\\manua\\OneDrive\\Desktop\\Aflozz\\model\\aouth.js:19:17)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)","timestamp":"2023-12-17 23:24:23"}

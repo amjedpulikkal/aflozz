@@ -625,8 +625,9 @@ module.exports = {
       console.log(req.query);
 
       const product = ObjectId.isValid(req.query.id) ? await productModel.findOne_product(req.query.id) : null
-      console.log(product);
+      
       const message = await userModel.getMessage()
+      console.log(message)
       res.render("user/chat", { layout: "user/layout", titel: "chat", message, cartLength: req.session.user.cart.length, user: req.session.user, product })
     } catch (error) {
       logger.error(error)

@@ -463,7 +463,7 @@
                     var regexp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/;
 
                     if (!validation) return toaster(2, "Please fill in all fields.")
-                    if (!regexp.test(newaddress.elements.address.value)) {
+                    if (!regexp.test(document.getElementById("email").value)) {
                         toaster(2, "Please choose a valid Email.")
                         document.getElementById("err-email").innerHTML = "Please choose a valid Email."
                         return
