@@ -79,7 +79,7 @@ module.exports = {
     unlist: async (req, res) => {
         try {
             await categoryModel.category_status(req.query)
-            res.redirect("/admin/category")
+            res.status(200).json("OK")
         } catch (error) {
             logger.error(error)
             return res.status(500).render("500", { layout: "login/layout" })

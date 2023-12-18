@@ -26,11 +26,11 @@
                                 </td>
                                 <td>
                                     <% if(item.status===false){ %>
-                                        <a href="/admin/unlist?_id=<%=item._id%>&status=true"
-                                            class="ds-setting">Disabled</a>
+                                        <a onclick="updateStatus('<%=item._id%>','true')"  id="statusB<%=item._id%>" 
+                                            class="ds-setting cursor-pointer">Disabled</a>
                                         <%}else{%>
-                                            <a href="/admin/unlist?_id=<%=item._id%>&status=false"
-                                                class="pd-setting">Active</a>
+                                            <a  onclick="updateStatus('<%=item._id%>','false')" id="statusB<%=item._id%>" 
+                                                class="pd-setting cursor-pointer">Active</a>
                                             <%}%>
                                 </td>
                                 <td>
@@ -61,3 +61,32 @@
         </div>
     </div>
 </div>
+
+
+<script>
+     function updateStatus(id,status) {
+      
+        fetch(`/admin/unlist?_id=${id}&status=${status}`).then(res=>{
+            if (res.ok) {
+                toaster(1,"catogory status has been changed successfully")
+                let text=document.getElementById(`statusB${id}`)
+                if (text.innerText=== "Active") {
+
+                    text.classList.remove("pd-setting")
+                    text.classList.add("ds-setting")
+                    text.innerText ="Disabled"
+
+                    
+                }else{
+                    text.classList.add("pd-setting")
+                    text.classList.remove("ds-setting")
+                    text.innerText ="Active"
+                }
+            }else{
+                toaster(2,"Product status has sum problems")
+
+            }
+        })
+
+    }
+</script>

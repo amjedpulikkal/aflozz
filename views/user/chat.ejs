@@ -27,7 +27,7 @@
       <div id="messages" style="flex-direction: column-reverse;"
          class="h-screen flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
          <%console.log(user._id)%>
-            <%message.forEach(item=>{%>
+            <%message.reverse().forEach(item=>{%>
 
                <%if(item.userId.toString()===user._id.toString()){%>
                   <div class="chat-message mt-2">
