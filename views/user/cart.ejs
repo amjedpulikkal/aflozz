@@ -281,7 +281,7 @@
             
             
             
-            whenChange()
+            whenChange1()
             productQty.addEventListener("change", whenChange);
             function whenChange(){
                 const qty = parseInt(productQty.value);
@@ -296,6 +296,29 @@
                         productQty.value = qtyMax;
                         inc(productQty.getAttribute("data-id"))
                         toaster(2, "Sorry,product is out of stock.")
+                        addBtn.disabled = true;
+                    } else {
+                        productQty.value = qty;
+                        inc(productQty.getAttribute("data-id"))
+    
+                        addBtn.disabled = false;
+                    }
+                }
+
+            }
+            function whenChange1(){
+                const qty = parseInt(productQty.value);
+                if (isNaN(qty) || qty < qtyMin) {
+                    productQty.value = qtyMin;
+                    inc(productQty.getAttribute("data-id"))
+                    // toaster(2, "Sorry,product is out of stock.")
+                    minusBtn.disabled = true;
+                } else {
+                    minusBtn.disabled = false;
+                    if (qty >= qtyMax) {
+                        productQty.value = qtyMax;
+                        inc(productQty.getAttribute("data-id"))
+                        // toaster(2, "Sorry,product is out of stock.")
                         addBtn.disabled = true;
                     } else {
                         productQty.value = qty;

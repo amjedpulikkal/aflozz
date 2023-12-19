@@ -375,23 +375,28 @@
                                             <label for="default-radio-2"
                                                 class="ml-2 text-sm font-medium ">Razorpay</label>
                                         </div>
-                                        <div class="mt-4 pb-4 flex ">
-                                            <input id="default-radio-1" type="radio" value="cashOnDelivery" id="wallet"
-                                                name="payment"
-                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="default-radio-1"
-                                                class="ml-2 text-sm font-medium ">Wallet</label>
-                                            <div class="ml-2 hidden" id="tick-img">
-                                                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
-                                                    style="fill: #44ff00"
-                                                    viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-
-                                                    <path
-                                                        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
-                                                </svg>
+                                        <!-- <div class="flex justify-around"> -->
+                                            <div class="mt-4 pb-4 flex ">
+                                                <input id="default-radio-1" type="radio" value="cashOnDelivery" id="wallet"
+                                                    name="payment"
+                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                <label for="default-radio-1"
+                                                    class="ml-2 text-sm font-medium ">Wallet</label>
+                                                <div class="ml-2 hidden" id="tick-img">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                        style="fill: #44ff00"
+                                                        viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+    
+                                                        <path
+                                                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                                                    </svg>
+                                                </div>
+                                                <div class="ms-auto" id="walletRs"> ₹<%=user?.wallet?.toFixed(2)||0%></div>
                                             </div>
-
-                                        </div>
+                                            <!-- <div>
+                                                ₹<%=user?.wallet?.toFixed(2)||0%>
+                                            </div>
+                                        </div> -->
                                         <button onclick="sub() " id="chBut"
                                             class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
 
@@ -510,6 +515,7 @@
                     let lwallet = Number('<%= user && user.wallet !== undefined ? user.wallet.toFixed(2) : 0 %>');
                     let total = Number("<%=price?.toFixed(2)%>")
                     document.getElementById("Ftotal").innerHTML = "₹ " + (total -= lwallet).toFixed(2)
+                    document.getElementById("walletRs").innerHTML="₹0"
 
                 }
                 if (discount) {
@@ -752,6 +758,7 @@
                                             document.getElementById("Ftotal").innerHTML = (total -= lwallet).toFixed(2)
                                             document.getElementById("tick-img").classList.remove("hidden")
                                             localStorage.setItem("wallet", true)
+                                            document.getElementById("walletRs").innerHTML="₹0"
                                         }
                                         document.getElementById("chBut").classList.remove("hidden")
                                         document.getElementById("spinnerCh").classList.add("hidden")
