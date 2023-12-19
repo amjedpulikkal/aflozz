@@ -1,6 +1,10 @@
 const { db_product, db_order } = require("./db")
 const { ObjectId } = require("mongodb");
-
+function generateUniqueID() {
+    const timestamp = Date.now().toString();
+    const randomNum = Math.floor(100000 + Math.random() * 900000);
+    return timestamp.slice(-3) + randomNum.toString().slice(-3);
+  }
 module.exports = {
     async ufind_product() {
         try {
@@ -16,6 +20,7 @@ module.exports = {
     },
     async add_product(data) {
         try {
+            data.no = generateUniqueID()
             data.price = Number(data.price)
             data.discount = Number(data.discount)
             data.stock = Number(data.stock)
