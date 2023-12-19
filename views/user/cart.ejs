@@ -271,37 +271,42 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         const qtyInputs = document.querySelectorAll(".qty-input");
-
         qtyInputs.forEach((inputContainer) => {
             const productQty = inputContainer.querySelector(".product-qty");
             const minusBtn = inputContainer.querySelector(".qty-count--minus");
             const addBtn = inputContainer.querySelector(".qty-count--add");
-
+            
             const qtyMin = parseInt(productQty.getAttribute("min"));
             const qtyMax = parseInt(productQty.getAttribute("max"));
-
-
-
-            productQty.addEventListener("change", function () {
+            
+            
+            
+            whenChange()
+            productQty.addEventListener("change", whenChange);
+            function whenChange(){
                 const qty = parseInt(productQty.value);
-
                 if (isNaN(qty) || qty < qtyMin) {
                     productQty.value = qtyMin;
+                    inc(productQty.getAttribute("data-id"))
                     toaster(2, "Sorry,product is out of stock.")
                     minusBtn.disabled = true;
                 } else {
                     minusBtn.disabled = false;
                     if (qty >= qtyMax) {
                         productQty.value = qtyMax;
+                        inc(productQty.getAttribute("data-id"))
                         toaster(2, "Sorry,product is out of stock.")
                         addBtn.disabled = true;
                     } else {
                         productQty.value = qty;
+                        inc(productQty.getAttribute("data-id"))
+    
                         addBtn.disabled = false;
                     }
                 }
-            });
 
+            }
+             
             minusBtn.addEventListener("click", function () {
                 let qty = parseInt(productQty.value);
                 if (qty > qtyMin) {
@@ -338,11 +343,11 @@
             });
         });
 
-        const selectElement = document.getElementById("ff");
-        selectElement.addEventListener("change", function () {
-            const selectedValue = selectElement.value;
-            console.log(selectedValue);
-        });
+        // const selectElement = document.getElementById("ff");
+        // selectElement.addEventListener("change", function () {
+        //     const selectedValue = selectElement.value;
+        //     console.log(selectedValue);
+        // });
     });
 
 </script>

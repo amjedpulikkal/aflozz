@@ -98,7 +98,6 @@
 
             let table = document.getElementById("table-3")
             method = method ? method : ""
-            // console.log(method);
             const res = await fetch("/admin/getReport", { method: "POST", body: new URLSearchParams({ start, end, method }) })
             let resp = await res.json()
             let data = resp.length ? resp[0] : resp
