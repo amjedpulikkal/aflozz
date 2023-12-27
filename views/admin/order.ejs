@@ -35,7 +35,7 @@
                             <option value="3">Retur order</option>
                         </select>
                     </div>
-                    <table>
+                    <table id="orders">
                         <tr>
                             <th>#order no</th>
                             <th>User</th>
@@ -160,4 +160,35 @@
             }
         });
     });
+
+        let pageNo =0
+    document.addEventListener("scroll",()=>{
+       let orderTr = document.getElementById("orders")
+       if(orderTr.scrollHeight  <= document.scrollingElement.scrollTop+document.body.offsetHeight){
+        pageNo++
+        getOrder(pageNo)
+
+       }
+     
+    })
+    function getOrder(no){
+        let orderTr = document.getElementById("orders")
+
+         let 
+        // fetch(`/admin/orders?page=${no}`).then(re=>{
+        //     if(re.ok){
+
+
+
+
+                
+        //     }
+        // })
+
+
+
+        
+
+    }
+
 </script>

@@ -253,7 +253,8 @@ module.exports = {
     ]).toArray()
   },
   async subscription() {
-    return await db_subscription.aggregate([{ $lookup: { from: "user", localField: "userId", foreignField: "_id", as: "userId" } }, { $match: { "userId.presence": { $ne: "online" } } }]).toArray()
+    // return await db_subscription.aggregate([{ $lookup: { from: "user", localField: "userId", foreignField: "_id", as: "userId" } }, { $match: { "userId.presence": { $ne: "online" } } }]).toArray()
+    return await db_subscription.find().toArray()
   },
   async getReturnOrders() {
     const order = await db_order.aggregate([

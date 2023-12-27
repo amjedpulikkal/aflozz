@@ -292,7 +292,7 @@ module.exports = {
        
             notification(notificationPayload)
             const data = await db.subscription()
-
+            console.log(data)
             res.redirect("/admin/notification")
             data.forEach(data=>{
                 webpush.sendNotification(data, JSON.stringify(notificationPayload)).then(() => {
