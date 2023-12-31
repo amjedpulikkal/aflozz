@@ -14,6 +14,7 @@ function varifyction(data) {
   try {
     return jwt.verify(data, secretKey)
   } catch (errr) {
+    console.log(errr)
     return null
 
   }
