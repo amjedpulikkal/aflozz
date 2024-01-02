@@ -6,8 +6,8 @@ Welcome to Floszz, an E-commerce website built using Node.js with Express.js, EJ
 
 
 - [Features](#features)
-- [TechnologyStack](#TechnologyStack)
-- [Installation](#RunLocally)
+- [TechnologyStack](#Technology-Stack)
+- [Installation](#Run-Locally)
 
 ## Features
 
