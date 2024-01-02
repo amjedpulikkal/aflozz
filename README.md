@@ -1,4 +1,4 @@
-# Floszz E-commerce Website
+# Aflozz E-commerce Website
 
 Welcome to Floszz, an E-commerce website built using Node.js with Express.js, EJS, and MongoDB.
 ## Project URL
