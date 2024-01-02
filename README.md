@@ -4,12 +4,10 @@ Welcome to Floszz, an E-commerce website built using Node.js with Express.js, EJ
 
 ## Table of Contents
 
+
 - [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Database Setup](#database-setup)
-- [Contributing](#contributing)
-- [License](#license)
+- [TechnologyStack](#TechnologyStack)
+- [Installation](#RunLocally)
 
 ## Features
 
