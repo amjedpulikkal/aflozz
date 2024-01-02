@@ -92,7 +92,9 @@ To run this project, you will need to add the following environment variables to
 `key_secret=Nsw4FLjT0UauZyFJDug7ViEU`
 `key_id=rzp_test_ISFWvbAXmN0zBI`
 `webPush_publicKey=BECJByIfs2oV2rDl72EmZAgU3wQq4HZQXslwFbrivDTblWuHZyW2r5R5mXKEop-auHg46mQS_1O134ZvfOH4yTY`
-`webPush_privatekey=1QJpyn77an14wdgHB_QeihihDeLk3NcPBOKApakn8Z0`## Screenshots
+`webPush_privatekey=1QJpyn77an14wdgHB_QeihihDeLk3NcPBOKApakn8Z0`
+
+## Screenshots
 
 ### Home Page
 ![Home Page](https://raw.githubusercontent.com/amjedpulikkal/aflozz/main/public/image/imageFrReadme/Web%20capture_2-1-2024_114239_www.aflozz.shop.jpeg)
