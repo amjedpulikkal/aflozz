@@ -259,11 +259,8 @@ module.exports = {
     },
     send: async (req, res) => {
         try {
-           
-
             const body = req.body
             body.date = new Date()
-        
             const { notification } = require("../app")
             await db_notification.insertOne(body)
             const notificationPayload = {

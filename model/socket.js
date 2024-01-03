@@ -7,7 +7,7 @@ module.exports = {
         const io = socketIO(Server);
         
         function notification(data){
-            console.log("send");
+            // console.log("send",data);
             io.emit("notfication",data)
          }
         io.on('connection', async (socket) => {
