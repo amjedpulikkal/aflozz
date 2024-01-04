@@ -571,6 +571,7 @@
           fetch("/unsubscribe", { method: "POST", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(subscribe) }).then(async res => {
             if (res.ok) {
               console.log("ooooook");
+              localStorage.clear();
               document.getElementById("logout").submit()
             }
           })
