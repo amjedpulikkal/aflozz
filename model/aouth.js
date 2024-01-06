@@ -1,5 +1,62 @@
 const user = require("./db").db_user
 const { ObjectId } = require("mongodb");
+const { RecaptchaEnterpriseServiceClient } = require('@google-cloud/recaptcha-enterprise');
+
+
+async function recaptcha(req, res, next) {
+
+    console.log(req.body)
+    // TO-DO: Replace the token and reCAPTCHA action variables before running the sample.
+    const projectID = "aflozz-1704543717653"
+    const recaptchaKey = "6LcL4kcpAAAAAG2nNK_R_x_ql3E2SoeiydCKAHC7"
+    const token = req.body?.token
+    const recaptchaAction = req.body?.action
+    createAssessment(projectID,recaptchaKey,token,recaptchaAction)
+}
+
+
+async function createAssessment(
+    projectID,
+    recaptchaSiteKey,
+    token,
+    recaptchaAction
+  ) {
+    const client = new RecaptchaEnterpriseServiceClient();
+    const projectPath = client.projectPath(projectID);
+    const request = {
+      assessment: {
+        event: {
+          token: token,
+          siteKey: recaptchaSiteKey,
+        },
+      },
+      parent: projectPath,
+    };
+    const [response] = await client.createAssessment(request);
+    console.log(response);
+    if (!response.tokenProperties.valid) {
+      console.log(
+        "The CreateAssessment call failed because the token was: " +
+          response.tokenProperties.invalidReason
+      );
+  
+      return null;
+    }
+    if (response.tokenProperties.action === recaptchaAction) {
+      return response.riskAnalysis.score;
+    } else {
+      console.log(
+        "The action attribute in your reCAPTCHA tag " +
+          "does not match the action you are expecting to score"
+      );
+      return null;
+    }
+  }
+
+
+
+
+
 
 
 async function ifuser(req, res, next) {
@@ -9,12 +66,12 @@ async function ifuser(req, res, next) {
         console.log(data);
         // req.session.user = data
         if (data) {
-            if(req.session.url){
+            if (req.session.url) {
                 const url = req.session.url
-                req.session.url = null 
+                req.session.url = null
                 res.redirect(url)
-                
-            }else{
+
+            } else {
                 req.session.user = data
                 next()
             }
@@ -53,7 +110,7 @@ function noadmin(req, res, next) {
 const sharp = require("sharp")
 const path = require("path")
 async function sharp_cat(req, res, next) {
-    if(req.file){
+    if (req.file) {
         const imageName = `${Date.now()}${Math.round() * 1000}${req.file.originalname}`
         req.body.image = imageName
         sharp(req.file.buffer).resize(300, 300).toFile(path.join(__dirname, "../public/image/products/", imageName), (err, info) => {
@@ -61,11 +118,11 @@ async function sharp_cat(req, res, next) {
                 console.log(err);
                 // Handle error
                 return res.status(500).send('Error processing image');
-            }else{
+            } else {
                 next()
             }
         })
-    }else{
+    } else {
         next()
     }
 
@@ -84,32 +141,32 @@ async function sharp_pro(req, res, next) {
         })
     })
 
-        next()
- 
+    next()
+
 }
 async function sharp_up(req, res, next) {
     req.body.image = {}
     req.body.status = false
     console.log(req.files);
-    const files =  req.files
-    for (const data in files ) {
-            const d = files[data][0]
-            console.log(d)
-            console.log(data)
-            const imageName = `${Date.now()}${Math.round() * 1000}${d.originalname}`
-                req.body.image[`image.${data}`] = imageName;
-            sharp(d.buffer).resize(300, 300).toFile(path.join(__dirname, "../public/image/products/", imageName), async (err, info) => {
-                if (err) {
-                    console.log(err);
-                }
-            })
+    const files = req.files
+    for (const data in files) {
+        const d = files[data][0]
+        console.log(d)
+        console.log(data)
+        const imageName = `${Date.now()}${Math.round() * 1000}${d.originalname}`
+        req.body.image[`image.${data}`] = imageName;
+        sharp(d.buffer).resize(300, 300).toFile(path.join(__dirname, "../public/image/products/", imageName), async (err, info) => {
+            if (err) {
+                console.log(err);
+            }
+        })
     }
     console.log(req.body.image);
-        next()
- 
+    next()
+
 }
 async function sharp_not(req, res, next) {
-    if(req.file){
+    if (req.file) {
         const imageName = `${Date.now()}${Math.round() * 1000}${req.file.originalname}`
         req.body.image = imageName
         console.log("req.body");
@@ -120,17 +177,17 @@ async function sharp_not(req, res, next) {
                 console.log(err);
                 // Handle error
                 return res.status(500).send('Error processing image');
-            }else{
+            } else {
                 next()
             }
         })
-    }else{
+    } else {
         next()
     }
- 
+
 }
 async function sharp_ban(req, res, next) {
-    if(req.file){
+    if (req.file) {
         const imageName = `${Date.now()}${Math.round() * 1000}${req.file.originalname}`
         req.body.image = imageName
         console.log("req.body");
@@ -141,15 +198,15 @@ async function sharp_ban(req, res, next) {
                 console.log(err);
                 // Handle error
                 return res.status(500).send('Error processing image');
-            }else{
+            } else {
                 next()
             }
         })
-    }else{
+    } else {
         next()
     }
- 
+
 }
 
 
-module.exports = {sharp_not, nouser, ifuser, sharp_up, ifadmin, noadmin, sharp_pro ,sharp_cat,sharp_ban}
+module.exports = { sharp_not, nouser, ifuser, sharp_up, ifadmin, noadmin, sharp_pro, sharp_cat, sharp_ban,recaptcha }

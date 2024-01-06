@@ -39,6 +39,15 @@ window.addEventListener("load", mainF);
 let form = document.getElementById("a-form")
 form.addEventListener("submit", e => {
     e.preventDefault();
+
+
+ 
+        console.log(23423)
+        // e.preventDefault();
+    grecaptcha.enterprise.ready(async () => {
+    const token = await grecaptcha.enterprise.execute('6LcL4kcpAAAAAG2nNK_R_x_ql3E2SoeiydCKAHC7', {action: 'LOGIN'});
+    // console.log(token)
+      
     const Name = document.forms["a-form"]["Name"].value
     const Email = document.forms["a-form"]["Email"].value;
     const Password = document.forms["a-form"]["Password"].value;
@@ -94,7 +103,9 @@ form.addEventListener("submit", e => {
 
 
     let data = {
-        Email: Email
+        Email: Email,
+        token,
+        action: 'LOGIN'
     }
 
 
@@ -124,6 +135,9 @@ form.addEventListener("submit", e => {
         .catch((error) => {
             console.error("Fetch error:", error);
         });
+
+    });
+
 });
 let bform = document.getElementById("b-form")
 bform.addEventListener("submit", e => {

@@ -94,7 +94,9 @@ module.exports = {
   },
   postSignup: async (req, res, next) => {
     try {
+
       const data = req.body
+      console.log(data)
       data.status = true
       userModel.find_insert(data).then(data => {
 
@@ -134,9 +136,9 @@ module.exports = {
     try {
       const data = req.body
 
-
+      console.log(data)
       const userData = await userModel.findOtp(data.Otp)
-
+      console.log(userData)
       if (userData) {
         if (new Date() < userData.ex_date) {
           if (userData.otp === data.Otp) {
