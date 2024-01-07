@@ -44,6 +44,9 @@ form.addEventListener("submit", e => {
  
         console.log(23423)
         // e.preventDefault();
+        // ///_______________________
+    const butten = document.getElementById("a-sub")
+    const spinner = document.getElementById("a-spinner")
     grecaptcha.enterprise.ready(async () => {
     const token = await grecaptcha.enterprise.execute('6LfQp0gpAAAAAHWlFahzqCPEfZI3xe5xaPCQRs4G', {action: 'LOGIN'});
     console.log(token)
@@ -51,9 +54,6 @@ form.addEventListener("submit", e => {
     const Name = document.forms["a-form"]["Name"].value
     const Email = document.forms["a-form"]["Email"].value;
     const Password = document.forms["a-form"]["Password"].value;
-    // ///_______________________
-    const butten = document.getElementById("a-sub")
-    const spinner = document.getElementById("a-spinner")
 
     butten.classList.add("lorder-hidden")
     spinner.classList.remove("lorder-hidden")
