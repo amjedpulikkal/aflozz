@@ -8,50 +8,72 @@ async function recaptcha(req, res, next) {
     console.log(req.body)
     // TO-DO: Replace the token and reCAPTCHA action variables before running the sample.
     const projectID = "aflozz-1704543717653"
-    const recaptchaKey = "6LcL4kcpAAAAAG2nNK_R_x_ql3E2SoeiydCKAHC7"
+    const recaptchaKey = "6LfQp0gpAAAAANR-Wx25alF9QN32fN92tm_9PIr7"
     const token = req.body?.token
     const recaptchaAction = req.body?.action
-    createAssessment(projectID,recaptchaKey,token,recaptchaAction)
+    // createAssessment(projectID,recaptchaKey,token,recaptchaAction)
+
+    const url = `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaKey}&response=${token}`;
+
+    fetch(url, {
+        method: 'post'
+    })
+        .then(response => response.json())
+        .then(google_response => {
+     
+            if(google_response.success){
+                next()
+            }
+        })
+        .catch(error => res.json({ error }));
+    
 }
 
 
-async function createAssessment(
-    projectID,
-    recaptchaSiteKey,
-    token,
-    recaptchaAction
-  ) {
-    const client = new RecaptchaEnterpriseServiceClient();
-    const projectPath = client.projectPath(projectID);
-    const request = {
-      assessment: {
-        event: {
-          token: token,
-          siteKey: recaptchaSiteKey,
-        },
-      },
-      parent: projectPath,
-    };
-    const [response] = await client.createAssessment(request);
-    console.log(response);
-    if (!response.tokenProperties.valid) {
-      console.log(
-        "The CreateAssessment call failed because the token was: " +
-          response.tokenProperties.invalidReason
-      );
-  
-      return null;
-    }
-    if (response.tokenProperties.action === recaptchaAction) {
-      return response.riskAnalysis.score;
-    } else {
-      console.log(
-        "The action attribute in your reCAPTCHA tag " +
-          "does not match the action you are expecting to score"
-      );
-      return null;
-    }
-  }
+// async function createAssessment(
+    
+//     projectID,
+//     recaptchaSiteKey,
+//     token,
+//     recaptchaAction
+//   ) {
+//     // try {
+        
+//     //     const client = new RecaptchaEnterpriseServiceClient();
+//     //     const projectPath = client.projectPath(projectID);
+//     //     const request = {
+//     //       assessment: {
+//     //         event: {
+//     //           token: token,
+//     //           siteKey: recaptchaSiteKey,
+//     //         },
+//     //       },
+//     //       parent: projectPath,
+//     //     };
+//     //     const [response] = await client.createAssessment(request);
+//     //     console.log(response);
+//     //     if (!response.tokenProperties.valid) {
+//     //       console.log(
+//     //         "The CreateAssessment call failed because the token was: " +
+//     //           response.tokenProperties.invalidReason
+//     //       );
+      
+//     //       return null;
+//     //     }
+//     //     if (response.tokenProperties.action === recaptchaAction) {
+//     //       return response.riskAnalysis.score;
+//     //     } else {
+//     //       console.log(
+//     //         "The action attribute in your reCAPTCHA tag " +
+//     //           "does not match the action you are expecting to score"
+//     //       );
+//     //       return null;
+//     //     }
+//     // } catch (error) {
+//     //     console.log(error);
+
+//     // }
+//   }
 
 
 

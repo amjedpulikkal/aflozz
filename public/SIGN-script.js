@@ -45,8 +45,8 @@ form.addEventListener("submit", e => {
         console.log(23423)
         // e.preventDefault();
     grecaptcha.enterprise.ready(async () => {
-    const token = await grecaptcha.enterprise.execute('6LcL4kcpAAAAAG2nNK_R_x_ql3E2SoeiydCKAHC7', {action: 'LOGIN'});
-    // console.log(token)
+    const token = await grecaptcha.enterprise.execute('6LfQp0gpAAAAAHWlFahzqCPEfZI3xe5xaPCQRs4G', {action: 'LOGIN'});
+    console.log(token)
       
     const Name = document.forms["a-form"]["Name"].value
     const Email = document.forms["a-form"]["Email"].value;

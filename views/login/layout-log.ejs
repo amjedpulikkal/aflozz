@@ -5,7 +5,8 @@
   <title>Sign Up - Sign In</title>
   <link rel="stylesheet" href="/sign-style.css">
   <link rel="stylesheet" href="/lorder.css">
-  <script src="https://www.google.com/recaptcha/enterprise.js?render=6LcL4kcpAAAAAG2nNK_R_x_ql3E2SoeiydCKAHC7"></script>
+  <script src="https://www.google.com/recaptcha/enterprise.js?render=6LfQp0gpAAAAAHWlFahzqCPEfZI3xe5xaPCQRs4G"></script>
+  <!-- Your code -->
 </head>
 <body>
   <body>
@@ -13,13 +14,6 @@
   </body>
 </html>
   <script  src="SIGN-script.js"></script>
-  <script>
-    function onClick(e) {
-      e.preventDefault();
-      grecaptcha.enterprise.ready(async () => {
-        const token = await grecaptcha.enterprise.execute('6LcL4kcpAAAAAG2nNK_R_x_ql3E2SoeiydCKAHC7', {action: 'LOGIN'});
-      });
-    }
-  </script>
+ 
 </body>
 </html>
