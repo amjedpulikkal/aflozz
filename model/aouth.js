@@ -1,7 +1,5 @@
 const user = require("./db").db_user
 const { ObjectId } = require("mongodb");
-const { RecaptchaEnterpriseServiceClient } = require('@google-cloud/recaptcha-enterprise');
-
 
 async function recaptcha(req, res, next) {
 

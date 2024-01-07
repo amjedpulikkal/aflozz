@@ -12,7 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/recaptcha-enterprise": "^5.1.0",
     "autoprefixer": "^10.4.15",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
