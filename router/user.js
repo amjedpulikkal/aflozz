@@ -43,7 +43,7 @@ router.post("/change/profil",ifuser,userController.changeProfil)
 
 router.get("/address/edit/:id",ifuser,userController.editAddress)
 router.get("/new-address",ifuser,userController.newAddress)
-router.post("/new-order",ifuser,userController.newOrder)
+router.post("/new-order",recaptcha,ifuser,userController.newOrder)
 router.get("/order/cancel/:id",ifuser,userController.cancelOrder)
 router.post("/order/return/:id",ifuser,userController.returnOrder)
 router.get("/account",ifuser,userController.getAccount)
@@ -70,6 +70,8 @@ router.route("/chat").get(ifuser,userController.chat).post(ifuser,userController
 
 
 // router.post('/subscribe', (req, res) => {
+//     res.status(300)
+// })
 //     const subscription = req.body;
 //     console.log(subscription);
 //      subscription = 

@@ -1,3 +1,4 @@
+<script src="https://www.google.com/recaptcha/enterprise.js?render=6LfQp0gpAAAAAHWlFahzqCPEfZI3xe5xaPCQRs4G"></script>
 <style>
     input[type="radio"]:checked+span {
         display: block;
@@ -376,24 +377,25 @@
                                                 class="ml-2 text-sm font-medium ">Razorpay</label>
                                         </div>
                                         <!-- <div class="flex justify-around"> -->
-                                            <div class="mt-4 pb-4 flex ">
-                                                <input id="default-radio-1" type="radio" value="cashOnDelivery" id="wallet"
-                                                    name="payment"
-                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                                <label for="default-radio-1"
-                                                    class="ml-2 text-sm font-medium ">Wallet</label>
-                                                <div class="ml-2 hidden" id="tick-img">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" height="1em"
-                                                        style="fill: #44ff00"
-                                                        viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-    
-                                                        <path
-                                                            d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
-                                                    </svg>
-                                                </div>
-                                                <div class="ms-auto" id="walletRs"> ₹<%=user?.wallet?.toFixed(2)||0%></div>
+                                        <div class="mt-4 pb-4 flex ">
+                                            <input id="default-radio-1" type="radio" value="cashOnDelivery" id="wallet"
+                                                name="payment"
+                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="default-radio-1"
+                                                class="ml-2 text-sm font-medium ">Wallet</label>
+                                            <div class="ml-2 hidden" id="tick-img">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                                    style="fill: #44ff00"
+                                                    viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+
+                                                    <path
+                                                        d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                                                </svg>
                                             </div>
-                                            <!-- <div>
+                                            <div class="ms-auto" id="walletRs"> ₹<%=user?.wallet?.toFixed(2)||0%>
+                                            </div>
+                                        </div>
+                                        <!-- <div>
                                                 ₹<%=user?.wallet?.toFixed(2)||0%>
                                             </div>
                                         </div> -->
@@ -414,6 +416,8 @@
             </div>
             <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
             <script>
+
+
 
                 document.getElementById("F-MRP").innerHTML = "₹ " + (JSON.parse(localStorage.getItem('totalMRP')))
 
@@ -515,7 +519,7 @@
                     let lwallet = Number('<%= user && user.wallet !== undefined ? user.wallet.toFixed(2) : 0 %>');
                     let total = Number("<%=price?.toFixed(2)%>")
                     document.getElementById("Ftotal").innerHTML = "₹ " + (total -= lwallet).toFixed(2)
-                    document.getElementById("walletRs").innerHTML="₹0"
+                    document.getElementById("walletRs").innerHTML = "₹0"
 
                 }
                 if (discount) {
@@ -541,7 +545,7 @@
                         toaster(2, "Please choose a code.")
                         document.getElementById("E_promo").innerHTML = "Please choose a code."
                         return
-                    }else{
+                    } else {
                         document.getElementById("E_promo").innerHTML = ""
 
                     }
@@ -581,7 +585,7 @@
 
 
 
-                function sub() {
+                async function sub() {
                     const form = document.getElementById('form-1');
                     const selectedRadioButton = form.querySelectorAll('input[type=radio][name=address]:checked');
                     const payradioButtons = document.querySelectorAll('input[type=radio][name=payment]');
@@ -620,10 +624,12 @@
                     if (payradioButtons[0].checked) {
                         localStorage.removeItem("wallet")
                         console.log(Total - discount);
+                        let Token = await token() || null
+
                         fetch("/new-order", {
                             method: "POST", headers: {
                                 'Content-Type': 'application/json'
-                            }, body: JSON.stringify({ index: selectedValue, paymentType: "Cash on Delivery", totalMRP: Total, price: "<%=price%>", wallet, discountID })
+                            }, body: JSON.stringify({ index: selectedValue, paymentType: "Cash on Delivery", totalMRP: Total, price: "<%=price%>", wallet, discountID, Token })
                         })
                             .then(res => {
                                 if (res.status === 200) {
@@ -661,13 +667,14 @@
 
                                         }
                                     },
-                                    "handler": function (response) {
+                                    "handler": async function (response) {
                                         localStorage.removeItem("wallet")
                                         document.getElementById("spinnerCh").classList.add("bg-green-600")
+                                        let Token = await token()
                                         fetch("/new-order", {
                                             method: "POST", headers: {
                                                 'Content-Type': 'application/json'
-                                            }, body: JSON.stringify({ index: selectedValue, paymentType: "online", totalMRP: JSON.parse(localStorage.getItem('totalMRP')), discountID, wallet })
+                                            }, body: JSON.stringify({ index: selectedValue, paymentType: "online", totalMRP: JSON.parse(localStorage.getItem('totalMRP')), discountID, wallet, Token })
                                         })
                                             .then(res => {
                                                 if (res.status === 200) {
@@ -727,12 +734,13 @@
                                         confirmButtonText: 'Continue',
                                         showCancelButton: true,
                                         allowOutsideClick: false
-                                    }).then((result) => {
+                                    }).then(async (result) => {
                                         if (result.isConfirmed) {
                                             wallet = true
                                             document.getElementById("Ftotal").innerHTML = 0
                                             localStorage.removeItem("wallet")
-                                            fetch("/new-order", { method: "POST", body: new URLSearchParams({ index: selectedValue, paymentType: "wallet", totalMRP: Total, wallet, discountID }) })
+                                            let Token = await token() || null
+                                            fetch("/new-order", { method: "POST", body: new URLSearchParams({ index: selectedValue, paymentType: "wallet", totalMRP: Total, wallet, discountID, Token }) })
                                                 .then(res => {
                                                     if (res.status === 200) {
                                                         // window.location.replace("/account/orders")
@@ -758,7 +766,7 @@
                                             document.getElementById("Ftotal").innerHTML = (total -= lwallet).toFixed(2)
                                             document.getElementById("tick-img").classList.remove("hidden")
                                             localStorage.setItem("wallet", true)
-                                            document.getElementById("walletRs").innerHTML="₹0"
+                                            document.getElementById("walletRs").innerHTML = "₹0"
                                         }
                                         document.getElementById("chBut").classList.remove("hidden")
                                         document.getElementById("spinnerCh").classList.add("hidden")
@@ -830,6 +838,7 @@
                         confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
                     }, 250);
                 }
+
             </script>
 
             <style>
@@ -884,6 +893,24 @@
                     setTimeout(function () {
                         cpnBtn.innerHTML = "COPY CODE";
                     }, 3000);
+
+
+                }
+
+                async function token() {
+                    return new Promise((res, rej) => {
+                        grecaptcha.enterprise.ready(async () => {
+
+                            const  token = await grecaptcha.enterprise.execute('6LfQp0gpAAAAAHWlFahzqCPEfZI3xe5xaPCQRs4G', { action: 'LOGIN' });
+                            console.log(token)
+                            res(token)
+                        })
+
+
+
+                    })
+
+
 
                 }
             </script>

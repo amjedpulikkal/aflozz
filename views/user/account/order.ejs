@@ -1,144 +1,150 @@
 <%-include("account-layout")%>
-    <div class="flex justify-center">
+    <div>
 
-        <ul class="container bg-white shadow overflow-hidden sm:rounded-md mt-4 ">
+        <div class="flex justify-center">
 
-            <li>
-                <div class="px-4 py-5 sm:px-6 border">
-                    <div class="flex items-center justify-b">
-                        <dir class=" w-1/3">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900">#Id</h3>
-                        </dir>
-                        <p class="w-1/3">Date</p>
-                        <div class="w-2/4">
-                            <!-- <div class="w-1/3"> -->
-                            status
-                            <!-- </div> -->
+            <ul class="container bg-white shadow overflow-hidden sm:rounded-md mt-4 ">
+
+                <li>
+                    <div class="px-4 py-5 sm:px-6 border">
+                        <div class="flex items-center justify-b">
+                            <dir class=" w-1/3">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900">#Id</h3>
+                            </dir>
+                            <p class="w-1/3">Date</p>
+                            <div class="w-2/4">
+                                <!-- <div class="w-1/3"> -->
+                                status
+                                <!-- </div> -->
+                            </div>
                         </div>
                     </div>
-                </div>
-            </li>
-            <% orders.forEach(function(items) { %>
-                <li id="order<%=items._id%>">
-                    <div class="px-4 py-5 sm:px-6 border">
-                        <div class="flex items-center justify-between">
-                            <div class="flex">
-                                <h3 class="text-lg leading-6 font-medium text-gray-900">#Id</h3>
-                                <a href="/account/orders/details/<%=items._id%>">
-                                    <p class="ms-2">
-                                        <%= items.no ? items.no : items._id %>
+                </li>
+                <% orders.forEach(function(items) { %>
+                    <li id="order<%=items._id%>">
+                        <div class="px-4 py-5 sm:px-6 border">
+                            <div class="flex items-center justify-between">
+                                <div class="flex">
+                                    <h3 class="text-lg leading-6 font-medium text-gray-900">#Id</h3>
+                                    <a href="/account/orders/details/<%=items._id%>">
+                                        <p class="ms-2">
+                                            <%= items.no ? items.no : items._id %>
 
-                                    </p>
-                                </a>
-                            </div>
-                            <p>
-                                <%= items.date%>
-                            </p>
-                            <div class="w-2/4">
-                                <div class="row-auto">
-                                    <div class="col-12 col-10 hh-grayBox pt-4">
-                                        <div class="flex justify between">
+                                        </p>
+                                    </a>
+                                </div>
+                                <p>
+                                    <%= items.date%>
+                                </p>
+                                <div class="w-2/4">
+                                    <div class="row-auto">
+                                        <div class="col-12 col-10 hh-grayBox pt-4">
+                                            <div class="flex justify between">
 
-                                            <%if(!items.cancel && !items.return){%>
-                                                <div
-                                                    class="order-tracking <%= (items.status.length >=1) ? 'completed' : '' %>">
-                                                    <span class="is-complete"></span>
-                                                    <p>Ordered<br><span>
-                                                            <%= (items.status[0]?.date) ? items.status[0]?.date : '' %>
-                                                        </span></p>
-                                                </div>
-                                                <div
-                                                    class="order-tracking  <%= (items.status.length>=2) ? 'completed' : '' %>">
-                                                    <span class="is-complete"></span>
-                                                    <p>Shipped<br><span>
-                                                            <%= (items.status[1]?.date) ? items.status[1]?.date : '' %>
-                                                        </span></p>
-                                                </div>
-                                                <div
-                                                    class="order-tracking  <%= (items.status.length >=3) ? 'completed' : '' %>">
-                                                    <span class="is-complete"></span>
-                                                    <p>Delivered<br><span>
-                                                            <%= (items.status[2]?.date) ? items.status[2]?.date : '' %>
-                                                        </span></p>
-                                                </div>
-                                                <%}else if(items.cancel && !items.return){%>
-                                                    <div class="order-tracking cancel">
+                                                <%if(!items.cancel && !items.return){%>
+                                                    <div
+                                                        class="order-tracking <%= (items.status.length >=1) ? 'completed' : '' %>">
                                                         <span class="is-complete"></span>
                                                         <p>Ordered<br><span>
                                                                 <%= (items.status[0]?.date) ? items.status[0]?.date : ''
                                                                     %>
                                                             </span></p>
                                                     </div>
-                                                    <div class="order-tracking cancel">
-                                                        <span class="z-10">Canceled</span>
-
+                                                    <div
+                                                        class="order-tracking  <%= (items.status.length>=2) ? 'completed' : '' %>">
+                                                        <span class="is-complete"></span>
+                                                        <p>Shipped<br><span>
+                                                                <%= (items.status[1]?.date) ? items.status[1]?.date : ''
+                                                                    %>
+                                                            </span></p>
                                                     </div>
-                                                    <div class="order-tracking  cancel">
+                                                    <div
+                                                        class="order-tracking  <%= (items.status.length >=3) ? 'completed' : '' %>">
                                                         <span class="is-complete"></span>
                                                         <p>Delivered<br><span>
                                                                 <%= (items.status[2]?.date) ? items.status[2]?.date : ''
                                                                     %>
                                                             </span></p>
                                                     </div>
-
-
-
-                                                    <%}else{%>
-                                                        <!-- <div></div> -->
-                                                        <div style="width: 50%;"
-                                                            class="order-tracking <%= (items.return.length >=1) ? 'completed' : '' %>">
+                                                    <%}else if(items.cancel && !items.return){%>
+                                                        <div class="order-tracking cancel">
                                                             <span class="is-complete"></span>
-                                                            <p>Return<br><span>
-                                                                    <%= (items.return[0]?.date) ? new
-                                                                        Date(items.return[0]?.date).toISOString().split('T')[0]
+                                                            <p>Ordered<br><span>
+                                                                    <%= (items.status[0]?.date) ? items.status[0]?.date
                                                                         : '' %>
                                                                 </span></p>
                                                         </div>
+                                                        <div class="order-tracking cancel">
+                                                            <span class="z-10">Canceled</span>
 
-                                                        <div style="width: 50%;"
-                                                            class="order-tracking  <%= (items.return.length >=2) ? 'completed' : '' %>">
+                                                        </div>
+                                                        <div class="order-tracking  cancel">
                                                             <span class="is-complete"></span>
                                                             <p>Delivered<br><span>
-                                                                    <%= (items.return[1]?.date) ? new
-                                                                        Date(items.return[1]?.date).toISOString().split('T')[0]
+                                                                    <%= (items.status[2]?.date) ? items.status[2]?.date
                                                                         : '' %>
                                                                 </span></p>
                                                         </div>
 
 
-                                                        <%}%>
+
+                                                        <%}else{%>
+                                                            <!-- <div></div> -->
+                                                            <div style="width: 50%;"
+                                                                class="order-tracking <%= (items.return.length >=1) ? 'completed' : '' %>">
+                                                                <span class="is-complete"></span>
+                                                                <p>Return<br><span>
+                                                                        <%= (items.return[0]?.date) ? new
+                                                                            Date(items.return[0]?.date).toISOString().split('T')[0]
+                                                                            : '' %>
+                                                                    </span></p>
+                                                            </div>
+
+                                                            <div style="width: 50%;"
+                                                                class="order-tracking  <%= (items.return.length >=2) ? 'completed' : '' %>">
+                                                                <span class="is-complete"></span>
+                                                                <p>Delivered<br><span>
+                                                                        <%= (items.return[1]?.date) ? new
+                                                                            Date(items.return[1]?.date).toISOString().split('T')[0]
+                                                                            : '' %>
+                                                                    </span></p>
+                                                            </div>
+
+
+                                                            <%}%>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <%if(items.status.length<3 && !items.cancel){%>
+                                    <div id="<%=items._id%>">
+                                        <button onclick="cancel('<%=items._id%>')"
+                                            class="bg-blue-500  rounded-full hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                    <%}%>
+
+                                        <%if( new Date() <=new Date(items.status[2]?.date).setDate(new
+                                            Date(items.status[2]?.date).getDate() + 7) && !items.return){%>
+
+                                            <div id="<%=items._id%>">
+                                                <button onclick="Return('<%=items._id%>')"
+                                                    class="bg-blue-500  rounded-full hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+                                                    Return
+                                                </button>
+                                            </div>
+
+                                            <%}%>
+
+
                             </div>
-                            <%if(items.status.length<3 && !items.cancel){%>
-                                <div id="<%=items._id%>">
-                                    <button onclick="cancel('<%=items._id%>')"
-                                        class="bg-blue-500  rounded-full hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
-                                        Cancel
-                                    </button>
-                                </div>
-                                <%}%>
-
-                                    <%if( new Date() <=new Date(items.status[2]?.date).setDate(new
-                                        Date(items.status[2]?.date).getDate() + 7) && !items.return){%>
-
-                                        <div id="<%=items._id%>">
-                                            <button onclick="Return('<%=items._id%>')"
-                                                class="bg-blue-500  rounded-full hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
-                                                Return
-                                            </button>
-                                        </div>
-
-                                        <%}%>
-
-
                         </div>
-                    </div>
-                </li>
-                <% }) %>
+                    </li>
+                    <% }) %>
 
-        </ul>
+            </ul>
+        </div>
     </div>
     <!-- Include the WebSocket client library -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.js"></script> -->
@@ -172,10 +178,15 @@
             Swal.fire({
                 title: 'Cancel Order',
                 text: 'Are you sure you want to cancel this order?',
-                icon: 'warning',
+                // icon: 'warning',
                 showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, cancel it!',
-                cancelButtonText: 'No, keep it'
+                cancelButtonText: 'No, keep it',
+                customClass: {
+                    popup: 'my-popup-class', // Define your custom CSS class here
+                },
             }).then((result) => {
                 if (result.isConfirmed) {
 
@@ -216,7 +227,8 @@
                     'damaged': 'Item Arrived Damaged',
                     'changed-mind': 'Changed My Mind',
                     'late-delivery': 'Late Delivery',
-                    'other': 'Other'
+                    'other': 'Other',
+
                 },
                 inputPlaceholder: 'Select a reason or choose Other',
                 preConfirm: (returnReason) => {
@@ -267,5 +279,15 @@
             });
 
 
+
+
         }
     </script>
+    <style>
+        .my-popup-class {
+            width: 400px;
+            /* Adjust the width as needed */
+            max-width: 80%;
+            /* You can also use percentage for responsiveness */
+        }
+    </style>

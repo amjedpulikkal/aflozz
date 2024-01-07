@@ -27,6 +27,8 @@ The project has been deployed and is accessible at [https://www.aflozz.shop](htt
 - **Offer Management:** Manage and display offers within categories and specific products.
 - **Banner Management:** Display banners for promotions or announcements.
 - **Community Chat for Product Reviews:** Provide a chat feature for users to discuss and review products.
+- **reCAPTCHA Integration:** Implemented reCAPTCHA verification to enhance security measures on user authentication and sensitive actions.
+  - Users are now required to pass reCAPTCHA verification during certain actions, such as login, registration, or checkout, to prevent automated bots and enhance security.
 
 ### Admin Side
 

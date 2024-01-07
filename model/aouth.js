@@ -7,7 +7,7 @@ async function recaptcha(req, res, next) {
     // TO-DO: Replace the token and reCAPTCHA action variables before running the sample.
     const projectID = "aflozz-1704543717653"
     const recaptchaKey = "6LfQp0gpAAAAANR-Wx25alF9QN32fN92tm_9PIr7"
-    const token = req.body?.token
+    const token = req.body?.token || req.body?.Token
     const recaptchaAction = req.body?.action
     // createAssessment(projectID,recaptchaKey,token,recaptchaAction)
 
@@ -18,9 +18,11 @@ async function recaptcha(req, res, next) {
     })
         .then(response => response.json())
         .then(google_response => {
-     
+            console.log(google_response.success)
             if(google_response.success){
                 next()
+            }else{
+                res.status(403).json("Error")
             }
         })
         .catch(error => res.json({ error }));
