@@ -185,10 +185,14 @@ bform.addEventListener("submit", e => {
         return false  
     }
 
-
+    grecaptcha.enterprise.ready(async () => {
+        const token = await grecaptcha.enterprise.execute('6LfQp0gpAAAAAHWlFahzqCPEfZI3xe5xaPCQRs4G', {action: 'LOGIN'});
+        console.log(token)
+          
     let data = {
         Email: Email,
-        Password: Password
+        Password: Password,
+        token
     }
     fetch("/login", {
         method: "POST",
@@ -219,6 +223,7 @@ bform.addEventListener("submit", e => {
         .catch((error) => {
             console.error("Fetch error:", error);
         });
+});
 });
 
 

@@ -12,7 +12,7 @@ const upload = multer({ storage })
 
 
 router.get("/",ifuser,userController.getHome) 
-router.route("/login").get(nouser,userController.getlogin).post(nouser,userController.psotLgin)
+router.route("/login").get(nouser,userController.getlogin).post(recaptcha,nouser,userController.psotLgin)
 router.get("/category", ifuser,userController.goetCategory)
 router.get("/product/:id", ifuser,userController.getProduct)
 router.post("/signup",recaptcha,nouser,userController.postSignup)
